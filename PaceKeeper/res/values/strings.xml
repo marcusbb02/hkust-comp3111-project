@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PaceKeeper</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_pedo">PedoActivity</string>
+    <string name="title_activity_music">MusicActivity</string>
+    <string name="title_activity_goal">GoalActivity</string>
+    <string name="title_activity_social">SocialActivity</string>
+    <string name="title_activity_stat">StatActivity</string>
+    <string name="title_activity_calibrate">CalibrateActivity</string>
+
+</resources>
