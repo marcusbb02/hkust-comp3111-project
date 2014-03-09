@@ -10,7 +10,7 @@ public class SpeedAdjuster {
 	// thread handler
 	private static Handler saHandler = new Handler();
 	// current state, tempo and pitch
-	private static boolean saChanging;
+	private static boolean saChanging = false;
 	private static int saState, saLastState = 99;
 	private static float saTempo, saPitch, saFinalTempo, saFinalPitch, saGradient;
 	// threshold for speed change
@@ -28,13 +28,16 @@ public class SpeedAdjuster {
 	public static final float SA_PITCH_SLOW = -1.0f;
 	
 	public static void setStepDurationThreshold(Pedometer pedo_obj, float f){
-		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - f;
+		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - 0.5f*f;
 		saStepDurationUpperThreshold = pedo_obj.getDefaultAverageStepDuration() + 2*f;
 	}
 	
-	synchronized public static int react(Pedometer pedo_obj, final SoundTouchPlayable st_obj){
+	public static int react(Pedometer pedo_obj, final SoundTouchPlayable st_obj){
+		Log.i("SpeedAdjustor", "Lower: " + saStepDurationLowerThreshold);
+		Log.i("SpeedAdjustor", "Upper: " + saStepDurationUpperThreshold);
 		// only change if it is not changing music speed and last state is different
 		if(!saChanging){
+			Log.i("SpeedAdjuster", "Rate set start");
 			// lock the reaction
 			saChanging = true;
 			if(pedo_obj.getAverageStepDuration() < saStepDurationLowerThreshold){
@@ -51,6 +54,7 @@ public class SpeedAdjuster {
 				return SA_NORMAL;
 			}
 		}
+		Log.i("SpeedAdjuster", "Rate set end");
 		return SA_NOCHANGE;
 	}
 	
@@ -93,8 +97,9 @@ public class SpeedAdjuster {
 				if(saTempo - saFinalTempo < 0.001 && saTempo - saFinalTempo > -0.001){
 					st_obj.setTempo(saFinalTempo);
 					st_obj.setPitchSemi(saFinalPitch);
+					Log.i("SpeedAdjuster", "End iterating");
 					// release the lock and set it as last state
-					saLastState = speed_level;
+					saLastState = SA_NOCHANGE;
 					saChanging = false;
 					saHandler.removeCallbacks(this);
 				}else{

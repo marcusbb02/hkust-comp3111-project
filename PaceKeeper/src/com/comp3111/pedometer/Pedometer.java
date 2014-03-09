@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 
 public class Pedometer implements SensorEventListener{
-	private final static int pStepDelayNumber = 2;
+	private final static int pStepDelayNumber = 1;
 	// for log message title
 	private final static String module_name = "Pedometer";
 	// sensor and its state
@@ -25,7 +25,7 @@ public class Pedometer implements SensorEventListener{
 	float pForceDiff = 0.0f;
 	//various values for settings
 	float pForceBaseThreshold = 1.3f, pThreshold = 0.5f, pUpperThreshold = 1.0f,
-		  pUpperThresholdRetainProportion = 0.99f, pLowerThresholdRetainProportion = 0.8f;
+		  pUpperThresholdRetainProportion = 1.0f, pLowerThresholdRetainProportion = 0.8f;
 	int pStepDurationSample = 10, pStepDurationDiscardThreshold = 20;
 	float pDefaultAverageStepDuration = 4.5f;
 	// thread interval, step counter, step-delay counter (all in terms of iteration)
@@ -65,7 +65,7 @@ public class Pedometer implements SensorEventListener{
 	    SENSOR_DELAY_GAME	rate suitable for games
 	 	SENSOR_DELAY_NORMAL	rate (default) suitable for screen orientation changes
 		 */
-		SpeedAdjuster.setStepDurationThreshold(this, 0.7f);
+		SpeedAdjuster.setStepDurationThreshold(this, 0.5f);
 		pHandler.postDelayed(PedoThread, pInterval);
 		pStep = 0;
 		running = true;
