@@ -5,6 +5,7 @@ import static com.smp.soundtouchandroid.Constants.*;
 import java.io.IOException;
 import java.util.Arrays;
 
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -99,8 +100,20 @@ public class SoundTouchPlayable implements Runnable
 	{
 		return decoder.getDuration();
 	}
-	
+
 	public static SoundTouchPlayable createSoundTouchPlayable(String fileName, int id, float tempo, float pitchSemi)
+			throws IOException
+	{
+		if(instance == null){
+			instance = new SoundTouchPlayable(fileName, id, tempo, pitchSemi);
+			soundTouch_Thread = new Thread(instance);
+			soundTouch_Thread.start();
+		}
+		return instance;
+	}
+	
+	//use temporarily
+	public static SoundTouchPlayable createSoundTouchPlayable(AssetFileDescriptor fileName, int id, float tempo, float pitchSemi)
 			throws IOException
 	{
 		if(instance == null){
@@ -131,6 +144,30 @@ public class SoundTouchPlayable implements Runnable
 		}
 
 		this.fileName = fileName;
+		this.id = id;
+
+		handler = new Handler();
+
+		pauseLock = new Object();
+		trackLock = new Object();
+		decodeLock = new Object();
+
+		paused = true;
+		finished = false;
+
+		setupAudio(id, tempo, pitchSemi);
+	}
+	
+	// use this temporarily
+	protected SoundTouchPlayable(AssetFileDescriptor fileName, int id, float tempo, float pitchSemi)
+			throws IOException
+	{
+		if (Build.VERSION.SDK_INT >= 16)
+		{
+			decoder = new MediaCodecMp3Decoder(fileName);
+		}
+
+		this.fileName = "Asset file";
 		this.id = id;
 
 		handler = new Handler();

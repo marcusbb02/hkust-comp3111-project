@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.comp3111.pedometer.Pedometer;
 import com.comp3111.pedometer.SpeedAdjuster;
+import com.comp3111.swipeview.SwipeDismissTouchListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +48,19 @@ public class PedoActivity extends Activity implements OnClickListener{
 		final Button btn_ru  = (Button)findViewById(R.id.mus_btn_rampup);
 		final Button btn_rn  = (Button)findViewById(R.id.mus_btn_rampnormal);
 		final Button btn_rd  = (Button)findViewById(R.id.mus_btn_rampdown);
+		
+		LinearLayout mus_player_buttons = (LinearLayout)findViewById(R.id.mus_player_buttons);
+		mus_player_buttons.setOnTouchListener(new SwipeDismissTouchListener(
+			mus_player_buttons,
+			null,
+			new SwipeDismissTouchListener.OnDismissCallback(){
+				@Override
+				public void onDismiss(View view, Object token) {
+					// TODO Auto-generated method stub
+					
+				}
+			}
+		));
 		
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
               
@@ -113,7 +128,10 @@ public class PedoActivity extends Activity implements OnClickListener{
 		
 		//the last two parameters are speed of playback and pitch in semi-tones.
 		try {
-			stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
+			// use temporarily - for internal testing
+			AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
+			stp = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
+			//stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,7 +168,10 @@ public class PedoActivity extends Activity implements OnClickListener{
 			if(stp.isPaused()){
 				//the last two parameters are speed of playback and pitch in semi-tones.
 				try {
-					stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
+					// use temporarily - for internal testing
+					AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
+					stp = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
+					//stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
