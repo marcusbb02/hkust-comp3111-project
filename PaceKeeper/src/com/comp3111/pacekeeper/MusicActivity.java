@@ -34,8 +34,7 @@ public class MusicActivity extends Activity {
     private ViewGroup leftPanel, centerPanel, rightPanel;
     private int currIndex = 1;	// start off from middle page
     private int ivCursorWidth;
-    private int tabWidth;
-    private int offsetX;
+    private int tabWidth, screenW, offsetX;
     private ImageView ivCursor;
     
     // For things inside ViewPager
@@ -47,7 +46,6 @@ public class MusicActivity extends Activity {
 		setContentView(R.layout.activity_pedo_viewpager);
 		InitViewPager();
 		InitImageView();
-		Log.i("tag", ivCursor.getLayoutParams().width + " is the width");
         mPager.setCurrentItem(1);
 	}
 
@@ -73,7 +71,7 @@ public class MusicActivity extends Activity {
     };
     
     private void InitViewPager() {
-        mPager = (ViewPager) findViewById(R.id.vPager);
+        mPager = (ViewPager) findViewById(R.id.pedo_vp_vPager);
         listViews = new ArrayList<View>();
         LayoutInflater mInflater = getLayoutInflater();
         leftPanel = (ViewGroup) mInflater.inflate(R.layout.activity_calibrate, null);
@@ -150,15 +148,13 @@ public class MusicActivity extends Activity {
     }
     
     private void InitImageView() {
-    	ivCursor = (ImageView) findViewById(R.id.cursor);
+    	ivCursor = (ImageView) findViewById(R.id.pedo_vp_cursor);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        int screenW = dm.widthPixels;
-        ivCursorWidth = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher).getWidth();
+        screenW = dm.widthPixels;
+        ivCursorWidth = BitmapFactory.decodeResource(getResources(), R.drawable.viewpager_tab).getWidth();
         tabWidth = screenW / listViews.size();
-        if (ivCursorWidth > tabWidth) {
-            ivCursor.getLayoutParams().width = tabWidth;
-            ivCursorWidth = tabWidth;
-        }
+        ivCursor.getLayoutParams().width = tabWidth;
+        ivCursorWidth = tabWidth;
         offsetX = (tabWidth - ivCursorWidth) / 2;
     }
     
@@ -170,7 +166,7 @@ public class MusicActivity extends Activity {
             if(arg0 == currIndex){
                 animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, -100, 0);
             }else{
-                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, 0, 0);            	
+                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, 0, 0);              	
             }
             currIndex = arg0;
             animation.setFillAfter(true);
@@ -181,7 +177,6 @@ public class MusicActivity extends Activity {
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
-			
 		}
 
 		@Override

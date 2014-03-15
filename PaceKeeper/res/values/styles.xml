@@ -25,10 +25,25 @@
         <item name="android:minWidth">20dp</item>
         <item name="android:textColor">#707070</item>
     </style>
+    <style name="nowCardStyleFilled">
+        <item name="android:background">@drawable/card_background_filled</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:textColor">#707070</item>
+    </style>
+    <style name="nowCardStyleFilledOld">
+        <item name="android:background">@drawable/card_background_filled_old</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:textColor">#707070</item>
+    </style>
     
     <!-- colors for layouts -->
 	<drawable name="color_black">#FF000000</drawable>
 	<drawable name="color_white">#FFFFFFFF</drawable>
 	<drawable name="color_red">#FFDC4437</drawable>
+	<drawable name="color_blue">#FF123456</drawable>
 
 </resources>

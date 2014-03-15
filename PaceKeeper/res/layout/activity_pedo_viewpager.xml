@@ -1,25 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:umadsdk="http://schemas.android.com/apk/res/com.LoveBus"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/color_red"
+    android:weightSum="100">
 
-    <ImageView
-        android:id="@+id/cursor"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="matrix"
-        android:src="@drawable/ic_launcher" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vPager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1.0"
-        android:background="#EFEFEF"
-        android:flipInterval="30"
-        android:persistentDrawingCache="animation" />
+    <!-- Collapsed Music Player -->
+    <LinearLayout
+    style="@style/nowCardStyleFilledOld"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:id="@+id/pedo_vp_player_buttons" 
+    android:layout_weight="50">
+	    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">    
+		   <ImageView
+   			   style="@style/nowCardStyleFilled"
+		       android:id="@+id/pedo_albumart"
+		       android:layout_width="150dp"
+		       android:layout_height="150dp"
+		       android:scaleType="fitXY"
+		       android:src="@drawable/album_placeholder" />
+		    <LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"		 
+			android:paddingLeft="@dimen/activity_horizontal_margin"  
+		    android:orientation="vertical">   
+			    <TextView
+			        android:id="@+id/pedo_vp_songname"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:layout_gravity="left"
+			        android:text="Song Name"
+			        android:textAppearance="?android:attr/textAppearanceLarge" />
+			    <TextView
+			        android:id="@+id/pedo_vp_artistname"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:layout_gravity="left"
+			        android:text="Artist"
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+			    <TextView
+			        android:id="@+id/pedo_vp_albumname"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:layout_gravity="left"
+			        android:text="Album"
+			        android:textAppearance="?android:attr/textAppearanceMedium" />	
+		    </LinearLayout>
+		</LinearLayout>
+	    <LinearLayout
+	    style="@style/nowCardStyleFilled"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">   		
+		    <Button
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Prev" />
+		    
+		    <Button
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Pause" />
+		
+		    <Button
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Next" /> 
+	    </LinearLayout>
+	</LinearLayout>
+	
+    <!-- Second Half of screen -->
+    
+	    <!-- Page Indicator -->
+		<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+		    <ImageView
+		        android:id="@+id/pedo_vp_cursor"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:scaleType="fitXY"
+		        android:src="@drawable/viewpager_tab" />
+	    </LinearLayout>
+	
+	    <android.support.v4.view.ViewPager
+	        android:id="@+id/pedo_vp_vPager"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_weight="1.0"
+	        android:flipInterval="30"
+	        android:persistentDrawingCache="animation" 
+	    />
 
 </LinearLayout>
