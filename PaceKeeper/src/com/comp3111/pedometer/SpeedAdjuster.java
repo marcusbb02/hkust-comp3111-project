@@ -28,7 +28,7 @@ public class SpeedAdjuster {
 	public static final float SA_PITCH_SLOW = -1.0f;
 	
 	public static void setStepDurationThreshold(Pedometer pedo_obj, float f){
-		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - 0.5f*f;
+		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - f;
 		saStepDurationUpperThreshold = pedo_obj.getDefaultAverageStepDuration() + 2*f;
 	}
 	
