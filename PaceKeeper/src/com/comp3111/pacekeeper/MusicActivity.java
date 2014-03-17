@@ -15,10 +15,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -34,8 +36,9 @@ public class MusicActivity extends Activity {
     private ViewGroup leftPanel, centerPanel, rightPanel;
     private int currIndex = 1;	// start off from middle page
     private int ivCursorWidth;
-    private int tabWidth, screenW, offsetX;
-    private ImageView ivCursor;
+    private int tabWidth, screenW, screenH, offsetX;
+    private ImageView ivCursor, ivAlbumArt;
+    int finalHeight, actionBarHeight;
     
     // For things inside ViewPager
     private LinearLayout mus_player_buttons;
@@ -45,8 +48,41 @@ public class MusicActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pedo_viewpager);
 		InitViewPager();
-		InitImageView();
+		InitImageView();	// for page cursor and album art resizing
         mPager.setCurrentItem(1);
+        InitPostView();		// for setting up view's position dynamically
+	}
+	
+	private void InitPostView(){
+        //find actionbar size
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)){
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
+
+		LinearLayout collpased_player_layout = (LinearLayout)findViewById(R.id.pedo_vp_collpase_player_layout);
+		LinearLayout collpase_player_layout_placeholder = (LinearLayout)findViewById(R.id.pedo_vp_collpase_player_layout_placeholder);
+		
+		// set height of player
+		collpase_player_layout_placeholder.getLayoutParams().height = (int) ((screenH - actionBarHeight) * 0.4);
+		collpased_player_layout.getLayoutParams().height = (int) ((screenH - actionBarHeight) * 0.4);
+		collpased_player_layout.bringToFront();
+		collpased_player_layout.invalidate();
+        // collapsed music player action
+		collpased_player_layout.setOnTouchListener(new SwipeDismissTouchListener(
+			collpased_player_layout,
+			actionBarHeight,
+			null,
+			new SwipeDismissTouchListener.OnDismissCallback(){
+				@Override
+				public void onDismiss(View view, Object token) {
+					// TODO Auto-generated method stub
+					// should be problem of swipeView
+					//view.setY(screenH - actionBarHeight - view.getHeight());
+					//view.requestLayout();
+				}
+			}
+		));
 	}
 
 	@Override
@@ -80,7 +116,7 @@ public class MusicActivity extends Activity {
         listViews.add(leftPanel);
         listViews.add(centerPanel);
         listViews.add(rightPanel);
-        InitViewsListener(centerPanel);
+        InitViewsListener(centerPanel);	// for pages actions
         mPager.setAdapter(new MyPagerAdapter(listViews));
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
         mPager.setCurrentItem(0);
@@ -90,6 +126,7 @@ public class MusicActivity extends Activity {
 		mus_player_buttons = (LinearLayout)leftPanel.findViewById(R.id.mus_player_buttons);
 		mus_player_buttons.setOnTouchListener(new SwipeDismissTouchListener(
 			mus_player_buttons,
+			actionBarHeight,
 			null,
 			new SwipeDismissTouchListener.OnDismissCallback(){
 				@Override
@@ -148,14 +185,26 @@ public class MusicActivity extends Activity {
     }
     
     private void InitImageView() {
+    	// cursor part for correct indicator width
     	ivCursor = (ImageView) findViewById(R.id.pedo_vp_cursor);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenW = dm.widthPixels;
+        screenH = dm.heightPixels;
         ivCursorWidth = BitmapFactory.decodeResource(getResources(), R.drawable.viewpager_tab).getWidth();
         tabWidth = screenW / listViews.size();
         ivCursor.getLayoutParams().width = tabWidth;
         ivCursorWidth = tabWidth;
         offsetX = (tabWidth - ivCursorWidth) / 2;
+        // album art part; to resize after knowing the actual image height
+        ivAlbumArt = (ImageView) findViewById(R.id.pedo_vp_collapse_albumart);
+        ViewTreeObserver vto = ivAlbumArt.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                finalHeight = ivAlbumArt.getMeasuredHeight();
+                ivAlbumArt.getLayoutParams().width = finalHeight;
+                return true;
+            }
+        });
     }
     
     public class MyOnPageChangeListener implements OnPageChangeListener {
@@ -164,7 +213,7 @@ public class MusicActivity extends Activity {
         	Animation animation;
             // initially, current index is same as translate-to index
             if(arg0 == currIndex){
-                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, -100, 0);
+                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, -12, 0);
             }else{
                 animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, 0, 0);              	
             }

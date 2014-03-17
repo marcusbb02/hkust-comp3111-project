@@ -2,12 +2,14 @@ package com.comp3111.swipeview;
 
 import static com.nineoldandroids.view.ViewHelper.setAlpha;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.nineoldandroids.animation.Animator;
@@ -62,13 +64,14 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 	private View mView;
 	private OnDismissCallback mCallback;
 	private int mViewWidth = 1; // 1 and not 0 to prevent dividing by zero
+	private int screenH, actionBarHeight;
 
 	// Transient properties
-	private float mDownX;
+	private float mDownY;
 	private boolean mSwiping;
 	private Object mToken;
 	private VelocityTracker mVelocityTracker;
-	private float mTranslationX;
+	private float mTranslationY;
 
 	/**
 	 * The callback interface used by {@link SwipeDismissTouchListener} to
@@ -100,7 +103,7 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 	 *            The callback to trigger when the user has indicated that she
 	 *            would like to dismiss this view.
 	 */
-	public SwipeDismissTouchListener(View view, Object token, OnDismissCallback callback) {
+	public SwipeDismissTouchListener(View view, int abHeight, Object token, OnDismissCallback callback) {
 		ViewConfiguration vc = ViewConfiguration.get(view.getContext());
 		mSlop = vc.getScaledTouchSlop();
 		mMinFlingVelocity = vc.getScaledMinimumFlingVelocity()*2;
@@ -109,22 +112,25 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 		mView = view;
 		mToken = token;
 		mCallback = callback;
+		actionBarHeight = abHeight;
 	}
 
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		// offset because the view is translated during swipe
-		motionEvent.offsetLocation(mTranslationX, 0);
+		motionEvent.offsetLocation(mTranslationY, 0);
 
 		if (mViewWidth < 2) {
 			mViewWidth = mView.getWidth();
 		}
+        DisplayMetrics dm = view.getResources().getDisplayMetrics();
+        screenH = dm.heightPixels;
 
 		switch (motionEvent.getActionMasked()) {
 		case MotionEvent.ACTION_DOWN: {
 			Log.i("Motion","ACTION_DOWN");
 			// TODO: ensure this is a finger, and set a flag
-			mDownX = motionEvent.getRawX();
+			mDownY = motionEvent.getRawY();
 			mVelocityTracker = VelocityTracker.obtain();
 			mVelocityTracker.addMovement(motionEvent);
 			view.onTouchEvent(motionEvent);
@@ -137,23 +143,21 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 				break;
 			}
 
-			float deltaX = motionEvent.getRawX() - mDownX;
+			float deltaY = motionEvent.getRawY() - mDownY;
 			mVelocityTracker.addMovement(motionEvent);
 			mVelocityTracker.computeCurrentVelocity(1000);
 			float velocityX = Math.abs(mVelocityTracker.getXVelocity());
 			float velocityY = Math.abs(mVelocityTracker.getYVelocity());
 			boolean dismiss = false;
 			boolean dismissRight = false;
-			if (Math.abs(deltaX) > mViewWidth / 2) {
+			if (deltaY > mViewWidth / 2) {
 				dismiss = true;
-				dismissRight = deltaX > 0;
 			} else if (mMinFlingVelocity <= velocityX && velocityX <= mMaxFlingVelocity && velocityY < velocityX) {
 				dismiss = true;
-				dismissRight = mVelocityTracker.getXVelocity() > 0;
 			}
 			if (dismiss) {
 				// dismiss
-				animate(mView).translationX(dismissRight ? mViewWidth : -mViewWidth).alpha(0).setDuration(mAnimationTime).setInterpolator(new LinearInterpolator()).setListener(new AnimatorListener() {
+				animate(mView).translationY(screenH - actionBarHeight - view.getHeight()).setDuration(mAnimationTime).setInterpolator(new DecelerateInterpolator()).setListener(new AnimatorListener() {
 
 					@Override
 					public void onAnimationStart(Animator arg0) {
@@ -180,12 +184,12 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 				});
 			} else {
 				// cancel
-				animate(mView).translationX(0).alpha(1).setDuration(mAnimationTime).setListener(null);
+				animate(mView).translationY(0).alpha(1).setDuration(mAnimationTime).setListener(null);
 
 			}
 			mVelocityTracker = null;
-			mTranslationX = 0;
-			mDownX = 0;
+			mTranslationY = 0;
+			mDownY = 0;
 			mSwiping = false;
 			break;
 		}
@@ -197,8 +201,8 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 			}
 
 			mVelocityTracker.addMovement(motionEvent);
-			float deltaX = motionEvent.getRawX() - mDownX;
-			if (Math.abs(deltaX) > mSlop) {
+			float deltaY = motionEvent.getRawY() - mDownY;
+			if (deltaY > mSlop) {
 				mSwiping = true;
 				mView.getParent().requestDisallowInterceptTouchEvent(true);
 
@@ -209,11 +213,10 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 			}
 
 			if (mSwiping) {
-				mTranslationX = deltaX;
-				ViewHelper.setTranslationX(mView, deltaX);
-
+				mTranslationY = deltaY;
+				ViewHelper.setTranslationY(mView, deltaY);
 				// TODO: use an ease-out interpolator or such
-				setAlpha(mView, Math.max(0f, Math.min(1f, 1f - 2f * Math.abs(deltaX) / mViewWidth / 1.2f)));
+				//setAlpha(mView, Math.max(0f, Math.min(1f, 1f - 2f * Math.abs(deltaX) / mViewWidth / 1.2f)));
 				return true;
 			}
 			break;
@@ -227,37 +230,7 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 		// callback.
 		// This triggers layout on each animation frame; in the future we may
 		// want to do something
-		// smarter and more performant.
+		// smarter and more performance.
 		mCallback.onDismiss(mView, mToken);
-		/*
-
-		final ViewGroup.LayoutParams lp = mView.getLayoutParams();
-		final int originalHeight = mView.getHeight();
-
-		ValueAnimator animator = ValueAnimator.ofInt(originalHeight, 1).setDuration(mAnimationTime);
-
-		animator.addListener(new AnimatorListenerAdapter() {
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				mCallback.onDismiss(mView, mToken);
-				// Reset view presentation
-				setAlpha(mView, 1f);
-				ViewHelper.setTranslationX(mView, 0);
-				// mView.setAlpha(1f);
-				// mView.setTranslationX(0);
-				lp.height = originalHeight;
-				mView.setLayoutParams(lp);
-			}
-		});
-
-		animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator valueAnimator) {
-				lp.height = (Integer) valueAnimator.getAnimatedValue();
-				mView.setLayoutParams(lp);
-			}
-		});
-
-		animator.start();*/
 	}
 }

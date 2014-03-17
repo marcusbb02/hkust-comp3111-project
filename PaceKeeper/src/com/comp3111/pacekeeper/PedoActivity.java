@@ -52,6 +52,7 @@ public class PedoActivity extends Activity implements OnClickListener{
 		LinearLayout mus_player_buttons = (LinearLayout)findViewById(R.id.mus_player_buttons);
 		mus_player_buttons.setOnTouchListener(new SwipeDismissTouchListener(
 			mus_player_buttons,
+			0,
 			null,
 			new SwipeDismissTouchListener.OnDismissCallback(){
 				@Override
