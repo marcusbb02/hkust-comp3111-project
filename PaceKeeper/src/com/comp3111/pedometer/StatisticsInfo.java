@@ -12,7 +12,7 @@ public class StatisticsInfo {
 
 	stepSize stepSizeVariable = stepSize.MEDIUM;
 	int stepLength = 80; // in cm
-	double metValue = 5.0;
+	double metValue = 0.5;
 	double calories;
 	double distanceTravelled;
 	double weight = 65;
@@ -56,7 +56,7 @@ public class StatisticsInfo {
 	}
 
 	public double getCaloriesBurn() {
-		return metValue * weight * (timeLasted / 360);
+		return metValue * weight * (totalSteps / 360);
 	}
 
 	public double getDistanceTravelled() {

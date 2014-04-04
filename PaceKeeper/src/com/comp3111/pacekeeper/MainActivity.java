@@ -16,11 +16,9 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Button lp  = (Button)findViewById(R.id.launch_pedo);	// by chau
-		Button lm  = (Button)findViewById(R.id.launch_music);	//	by wyman
+		Button lm  = (Button)findViewById(R.id.launch_music);	//	by chau and wyman
 		Button lg  = (Button)findViewById(R.id.launch_goal);	//	by chau
 		Button lc  = (Button)findViewById(R.id.launch_calibrate);
-		lp.setOnClickListener(this);
 		lm.setOnClickListener(this);
 		lc.setOnClickListener(this);
 		lg.setOnClickListener(this);
@@ -38,10 +36,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		Intent intent;
 		// TODO Case switch of buttons
 		switch(v.getId()){
-		case	R.id.launch_pedo:
-			intent = new Intent(this, PedoActivity.class);
-			this.startActivity(intent);
-			break;
 		case	R.id.launch_music:
 			intent = new Intent(this, MusicActivity.class);
 			this.startActivity(intent);

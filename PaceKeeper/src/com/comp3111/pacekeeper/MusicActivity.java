@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comp3111.pedometer.Goal;
 import com.comp3111.pedometer.Pedometer;
 import com.comp3111.pedometer.SpeedAdjuster;
 import com.comp3111.pedometer.StatisticsInfo;
@@ -19,7 +20,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -60,6 +60,7 @@ public class MusicActivity extends Activity {
 	double time_axis;
 	Pedometer pedo;
 	StatisticsInfo stinfo = new StatisticsInfo(68);	// for 68kg
+	Goal goal = null;
 
 	//class-accessible Player
 	SoundTouchPlayable stp;
@@ -68,7 +69,6 @@ public class MusicActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_pedo_viewpager);
 		InitViewPager();
 		InitImageView();	// for page cursor and album art resizing
@@ -135,7 +135,7 @@ public class MusicActivity extends Activity {
         LayoutInflater mInflater = getLayoutInflater();
         leftPanel = (ViewGroup) mInflater.inflate(R.layout.activity_pedo_left, null);
         centerPanel = (ViewGroup) mInflater.inflate(R.layout.activity_pedo, null);
-        rightPanel = (ViewGroup) mInflater.inflate(R.layout.activity_goal, null);
+        rightPanel = (ViewGroup) mInflater.inflate(R.layout.activity_pedo_right, null);
         listViews.add(leftPanel);
         listViews.add(centerPanel);
         listViews.add(rightPanel);
@@ -170,13 +170,8 @@ public class MusicActivity extends Activity {
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
 		// center page graph
 		// init example series data
-		final GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-			        new GraphViewData(0, 0.0d)
-			});		
-		final GraphView graphView = new LineGraphView(
-				this // context
-				, "" // heading
-		);
+		final GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {new GraphViewData(0, 0.0d)});		
+		final GraphView graphView = new LineGraphView(this, "");
 		graphView.addSeries(exampleSeries); // data
 		graphView.setScrollable(true);		// for appending
 		// optional - set view port; size matched with data stored, start at y-value 0
@@ -335,7 +330,7 @@ public class MusicActivity extends Activity {
         	Animation animation;
             // initially, current index is same as translate-to index
             if(arg0 == currIndex){
-                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, -12, 0);
+                animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, -3, 0);
             }else{
                 animation = new TranslateAnimation(tabWidth * currIndex + offsetX, tabWidth * arg0 + offsetX, 0, 0);              	
             }

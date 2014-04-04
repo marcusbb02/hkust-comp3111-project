@@ -9,20 +9,12 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/launch_pedo"
+        android:id="@+id/launch_music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="PedoActivity" />
-
-    <Button
-        android:id="@+id/launch_music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/launch_pedo"
-        android:text="MusicPlayerActivity" />
+        android:text="MusicActivity" />
 
     <Button
         android:id="@+id/launch_goal"

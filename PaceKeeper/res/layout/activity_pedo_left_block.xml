@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="3528"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
         android:textSize="30dp"
