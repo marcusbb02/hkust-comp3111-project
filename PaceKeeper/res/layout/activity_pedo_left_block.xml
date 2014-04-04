@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/nowCardStyleFilled"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fontFamily="sans-serif-light"
+    android:gravity="top"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/pedo_left_block_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="steps"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="12dp"
+        android:textColor="#707070"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/pedo_left_block_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="3528"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#707070"
+        android:textSize="30dp"
+        android:textStyle="italic" />
+
+</RelativeLayout>

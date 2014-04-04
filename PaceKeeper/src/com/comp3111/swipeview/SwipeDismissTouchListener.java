@@ -150,8 +150,9 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 			float velocityY = Math.abs(mVelocityTracker.getYVelocity());
 			boolean dismiss = false;
 			boolean dismissRight = false;
-			if (deltaY > mViewWidth / 2) {
+			if (deltaY > mView.getHeight() / 2) {
 				dismiss = true;
+				// TODO: fix the below line
 			} else if (mMinFlingVelocity <= velocityX && velocityX <= mMaxFlingVelocity && velocityY < velocityX) {
 				dismiss = true;
 			}

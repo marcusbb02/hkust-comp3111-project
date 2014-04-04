@@ -5,38 +5,8 @@
     android:background="@drawable/color_red"
     tools:context=".PedoActivity" >
     
-    <LinearLayout
-        style="@style/nowCardStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/mus_player_buttons" >
-
-        <Button
-            android:visibility="invisible"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Drag" />
-
-        <Button
-            android:id="@+id/mus_btn_pedo_start"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Play" />
-
-        <Button
-            android:id="@+id/mus_btn_pedo_stop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Stop" />
-
-    </LinearLayout>
-    
 	<RelativeLayout
-	    android:layout_below="@id/mus_player_buttons"
+	    android:id="@+id/mus_btn_trigger"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:paddingBottom="@dimen/activity_vertical_margin"
@@ -55,19 +25,22 @@
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="Ramp Up" />
+        	    android:visibility="invisible"
+	            android:text="Up" />
 	        <Button
 	            android:id="@+id/mus_btn_rampnormal"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="Normal Pace" />
+        	    android:visibility="invisible"
+	            android:text="Normal" />
 	        <Button
 	            android:id="@+id/mus_btn_rampdown"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="Ramp Down" />
+        	    android:visibility="invisible"
+	            android:text="Down" />
 	        
 	    </LinearLayout>
 	
@@ -99,7 +72,7 @@
 	        style="@style/nowCardStyle"
 	        android:id="@+id/chart_container"
 	        android:layout_width="wrap_content"
-	        android:layout_height="150dp"
+	        android:layout_height="wrap_content"
 	        android:orientation="horizontal"
 	        android:layout_below="@id/tw_pedo_av_duration" >        
 	    </LinearLayout>

@@ -49,20 +49,6 @@ public class PedoActivity extends Activity implements OnClickListener{
 		final Button btn_rn  = (Button)findViewById(R.id.mus_btn_rampnormal);
 		final Button btn_rd  = (Button)findViewById(R.id.mus_btn_rampdown);
 		
-		LinearLayout mus_player_buttons = (LinearLayout)findViewById(R.id.mus_player_buttons);
-		mus_player_buttons.setOnTouchListener(new SwipeDismissTouchListener(
-			mus_player_buttons,
-			0,
-			null,
-			new SwipeDismissTouchListener.OnDismissCallback(){
-				@Override
-				public void onDismiss(View view, Object token) {
-					// TODO Auto-generated method stub
-					
-				}
-			}
-		));
-		
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
               
 		// init example series data
@@ -121,12 +107,12 @@ public class PedoActivity extends Activity implements OnClickListener{
 				}
         	}
         };
-
+/*
 		Button btn_pp  = (Button)findViewById(R.id.mus_btn_pedo_start);
 		Button btn_st  = (Button)findViewById(R.id.mus_btn_pedo_stop);
 		btn_pp.setOnClickListener(this);
 		btn_st.setOnClickListener(this);
-		
+*/	
 		//the last two parameters are speed of playback and pitch in semi-tones.
 		try {
 			// use temporarily - for internal testing
@@ -164,6 +150,7 @@ public class PedoActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		// TODO Case switch of buttons
+		/*
 		switch(arg0.getId()){
 		case	R.id.mus_btn_pedo_start:
 			if(stp.isPaused()){
@@ -194,7 +181,7 @@ public class PedoActivity extends Activity implements OnClickListener{
 			btn_pp.setText("Play");
 			pedo.stopSensor();
 			break;
-		}
+		}*/
 	}
 
 }
