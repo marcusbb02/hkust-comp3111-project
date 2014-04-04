@@ -1,5 +1,7 @@
 package com.comp3111.local_database;
 
+import static android.provider.BaseColumns._ID;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -26,6 +29,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private final Context myContext;    
 	private final static String TAG = "SQLiteHelper";
 	
+	//constants
+    private static String ACH_TABLE = "acheivement"; 
+    private static String AID = "acheivement_id"; 
+    private static String ACH = "acheivement_name"; 
+    private static String ISS = "is_succeed"; 
+    private static String REC = "record"; 
+    
+    private static String STA_TABLE = "statistic"; 
+    private static String AT = "app_times"; 
+    
+    private static String SET_TABLE = "setting"; 
+    
+	//
 	public DataBaseHelper(Context context, int version) {
 		super(context, DB_NAME, null, version);
 		this.myContext = context;
@@ -183,6 +199,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + ACH_TABLE + "("
+                + AID + " INTEGER PRIMARY KEY," 
+        		+ ACH + " CHAR,"
+                + ISS + " INTEGER" 
+                + REC + " CHAR" 
+        		+ ")";
+        db.execSQL(CREATE_CONTACTS_TABLE);
+        
 		// TODO Auto-generated method stub
 //		Log.e(TAG, "SQLitehelper onCreate!");
 //		try {
@@ -207,6 +232,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "SQLitehelper onUpgrade!");
+	}
+	
+	//FUNCTION
+	
+	public void add_achievement(String name) {		//acheivement constructor
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    ContentValues values = new ContentValues();
+	    values.put(ACH, name); 
+	    values.put(ISS, 0); 
+	    values.put(REC, "0"); 
+	 
+	    db.insert(ACH_TABLE, null ,values);
+	    db.close(); // Closing database connection
+	}
+	
+
+	public void update_achievement(int ID,String record) {		//update record
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    
+	    ContentValues values = new ContentValues();
+	    values.put(ISS, 1); 
+	    values.put(REC, record); 
+
+	    db.update(ACH_TABLE, values,  AID + " = " +ID,null );
+	    db.close(); // Closing database connection
+	}
+	
+	public String get_achievement_record(int id) {
+			SQLiteDatabase db = this.getReadableDatabase();
+
+			Cursor cursor = db.query(ACH, new String[] { AID,
+					ISS, REC }, AID + "=" + id, null, null, null,
+					null);
+	        if (cursor != null)
+	            cursor.moveToFirst();
+
+			return cursor.getString(3);
+
+		
 	}
 	
     @Override
