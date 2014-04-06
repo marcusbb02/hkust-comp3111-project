@@ -1,17 +1,12 @@
 package com.comp3111.pacekeeper;
 
-import com.comp3111.pedometer.TimeGoal;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class GoalActivity extends Activity implements OnClickListener{
 	
@@ -33,13 +28,6 @@ public class GoalActivity extends Activity implements OnClickListener{
 		findViewById(R.id.goal_dist).setOnClickListener(this);
 		findViewById(R.id.goal_step).setOnClickListener(this);
 		findViewById(R.id.goal_cardio).setOnClickListener(this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.goal, menu);
-		return true;
 	}
 
 	@Override

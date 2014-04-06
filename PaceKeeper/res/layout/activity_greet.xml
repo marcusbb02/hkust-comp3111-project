@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+		    <LinearLayout
+		        android:id="@+id/upper_btns"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1">        
+			    <ImageView
+			        android:id="@+id/greet_left_panel"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:background="#DB4437" 
+			        android:layout_weight="1"
+        			android:src="@drawable/ic_menu_left"/>
+			
+			    <ImageView
+			        android:id="@+id/greet_right_panel"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:background="#109d59"
+			        android:layout_weight="1"
+        			android:src="@drawable/ic_menu_right" />
+		    </LinearLayout>
+    </LinearLayout>
+
+		    <RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="55dp"
+		        android:background="#efefef"
+		        android:layout_alignParentBottom="true" >
+		        <ImageButton
+		            android:id="@+id/greet_stat"
+		            style="?android:borderlessButtonStyle"
+		            android:layout_width="55dp"
+		            android:layout_height="match_parent"
+		            android:scaleType="centerCrop"
+		            android:text="Statistics"
+			        android:src="@drawable/ic_button_stat" />
+		        
+		        <ImageButton
+		            android:id="@+id/greet_options"
+		            style="?android:borderlessButtonStyle"
+		            android:layout_width="55dp"
+		            android:layout_height="match_parent"
+		            android:layout_alignParentTop="true"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerCrop"
+		            android:text="Statistics"
+			        android:src="@drawable/ic_button_calibrate" />
+
+		        <ImageButton
+		            android:id="@+id/greet_calibrate"
+		            style="?android:borderlessButtonStyle"
+		            android:layout_width="55dp"
+		            android:layout_height="match_parent"
+		            android:layout_alignParentRight="true"
+		            android:layout_alignParentTop="true"
+		            android:scaleType="centerCrop"
+		            android:text="Statistics"
+			        android:src="@drawable/ic_button_option" />
+
+		    </RelativeLayout>
+		    
+		    <View
+		        android:id="@+id/greet_animate_panel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:alpha="0.0"
+		        android:background="#DDDDDD" 
+		        android:layout_weight="1"/>
+
+</RelativeLayout>

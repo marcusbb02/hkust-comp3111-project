@@ -22,14 +22,14 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
+		        layout="@layout/activity_pedo_left_block_light_blue" />
 
 		    <include
 		        android:id="@+id/pedo_left_cell2"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
+		        layout="@layout/activity_pedo_left_block_light_purple" />
 
 		</LinearLayout>
 	    <LinearLayout
@@ -42,21 +42,21 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
+		        layout="@layout/activity_pedo_left_block_light_green" />
 
 		    <include
 		        android:id="@+id/pedo_left_cell4"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
+		        layout="@layout/activity_pedo_left_block_light_orange" />
 		    
 		    <include
 		        android:id="@+id/pedo_left_cell5"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
+		        layout="@layout/activity_pedo_left_block_light_red" />
 
 		</LinearLayout>
     </LinearLayout>

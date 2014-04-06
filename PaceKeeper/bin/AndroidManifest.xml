@@ -9,51 +9,55 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Holo.Light" >
         <activity
             android:name="com.comp3111.pacekeeper.MainActivity"
             android:label="@string/app_name"
-      		android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.PedoActivity"
+            android:label="@string/title_activity_pedo"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.MusicActivity"
+            android:label="@string/title_activity_music"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.GoalActivity"
+            android:label="@string/title_activity_goal"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.SocialActivity"
+            android:label="@string/title_activity_social"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.StatActivity"
+            android:label="@string/title_activity_stat"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.CalibrateActivity"
+            android:label="@string/title_activity_calibrate"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.GreetActivity"
+            android:label="@string/title_activity_greet" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.PedoActivity"
-            android:label="@string/title_activity_pedo"
-        	android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.MusicActivity"
-            android:label="@string/title_activity_music"
-        	android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.GoalActivity"
-            android:label="@string/title_activity_goal"
-        	android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.SocialActivity"
-            android:label="@string/title_activity_social"
-        	android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.StatActivity"
-            android:label="@string/title_activity_stat"
-        	android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.CalibrateActivity"
-            android:label="@string/title_activity_calibrate"
-        	android:screenOrientation="portrait" >
         </activity>
     </application>
 
