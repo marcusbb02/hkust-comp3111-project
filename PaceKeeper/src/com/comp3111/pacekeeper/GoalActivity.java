@@ -33,25 +33,6 @@ public class GoalActivity extends Activity implements OnClickListener{
 		findViewById(R.id.goal_dist).setOnClickListener(this);
 		findViewById(R.id.goal_step).setOnClickListener(this);
 		findViewById(R.id.goal_cardio).setOnClickListener(this);
-		
-		/*
-		final TextView goal_tv = (TextView)findViewById(R.id.goal_textview);
-		Button goal_but_start = (Button)findViewById(R.id.goal_btn_pedo_start);
-		Button goal_but_stop = (Button)findViewById(R.id.goal_btn_pedo_stop);
-		final TimeGoal tg = new TimeGoal(){
-			public void updateGoalStateCallback(){
-				goal_tv.setText("Remaining time: " + this.getSecs());
-			}
-		};
-		
-		goal_but_start.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				tg.startTimedGoal(1000);
-			}
-		});
-*/
 	}
 
 	@Override
@@ -91,23 +72,26 @@ public class GoalActivity extends Activity implements OnClickListener{
 		}
 
 		new AlertDialog.Builder(this).setTitle(title)
-									 .setItems(selection, new GoalSelectionListener(goalId))
+									 .setItems(selection, new GoalSelectionListener(goalId, title))
 									 .setNegativeButton("Cancel", null)
 									 .show();
 	}
 	
 	class GoalSelectionListener implements android.content.DialogInterface.OnClickListener{
 		private int goalId;
-		
-		public GoalSelectionListener(int goalId) {
+		private String goalType;
+
+		public GoalSelectionListener(int goalId, String goalType) {
 			// TODO Auto-generated constructor stub
 			this.goalId = goalId;
+			this.goalType = goalType;
 		}
 
 		@Override
 		public void onClick(DialogInterface arg0, int arg1) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(GoalActivity.this, MusicActivity.class);
+			intent.putExtra("goal_type", goalType);
 			GoalActivity.this.startActivity(intent);
 			GoalActivity.this.finish();
 		}

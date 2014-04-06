@@ -2,75 +2,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/color_red"
     tools:context=".PedoActivity" >
-    
-    <LinearLayout
-        android:id="@+id/pedo_left_container"
-        style="@style/nowCardStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:orientation="vertical" >
-
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="90dp"
-	        android:orientation="horizontal" >
-	        
-		    <include
-		        android:id="@+id/pedo_left_cell1"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
-
-		    <include
-		        android:id="@+id/pedo_left_cell2"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
-
-		</LinearLayout>
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="90dp"
-	        android:orientation="horizontal" >
-	        
-		    <include
-		        android:id="@+id/pedo_left_cell3"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
-
-		    <include
-		        android:id="@+id/pedo_left_cell4"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
-		    
-		    <include
-		        android:id="@+id/pedo_left_cell5"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1"
-		        layout="@layout/activity_pedo_left_block" />
-
-		</LinearLayout>
-    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/pedo_right_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/pedo_left_container"
-        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/pedo_right_maintext"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="27dp"
+        android:text="Medium Text"
         android:textColor="#FFFFFFFF"
+        android:textStyle="italic"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/pedo_right_maintext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:text="00:00"
+        android:textColor="#FFFFFFFF"
         android:textSize="52dp"
         android:textStyle="italic" />
 
+    <TextView
+        android:id="@+id/pedo_right_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Goal"
+        android:textColor="#FFFFFFFF"
+        android:textSize="36dp"
+        android:textStyle="italic" />
+    
 </RelativeLayout>

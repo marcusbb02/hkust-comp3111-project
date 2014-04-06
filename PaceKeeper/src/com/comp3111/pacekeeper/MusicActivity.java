@@ -5,10 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.comp3111.pedometer.Goal;
-import com.comp3111.pedometer.Pedometer;
-import com.comp3111.pedometer.SpeedAdjuster;
-import com.comp3111.pedometer.StatisticsInfo;
+import com.comp3111.pedometer.*;
 import com.comp3111.swipeview.SwipeDismissTouchListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -18,7 +15,6 @@ import com.smp.soundtouchandroid.SoundTouchPlayable;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
@@ -56,11 +52,12 @@ public class MusicActivity extends Activity {
     
     // For things inside ViewPager
 	String fullPathToAudioFile = Environment.getExternalStorageDirectory().toString() + "/test.mp3";
-	TextView gForce, pedoSteps, av_duration, left_steps, left_miles, left_stepsPerMin, left_milesPerHour, left_calories;
+	TextView gForce, pedoSteps, av_duration, left_steps, left_miles, left_stepsPerMin, left_milesPerHour, left_calories, rht_main_text;
 	double time_axis;
 	Pedometer pedo;
 	StatisticsInfo stinfo = new StatisticsInfo(68);	// for 68kg
 	Goal goal = null;
+	
 
 	//class-accessible Player
 	SoundTouchPlayable stp;
@@ -74,8 +71,32 @@ public class MusicActivity extends Activity {
 		InitImageView();	// for page cursor and album art resizing
         mPager.setCurrentItem(1);
         InitPostView();		// for setting up view's position dynamically
+        InitExtra();
 	}
 	
+	private void InitExtra() {
+		// TODO for specifying goals from GoalActivity
+		Bundle extras = this.getIntent().getExtras();
+		if ( extras != null ) {
+		  if ( extras.containsKey("goal_type") ) {
+			// Set the color to different atmosphere
+			View mainview = (View)findViewById(R.id.pedo_vp_main);
+			mainview.setBackgroundColor(getResources().getColor(R.drawable.color_green));
+			// create goal according to pref selected, and set the text
+		    this.setTitle(extras.getString("goal_type"));
+	        goal = new StepGoal(){
+				public void updateGoalStateCallback(){
+					rht_main_text.setText(this.getText());
+				}
+			};
+			TextView rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_title);
+			rht_text.setText(goal.getTitle());
+			rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_placeholder);
+			rht_text.setText(goal.getPlaceholder());
+		  }
+		}
+	}
+
 	private void InitPostView(){
         //find actionbar size
         TypedValue tv = new TypedValue();
@@ -92,6 +113,7 @@ public class MusicActivity extends Activity {
 		collpased_player_layout.bringToFront();
 		collpased_player_layout.invalidate();
         // collapsed music player action
+		/*
 		collpased_player_layout.setOnTouchListener(new SwipeDismissTouchListener(
 			collpased_player_layout,
 			actionBarHeight,
@@ -105,7 +127,7 @@ public class MusicActivity extends Activity {
 					//view.requestLayout();
 				}
 			}
-		));
+		));*/
 	}
 
 	@Override
@@ -168,6 +190,9 @@ public class MusicActivity extends Activity {
 		final Button btn_rn  = (Button)centerPanel.findViewById(R.id.mus_btn_rampnormal);
 		final Button btn_rd  = (Button)centerPanel.findViewById(R.id.mus_btn_rampdown);
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
+		// right page text
+		rht_main_text = (TextView)rightPanel.findViewById(R.id.pedo_right_maintext);
+				
 		// center page graph
 		// init example series data
 		final GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {new GraphViewData(0, 0.0d)});		
@@ -248,12 +273,19 @@ public class MusicActivity extends Activity {
 					}*/
 					stp.play();
 			        pedo.startSensor();
+					goal.startGoal(1000);
+					// temp. use for time goal demostration
+					if(goal != null){
+						rht_main_text.setText(goal.getText());
+					}
 				}else{
 					stp.pause();
 					pedo.stopSensor();
+					goal.pauseGoal();
 				}
 			}        	
         });
+        
 		//the last two parameters are speed of playback and pitch in semi-tones.
 		try {
 			// use temporarily - for internal testing
@@ -293,11 +325,6 @@ public class MusicActivity extends Activity {
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
             return arg0 == (arg1);
-        }
-        
-        @Override
-        public Parcelable saveState() {
-            return null;
         }
     }
     

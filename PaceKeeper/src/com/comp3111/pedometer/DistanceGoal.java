@@ -2,15 +2,15 @@ package com.comp3111.pedometer;
 
 import android.util.Log;
 
-public class TimeGoal extends Goal{
+public class DistanceGoal extends Goal{
 	
 	// text goes here
-	public static final String TITLE_TEXT = "Time Goal";
-	public static final String PLACEHOLDER_TEXT = "Remaining time:";
+	public static final String TITLE_TEXT = "Distance Goal";
+	public static final String PLACEHOLDER_TEXT = "Remaining distance:";
 	
 	// time variables
-	private long secs = 301;
-
+	private long distance = 5000;
+	
 	public String getTitle(){
 		return TITLE_TEXT;
 	}
@@ -21,10 +21,10 @@ public class TimeGoal extends Goal{
 	
 	@Override
 	boolean updateGoalState() {
-		Log.i("tag", "Remaining: " + secs);
-		secs--;
+		Log.i("tag", "Remaining: " + distance);
+		distance--;
 		updateGoalStateCallback();
-		if(secs == 0){
+		if(distance == 0){
 			return false;
 		}
 		// TODO Auto-generated method stub
@@ -32,15 +32,7 @@ public class TimeGoal extends Goal{
 	}
 	
 	public String getText(){
-		String min = Integer.toString((int) (secs/60));
-		String sec = Integer.toString((int) (secs % 60));
-		if(secs % 60 < 10){
-			sec = "0" + sec;
-		}
-		if(secs/60 < 10){
-			min = "0" + min;
-		}
-		return (min+":"+sec);
+		return ""+distance;
 	}
 	
 	public void updateGoalStateCallback(){
