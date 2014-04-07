@@ -52,7 +52,8 @@
         </activity>
         <activity
             android:name="com.comp3111.pacekeeper.GreetActivity"
-            android:label="@string/title_activity_greet" >
+            android:label="@string/title_activity_greet"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

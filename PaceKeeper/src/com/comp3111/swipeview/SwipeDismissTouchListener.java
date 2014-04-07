@@ -188,6 +188,7 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 				animate(mView).translationY(0).alpha(1).setDuration(mAnimationTime).setListener(null);
 
 			}
+			mVelocityTracker.recycle();
 			mVelocityTracker = null;
 			mTranslationY = 0;
 			mDownY = 0;

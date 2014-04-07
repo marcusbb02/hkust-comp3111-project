@@ -56,7 +56,7 @@ public class MusicActivity extends Activity {
 	double time_axis;
 	Pedometer pedo;
 	StatisticsInfo stinfo = new StatisticsInfo(68);	// for 68kg
-	Goal goal = null;
+	Goal goal = new TimeGoal();
 	
 
 	//class-accessible Player
@@ -84,7 +84,7 @@ public class MusicActivity extends Activity {
 			mainview.setBackgroundColor(getResources().getColor(R.drawable.color_green));
 			// create goal according to pref selected, and set the text
 		    this.setTitle(extras.getString("goal_type"));
-	        goal = new StepGoal(){
+	        goal = new TimeGoal(){
 				public void updateGoalStateCallback(){
 					rht_main_text.setText(this.getText());
 				}
@@ -186,9 +186,11 @@ public class MusicActivity extends Activity {
 		gForce=(TextView)centerPanel.findViewById(R.id.tw_pedo_gf);
 		pedoSteps=(TextView)centerPanel.findViewById(R.id.tw_pedo_steps);
 		av_duration=(TextView)centerPanel.findViewById(R.id.tw_pedo_av_duration);
-		final Button btn_ru  = (Button)centerPanel.findViewById(R.id.mus_btn_rampup);
-		final Button btn_rn  = (Button)centerPanel.findViewById(R.id.mus_btn_rampnormal);
-		final Button btn_rd  = (Button)centerPanel.findViewById(R.id.mus_btn_rampdown);
+		final ImageView btn_ru  = (ImageView)centerPanel.findViewById(R.id.mus_btn_rampup);
+		final ImageView btn_f1 = (ImageView)centerPanel.findViewById(R.id.mus_btn_filler);
+		final ImageView btn_rn  = (ImageView)centerPanel.findViewById(R.id.mus_btn_rampnormal);
+		final ImageView btn_f2 = (ImageView)centerPanel.findViewById(R.id.mus_btn_filler2);
+		final ImageView btn_rd  = (ImageView)centerPanel.findViewById(R.id.mus_btn_rampdown);
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
 		// right page text
 		rht_main_text = (TextView)rightPanel.findViewById(R.id.pedo_right_maintext);

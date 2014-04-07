@@ -26,7 +26,7 @@
 		       android:id="@+id/pedo_vp_collapse_albumart"
 		       style="@style/nowCardStyleFilled"
 		       android:layout_width="wrap_content"
-		       android:layout_height="match_parent"
+		       android:layout_height="100dp"
 		       android:scaleType="centerInside"
 		       android:src="@drawable/album_placeholder" />
 

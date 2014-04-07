@@ -18,7 +18,7 @@ public class ExpandAnimation extends Animation {
     private int mType;
     private RelativeLayout.LayoutParams mLayoutParams;
 
-    public ExpandAnimation(View view, int duration, int type, int x, int y) {
+    public ExpandAnimation(View view, int duration, int type, int x, int y, int screenW, int screenH) {
 
         setDuration(duration);
         mView = view;
@@ -32,8 +32,8 @@ public class ExpandAnimation extends Animation {
             mLayoutParams.height = 0;
             mLayoutParams.width = 0;
         } else {
-            mLayoutParams.height = LayoutParams.WRAP_CONTENT;
-            mLayoutParams.width = LayoutParams.WRAP_CONTENT;
+            mLayoutParams.height = screenH + y;
+            mLayoutParams.width = screenW + x;
         }
         view.setVisibility(View.VISIBLE);
     }

@@ -25,7 +25,7 @@ public class Pedometer implements SensorEventListener{
 	float pForceDiff = 0.0f;
 	//various values for settings
 	float pForceBaseThreshold = 1.3f, pThreshold = 0.5f, pUpperThreshold = 1.0f,
-		  pUpperThresholdRetainProportion = 1.0f, pLowerThresholdRetainProportion = 0.8f;
+		  pUpperThresholdRetainProportion = 1.0f, pLowerThresholdRetainProportion = 0.9f;
 	int pStepDurationSample = 10, pStepDurationDiscardThreshold = 20;
 	float pDefaultAverageStepDuration = 4.5f;
 	// thread interval, step counter, step-delay counter (all in terms of iteration)

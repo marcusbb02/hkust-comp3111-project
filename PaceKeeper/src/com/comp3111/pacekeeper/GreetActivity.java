@@ -64,7 +64,7 @@ public class GreetActivity extends Activity implements OnTouchListener{
 			panel_anim.setBackgroundColor(getResources().getColor(R.drawable.color_red));
 			intent = new Intent(this, MusicActivity.class);
 		}
-		ExpandAnimation panel_anim_expand = new ExpandAnimation(panel_anim, 500, ExpandAnimation.EXPAND, x - 25, y - 100);
+		ExpandAnimation panel_anim_expand = new ExpandAnimation(panel_anim, 400, ExpandAnimation.EXPAND, x - 25, y - 100, screenH, screenW);
 		panel_anim_expand.setAnimationListener(new AnimationListener(){
 
 			@Override
