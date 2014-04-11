@@ -9,7 +9,7 @@ public class TimeGoal extends Goal{
 	public static final String PLACEHOLDER_TEXT = "Remaining time:";
 	
 	// time variables
-	private long secs = 301;
+	private long secs = 1800;
 
 	public String getTitle(){
 		return TITLE_TEXT;

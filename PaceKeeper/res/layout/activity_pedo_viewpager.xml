@@ -24,10 +24,9 @@
 
 		   <ImageView
 		       android:id="@+id/pedo_vp_collapse_albumart"
-		       style="@style/nowCardStyleFilled"
 		       android:layout_width="wrap_content"
 		       android:layout_height="100dp"
-		       android:scaleType="centerInside"
+		       android:scaleType="fitCenter"
 		       android:src="@drawable/album_placeholder" />
 
 		    <LinearLayout
@@ -37,28 +36,32 @@
 		    android:orientation="vertical">   
 			    <TextView
 			        android:id="@+id/pedo_vp_songname"
+                    android:textColor="#666666"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:layout_gravity="left"
-			        android:text="I Ran (So Far Away)"
+        			android:textStyle="bold"
+			        android:text="Good Time"
 			        android:textAppearance="?android:attr/textAppearanceLarge" />
 			    <TextView
 			        android:id="@+id/pedo_vp_artistname"
+                    android:textColor="#666666"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:layout_gravity="left"
-			        android:text="A Flock of Seagulls"
+			        android:text="Owl City and Carly Rae Jepsen"
 			        android:textAppearance="?android:attr/textAppearanceMedium" />
 			    <TextView
 			        android:id="@+id/pedo_vp_albumname"
+                    android:textColor="#666666"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_weight="1"
 			        android:layout_gravity="left"
         			android:textStyle="italic"
-			        android:text="A Flock of Seagulls"
+			        android:text="Kiss"
 			        android:textAppearance="?android:attr/textAppearanceMedium" />	
 			    <LinearLayout
 			    	android:gravity="center"
@@ -98,6 +101,12 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:src="@drawable/ic_action_pause" />
+	        <ImageButton
+       			style="?android:borderlessButtonStyle"
+	            android:id="@+id/pedo_vp_collapsed_play"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/ic_action_play" />
 	        <ImageButton
        			style="?android:borderlessButtonStyle"
 	            android:id="@+id/pedo_vp_collapsed_next"

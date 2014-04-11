@@ -20,12 +20,19 @@ public class SpeedAdjuster {
 	public static final int SA_NORMAL = 0;
 	public static final int SA_SLOW = -1;
 	public static final int SA_NOCHANGE = 99;
+	public static final float SA_TEMPO_FAST = 2.0f;
+	public static final float SA_PITCH_FAST = 1.5f;
+	public static final float SA_TEMPO_NORMAL = 1.0f;
+	public static final float SA_PITCH_NORMAL = 0.0f;
+	public static final float SA_TEMPO_SLOW = 0.5f;
+	public static final float SA_PITCH_SLOW = -1.5f;
+	/*
 	public static final float SA_TEMPO_FAST = 1.5f;
 	public static final float SA_PITCH_FAST = 1.0f;
 	public static final float SA_TEMPO_NORMAL = 1.0f;
 	public static final float SA_PITCH_NORMAL = 0.0f;
 	public static final float SA_TEMPO_SLOW = 0.5f;
-	public static final float SA_PITCH_SLOW = -1.0f;
+	public static final float SA_PITCH_SLOW = -1.0f;*/
 	
 	public static void setStepDurationThreshold(Pedometer pedo_obj, float f){
 		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - 1.5f*f;

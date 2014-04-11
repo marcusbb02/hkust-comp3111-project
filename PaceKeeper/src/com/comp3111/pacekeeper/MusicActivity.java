@@ -33,6 +33,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,6 +54,7 @@ public class MusicActivity extends Activity {
     // For things inside ViewPager
 	String fullPathToAudioFile = Environment.getExternalStorageDirectory().toString() + "/test.mp3";
 	TextView gForce, pedoSteps, av_duration, left_steps, left_miles, left_stepsPerMin, left_milesPerHour, left_calories, rht_main_text;
+	ImageButton btn_pause, btn_play;
 	double time_axis;
 	Pedometer pedo;
 	StatisticsInfo stinfo = new StatisticsInfo(68);	// for 68kg
@@ -113,6 +115,9 @@ public class MusicActivity extends Activity {
 		collpased_player_layout.bringToFront();
 		collpased_player_layout.invalidate();
         // collapsed music player action
+		btn_pause = (ImageButton)findViewById(R.id.pedo_vp_collapsed_pause);
+		btn_play = (ImageButton)findViewById(R.id.pedo_vp_collapsed_play);
+		btn_pause.setVisibility(View.GONE);
 		/*
 		collpased_player_layout.setOnTouchListener(new SwipeDismissTouchListener(
 			collpased_player_layout,
@@ -239,19 +244,25 @@ public class MusicActivity extends Activity {
 				av_duration.setText("Av. Step Duration: "+s_duration);
 				switch(SpeedAdjuster.react(pedo, stp)){
 					case	SpeedAdjuster.SA_FAST:
-						btn_ru.setVisibility(View.VISIBLE);
+						btn_ru.setVisibility(View.INVISIBLE);
+						btn_f1.setVisibility(View.INVISIBLE);
 						btn_rn.setVisibility(View.INVISIBLE);
-						btn_rd.setVisibility(View.INVISIBLE);
+						btn_f2.setVisibility(View.VISIBLE);
+						btn_rd.setVisibility(View.VISIBLE);
 						break;
 					case	SpeedAdjuster.SA_NORMAL:
 						btn_ru.setVisibility(View.INVISIBLE);
+						btn_f1.setVisibility(View.VISIBLE);
 						btn_rn.setVisibility(View.VISIBLE);
+						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
 						break;
 					case	SpeedAdjuster.SA_SLOW:
-						btn_ru.setVisibility(View.INVISIBLE);
+						btn_ru.setVisibility(View.VISIBLE);
+						btn_f1.setVisibility(View.VISIBLE);
 						btn_rn.setVisibility(View.INVISIBLE);
-						btn_rd.setVisibility(View.VISIBLE);
+						btn_f2.setVisibility(View.INVISIBLE);
+						btn_rd.setVisibility(View.INVISIBLE);
 						break;
 				}
         	}
@@ -276,6 +287,8 @@ public class MusicActivity extends Activity {
 					stp.play();
 			        pedo.startSensor();
 					goal.startGoal(1000);
+					btn_pause.setVisibility(View.VISIBLE);
+					btn_play.setVisibility(View.GONE);
 					// temp. use for time goal demostration
 					if(goal != null){
 						rht_main_text.setText(goal.getText());
@@ -284,6 +297,8 @@ public class MusicActivity extends Activity {
 					stp.pause();
 					pedo.stopSensor();
 					goal.pauseGoal();
+					btn_pause.setVisibility(View.GONE);
+					btn_play.setVisibility(View.VISIBLE);
 				}
 			}        	
         });

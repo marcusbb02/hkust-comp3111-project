@@ -26,8 +26,8 @@
 	
 	        <ImageView
 	            android:id="@+id/mus_btn_rampup"
-	            android:layout_width="48dp"
-	            android:layout_height="48dp"
+	            android:layout_width="32dp"
+	            android:layout_height="32dp"
 	            android:layout_weight="1"
         	    android:visibility="visible"
         	    android:scaleType="fitCenter"
@@ -44,8 +44,8 @@
 	            android:src="@drawable/ic_circle_dot" />
 	        <ImageView
 	            android:id="@+id/mus_btn_rampnormal"
-	            android:layout_width="8dp"
-	            android:layout_height="match_parent"
+	            android:layout_width="48dp"
+	            android:layout_height="48dp"
 	            android:layout_weight="1"
         	    android:visibility="visible"
         	    android:scaleType="fitCenter"
@@ -62,8 +62,8 @@
 	            android:src="@drawable/ic_circle_dot" />
 	        <ImageView
 	            android:id="@+id/mus_btn_rampdown"
-	            android:layout_width="48dp"
-	            android:layout_height="48dp"
+	            android:layout_width="32dp"
+	            android:layout_height="32dp"
 	            android:layout_weight="1"
         	    android:visibility="visible"
         	    android:scaleType="fitCenter"
