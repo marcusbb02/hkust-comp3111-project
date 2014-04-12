@@ -10,6 +10,7 @@
     <string name="title_activity_social">SocialActivity</string>
     <string name="title_activity_stat">StatActivity</string>
     <string name="title_activity_calibrate">CalibrateActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_greet">PaceKeeper</string>
 
 </resources>
