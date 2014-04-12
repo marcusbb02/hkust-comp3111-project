@@ -33,4 +33,21 @@
         android:orientation="horizontal"
         android:layout_below="@id/calibrate_processButton" >        
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/calibrate_processButton"
+        android:layout_alignTop="@+id/calibrate_chartContainer"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="60dp" >
+
+        <Button
+            android:id="@+id/profile_settingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="profile" />
+
+    </LinearLayout>
+
 </RelativeLayout>
