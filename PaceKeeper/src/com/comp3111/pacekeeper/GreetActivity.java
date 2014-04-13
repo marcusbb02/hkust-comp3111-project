@@ -9,15 +9,15 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.widget.ImageButton;
 
-public class GreetActivity extends Activity implements OnTouchListener{
+public class GreetActivity extends Activity implements OnClickListener{
 	
 	// global accessible elements
-	View left_panel;
-	View right_panel;
 	View panel_anim;
 	Intent intent;
 	int screenW, screenH;
@@ -27,16 +27,15 @@ public class GreetActivity extends Activity implements OnTouchListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_greet);
 		
-		// find the middle position
+		// find the display attributes
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenW = dm.widthPixels;
         screenH = dm.heightPixels;
 		
-		// set up panels onClick action
-		left_panel = (View)findViewById(R.id.greet_left_panel);
-		//left_panel.setOnClickListener(this);
-		right_panel = (View)findViewById(R.id.greet_right_panel);
-		//right_panel.setOnClickListener(this);
+		// set up lower ImageButtons onClick action
+		ImageButton greetCalibrate = (ImageButton)findViewById(R.id.greet_calibrate);
+		greetCalibrate.setOnClickListener(this);
+
 		// initialize panel animations
 		panel_anim = (View)findViewById(R.id.greet_animate_panel);
 		panel_anim.setVisibility(View.VISIBLE);
@@ -92,21 +91,14 @@ public class GreetActivity extends Activity implements OnTouchListener{
 	}
 
 	@Override
-	public boolean onTouch(View view, MotionEvent arg1) {
-		// TODO Auto-generated method stub// View OnClick case switch
+	public void onClick(View view) {
+		// View OnClick case switch
 		switch(view.getId()){
-		case R.id.greet_left_panel:
-	        //panel_anim_rc = new ExpandAnimation(right_panel, 500, ExpandAnimation.COLLAPSE);
-	        //right_panel.startAnimation(panel_anim_rc);
-			//panel_anim.startAnimation(panel_anim_expand);
+		case R.id.greet_calibrate:
+			intent = new Intent(this, CalibrateActivity.class);
+			GreetActivity.this.startActivity(GreetActivity.this.intent);
 			break;
-		case R.id.greet_right_panel:
-	        //panel_anim_lc = new ExpandAnimation(left_panel, 500, ExpandAnimation.COLLAPSE);
-	        //left_panel.startAnimation(panel_anim_lc);
-			//panel_anim.startAnimation(panel_anim_expand);
-			break;
-	}
-		return false;
+		}	
 	}
 
 }

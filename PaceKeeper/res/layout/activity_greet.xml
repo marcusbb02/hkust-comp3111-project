@@ -19,6 +19,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:background="#DB4437" 
+			        android:scaleType="fitStart"
 			        android:layout_weight="1"
         			android:src="@drawable/ic_menu_left"/>
 			
@@ -27,6 +28,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:background="#109d59"
+			        android:scaleType="fitStart"
 			        android:layout_weight="1"
         			android:src="@drawable/ic_menu_right" />
 		    </LinearLayout>
@@ -37,6 +39,14 @@
 		        android:layout_height="55dp"
 		        android:background="#efefef"
 		        android:layout_alignParentBottom="true" >
+		        <Button
+		            android:id="@+id/greet_filler"
+		        	android:background="#efefef"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:scaleType="centerCrop"
+			        android:src="@drawable/ic_button_stat" />
+		        
 		        <ImageButton
 		            android:id="@+id/greet_stat"
 		            style="?android:borderlessButtonStyle"
@@ -45,27 +55,27 @@
 		            android:scaleType="centerCrop"
 		            android:text="Statistics"
 			        android:src="@drawable/ic_button_stat" />
-		        
-		        <ImageButton
-		            android:id="@+id/greet_options"
-		            style="?android:borderlessButtonStyle"
-		            android:layout_width="55dp"
-		            android:layout_height="match_parent"
-		            android:layout_alignParentTop="true"
-		            android:layout_centerHorizontal="true"
-		            android:scaleType="centerCrop"
-		            android:text="Statistics"
-			        android:src="@drawable/ic_button_calibrate" />
 
 		        <ImageButton
 		            android:id="@+id/greet_calibrate"
 		            style="?android:borderlessButtonStyle"
 		            android:layout_width="55dp"
 		            android:layout_height="match_parent"
+		            android:layout_alignParentTop="true"
+		            android:layout_centerHorizontal="true"
+		            android:scaleType="centerCrop"
+		            android:text="Calibrate"
+			        android:src="@drawable/ic_button_calibrate" />
+		        
+		        <ImageButton
+		            android:id="@+id/greet_options"
+		            style="?android:borderlessButtonStyle"
+		            android:layout_width="55dp"
+		            android:layout_height="match_parent"
 		            android:layout_alignParentRight="true"
 		            android:layout_alignParentTop="true"
 		            android:scaleType="centerCrop"
-		            android:text="Statistics"
+		            android:text="Options"
 			        android:src="@drawable/ic_button_option" />
 
 		    </RelativeLayout>
