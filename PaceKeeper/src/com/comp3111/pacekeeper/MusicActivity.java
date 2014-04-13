@@ -16,6 +16,7 @@ import com.smp.soundtouchandroid.SoundTouchPlayable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -197,8 +198,21 @@ public class MusicActivity extends Activity {
 		final ImageView btn_f2 = (ImageView)centerPanel.findViewById(R.id.mus_btn_filler2);
 		final ImageView btn_rd  = (ImageView)centerPanel.findViewById(R.id.mus_btn_rampdown);
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
-		// right page text
+		// right page text and button
 		rht_main_text = (TextView)rightPanel.findViewById(R.id.pedo_right_maintext);
+		Button btn_end = (Button)rightPanel.findViewById(R.id.pedo_right_halt);
+		btn_end.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// stop soundtouch component and else, then launch ResultActivity
+				stp.stop();
+				pedo.stopSensor();
+				goal.pauseGoal();
+				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
+				startActivity(intent);
+				MusicActivity.this.finish();
+			}
+		});
 				
 		// center page graph
 		// init example series data

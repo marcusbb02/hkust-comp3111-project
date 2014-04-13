@@ -12,5 +12,6 @@
     <string name="title_activity_calibrate">CalibrateActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_greet">PaceKeeper</string>
+    <string name="title_activity_result">ResultActivity</string>
 
 </resources>
