@@ -13,5 +13,9 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_greet">PaceKeeper</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_extended_music">ExtendedMusicActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

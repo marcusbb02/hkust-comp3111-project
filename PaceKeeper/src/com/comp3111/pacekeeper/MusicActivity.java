@@ -58,7 +58,8 @@ public class MusicActivity extends Activity {
 	ImageButton btn_pause, btn_play;
 	double time_axis;
 	Pedometer pedo;
-	StatisticsInfo stinfo = new StatisticsInfo(68);	// for 68kg
+	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
+	ConsistentStatisticsInfo stinfo = new ConsistentStatisticsInfo(68);	// for 68kg
 	Goal goal = new TimeGoal();
 	
 
@@ -107,18 +108,27 @@ public class MusicActivity extends Activity {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
         }
 
-		LinearLayout collpased_player_layout = (LinearLayout)findViewById(R.id.pedo_vp_collpase_player_layout);
+		LinearLayout collapsed_player_layout = (LinearLayout)findViewById(R.id.pedo_vp_collpase_player_layout);
 		LinearLayout collpase_player_layout_placeholder = (LinearLayout)findViewById(R.id.pedo_vp_collpase_player_layout_placeholder);
 		
 		// set height of player
 		collpase_player_layout_placeholder.getLayoutParams().height = (int) ((screenH - actionBarHeight) * 0.4);
-		collpased_player_layout.getLayoutParams().height = (int) ((screenH - actionBarHeight) * 0.4);
-		collpased_player_layout.bringToFront();
-		collpased_player_layout.invalidate();
+		collapsed_player_layout.getLayoutParams().height = (int) ((screenH - actionBarHeight) * 0.4);
+		collapsed_player_layout.bringToFront();
+		collapsed_player_layout.invalidate();
         // collapsed music player action
 		btn_pause = (ImageButton)findViewById(R.id.pedo_vp_collapsed_pause);
 		btn_play = (ImageButton)findViewById(R.id.pedo_vp_collapsed_play);
 		btn_pause.setVisibility(View.GONE);
+		collapsed_player_layout.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				//Launch ExtendedMusicActivity
+				Intent intent = new Intent(MusicActivity.this, ExtendedMusicActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_in_anim);
+			}			
+		});
 		/*
 		collpased_player_layout.setOnTouchListener(new SwipeDismissTouchListener(
 			collpased_player_layout,
@@ -142,20 +152,6 @@ public class MusicActivity extends Activity {
 		getMenuInflater().inflate(R.menu.calibrate, menu);
 		return true;
 	}
-	
-	// Methods for ViewPager
-    public class MyOnClickListener implements View.OnClickListener {
-        private int index = 0;
-
-        public MyOnClickListener(int i) {
-            index = i;
-        }
-
-        @Override
-        public void onClick(View v) {
-            mPager.setCurrentItem(index);
-        }
-    };
     
     private void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.pedo_vp_vPager);
@@ -176,7 +172,7 @@ public class MusicActivity extends Activity {
     private void InitViewsListener(ViewGroup leftPanel, final ViewGroup centerPanel, ViewGroup rightPanel) {
     	// rename left cells
     	TextView cell_text = (TextView)leftPanel.findViewById(R.id.pedo_left_cell2).findViewById(R.id.pedo_left_block_desc);
-    	cell_text.setText("miles travelled");
+    	cell_text.setText("miles");
     	cell_text = (TextView)leftPanel.findViewById(R.id.pedo_left_cell3).findViewById(R.id.pedo_left_block_desc);
     	cell_text.setText("steps/min");
     	cell_text = (TextView)leftPanel.findViewById(R.id.pedo_left_cell4).findViewById(R.id.pedo_left_block_desc);
@@ -208,7 +204,9 @@ public class MusicActivity extends Activity {
 				stp.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
+				ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
+				intent.putExtra("goal", "true");
 				startActivity(intent);
 				MusicActivity.this.finish();
 			}
@@ -243,19 +241,20 @@ public class MusicActivity extends Activity {
         	// for lengthier thread action
         	public void PedoThreadCallback(int st, float threshold, float s_duration){
         		// set left page values
-        		stinfo.setTotalSteps(st);
-        		stinfo.addTime(0.1);	// 0.1 * 10 = 1 sec
+        		ConsistentStatisticsInfo.infoContent.setTotalSteps(st);
+        		ConsistentStatisticsInfo.infoContent.addTime(0.1);	// 0.1 * 10 = 1 sec
         		left_steps.setText(""+st);
-        		left_miles.setText(""+stinfo.getDistanceTravelled());	// side effect : changed miles field
-        		left_stepsPerMin.setText(""+roundOneDecimal(stinfo.getStepPerTime()));
-        		left_milesPerHour.setText(""+roundOneDecimal(stinfo.getDistancePerTime()));
-        		left_calories.setText(""+roundOneDecimal(stinfo.getCaloriesBurn()));
+        		left_miles.setText(""+ConsistentStatisticsInfo.infoContent.getDistanceTravelled());	// side effect : changed miles field
+        		left_stepsPerMin.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getStepPerTime()));
+        		left_milesPerHour.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getDistancePerTime()));
+        		left_calories.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getCaloriesBurn()));
 
         		// graph 
 				time_axis += 1d;
 				exampleSeries.appendData(new GraphViewData(time_axis, pForce), true, 50 );
 				pedoSteps.setText("Steps taken: " + st+"; Th: " + threshold);
 				av_duration.setText("Av. Step Duration: "+s_duration);
+				// change UI reacting the speed
 				switch(SpeedAdjuster.react(pedo, stp)){
 					case	SpeedAdjuster.SA_FAST:
 						btn_ru.setVisibility(View.INVISIBLE);
@@ -263,6 +262,9 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.VISIBLE);
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						lastSpeedState = SpeedAdjuster.SA_FAST;
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
 						break;
 					case	SpeedAdjuster.SA_NORMAL:
 						btn_ru.setVisibility(View.INVISIBLE);
@@ -270,6 +272,9 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.VISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						lastSpeedState = SpeedAdjuster.SA_NORMAL;
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
 						break;
 					case	SpeedAdjuster.SA_SLOW:
 						btn_ru.setVisibility(View.VISIBLE);
@@ -277,11 +282,14 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.INVISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						lastSpeedState = SpeedAdjuster.SA_SLOW;
+						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
 						break;
 				}
         	}
         };
-        RelativeLayout btn_pp  =(RelativeLayout)centerPanel.findViewById(R.id.mus_btn_trigger);
+        RelativeLayout btn_pp = (RelativeLayout)centerPanel.findViewById(R.id.mus_btn_trigger);
         btn_pp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
@@ -413,6 +421,6 @@ public class MusicActivity extends Activity {
     double roundOneDecimal(double d) { 
         DecimalFormat twoDForm = new DecimalFormat("#.#"); 
         return Double.valueOf(twoDForm.format(d));
-  }  
+    }  
 
 }

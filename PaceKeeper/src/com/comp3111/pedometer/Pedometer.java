@@ -67,7 +67,7 @@ public class Pedometer implements SensorEventListener{
 		 */
 		SpeedAdjuster.setStepDurationThreshold(this, 0.5f);
 		pHandler.postDelayed(PedoThread, pInterval);
-		pStep = 0;
+		//pStep = 0;
 		running = true;
 	}
 

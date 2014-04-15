@@ -70,8 +70,8 @@ public class GreetActivity extends Activity implements OnClickListener{
 			public void onAnimationEnd(Animation arg0) {
 				// TODO Auto-generated method stub
 				GreetActivity.this.startActivity(GreetActivity.this.intent);
-				overridePendingTransition(R.anim.hold, R.anim.fade_in_anim);
-				GreetActivity.this.finish();
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_in_anim);
+				//GreetActivity.this.finish();
 			}
 
 			@Override
@@ -88,6 +88,15 @@ public class GreetActivity extends Activity implements OnClickListener{
 			
 		});
 		panel_anim.startAnimation(panel_anim_expand);
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		// hide panel_anim block
+		if(panel_anim != null){
+			panel_anim.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	@Override

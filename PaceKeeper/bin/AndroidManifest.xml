@@ -69,6 +69,14 @@
             android:name="com.comp3111.pacekeeper.ResultActivity"
             android:label="@string/title_activity_result" >
         </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.ExtendedMusicActivity"
+            android:label="@string/title_activity_extended_music"
+            android:parentActivityName="com.comp3111.pacekeeper.MusicActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.comp3111.pacekeeper.MusicActivity" />
+        </activity>
     </application>
 
 </manifest>

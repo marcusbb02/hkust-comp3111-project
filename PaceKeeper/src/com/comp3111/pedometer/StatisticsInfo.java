@@ -1,4 +1,13 @@
 package com.comp3111.pedometer;
+
+import java.util.ArrayList;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
+import com.jjoe64.graphview.GraphView.GraphViewData;
+
 /**
  * Class for calculating statistical information
  * @author Henry Chan
@@ -9,16 +18,18 @@ public class StatisticsInfo {
 	static enum stepSize {
 		LARGE, MEDIUM, SMALL
 	};
+	
+	public ArrayList<GraphViewData> pace_dist = new ArrayList<GraphViewData>();
 
 	stepSize stepSizeVariable = stepSize.MEDIUM;
 	int stepLength = 80; // in cm
-	double metValue = 0.5;
+	double metValue = 0.2;
 	double calories;
 	double distanceTravelled;
 	double weight = 65;
 	double stepDuration;
-	double totalSteps;
-	double timeLasted;// second
+	int totalSteps;
+	double timeLasted = 0.00001;// second
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);
@@ -46,6 +57,10 @@ public class StatisticsInfo {
 	public void setTotalSteps(int st){
 		totalSteps = st;
 	}
+	
+	public int getTotalSteps(){
+		return totalSteps;
+	}
 
 	double getWeight() {
 		return weight;
@@ -56,7 +71,7 @@ public class StatisticsInfo {
 	}
 
 	public double getCaloriesBurn() {
-		return metValue * weight * (totalSteps / 360);
+		return (double) metValue * weight * (totalSteps / 360.0);
 	}
 
 	public double getDistanceTravelled() {
@@ -78,4 +93,5 @@ public class StatisticsInfo {
 	public double getTimeLasted() {
 		return timeLasted;
 	}
+
 }
