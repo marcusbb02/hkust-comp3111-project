@@ -1,5 +1,6 @@
 package com.comp3111.pacekeeper;
 
+import com.comp3111.achievement.AchievementActivity;
 import com.comp3111.local_database.DataBaseHelper;
 
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class CalibrateActivity extends Activity  implements OnClickListener {
 //		guideText.startAnimation(fadeInAnimation);
 		Button setting_c  = (Button)findViewById(R.id.profile_settingButton);	
 		setting_c.setOnClickListener(this);
+		Button tst  = (Button)findViewById(R.id.tst2);	
+		tst.setOnClickListener(this);
 	}
 
 	@Override
@@ -44,9 +47,13 @@ public class CalibrateActivity extends Activity  implements OnClickListener {
 		Intent intent;
 		switch(v.getId()){
 		case	R.id.profile_settingButton:
-			intent = new Intent(this, ProfileActivity.class);
+			intent = new Intent(this, ProfileListActivity.class);
 			this.startActivity(intent);
 			break;
+		case	R.id.tst2:	
+			intent = new Intent(this, AchievementActivity.class);
+		this.startActivity(intent);
+		break;
 			}
 }
 }
