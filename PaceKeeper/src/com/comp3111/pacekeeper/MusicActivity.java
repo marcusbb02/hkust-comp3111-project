@@ -59,12 +59,15 @@ public class MusicActivity extends Activity {
 	double time_axis;
 	Pedometer pedo;
 	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
-	ConsistentStatisticsInfo stinfo = new ConsistentStatisticsInfo(68);	// for 68kg
 	Goal goal = new TimeGoal();
 	
+	/**
+	 * Consistent Contents includes
+	 * currentStatInfo : StatisticsInfo
+	 * soundTouchModule : SoundTouchPlayable
+	 */
 
 	//class-accessible Player
-	SoundTouchPlayable stp;
 	float tempoValue = 1.0f;
 
 	@Override
@@ -126,7 +129,7 @@ public class MusicActivity extends Activity {
 				//Launch ExtendedMusicActivity
 				Intent intent = new Intent(MusicActivity.this, ExtendedMusicActivity.class);
 				startActivity(intent);
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_in_anim);
+				overridePendingTransition(R.anim.slide_in_from_above, R.anim.hold);
 			}			
 		});
 		/*
@@ -201,10 +204,10 @@ public class MusicActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// stop soundtouch component and else, then launch ResultActivity
-				stp.stop();
+				ConsistentContents.soundTouchModule.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
-				ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
+				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				intent.putExtra("goal", "true");
 				startActivity(intent);
@@ -241,13 +244,13 @@ public class MusicActivity extends Activity {
         	// for lengthier thread action
         	public void PedoThreadCallback(int st, float threshold, float s_duration){
         		// set left page values
-        		ConsistentStatisticsInfo.infoContent.setTotalSteps(st);
-        		ConsistentStatisticsInfo.infoContent.addTime(0.1);	// 0.1 * 10 = 1 sec
+        		ConsistentContents.currentStatInfo.setTotalSteps(st);
+        		ConsistentContents.currentStatInfo.addTime(0.1);	// 0.1 * 10 = 1 sec
         		left_steps.setText(""+st);
-        		left_miles.setText(""+ConsistentStatisticsInfo.infoContent.getDistanceTravelled());	// side effect : changed miles field
-        		left_stepsPerMin.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getStepPerTime()));
-        		left_milesPerHour.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getDistancePerTime()));
-        		left_calories.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getCaloriesBurn()));
+        		left_miles.setText(""+ConsistentContents.currentStatInfo.getDistanceTravelled());	// side effect : changed miles field
+        		left_stepsPerMin.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getStepPerTime()));
+        		left_milesPerHour.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getDistancePerTime()));
+        		left_calories.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getCaloriesBurn()));
 
         		// graph 
 				time_axis += 1d;
@@ -255,16 +258,16 @@ public class MusicActivity extends Activity {
 				pedoSteps.setText("Steps taken: " + st+"; Th: " + threshold);
 				av_duration.setText("Av. Step Duration: "+s_duration);
 				// change UI reacting the speed
-				switch(SpeedAdjuster.react(pedo, stp)){
+				switch(SpeedAdjuster.react(pedo, ConsistentContents.soundTouchModule)){
 					case	SpeedAdjuster.SA_FAST:
 						btn_ru.setVisibility(View.INVISIBLE);
 						btn_f1.setVisibility(View.INVISIBLE);
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.VISIBLE);
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
 						lastSpeedState = SpeedAdjuster.SA_FAST;
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 						break;
 					case	SpeedAdjuster.SA_NORMAL:
 						btn_ru.setVisibility(View.INVISIBLE);
@@ -272,9 +275,9 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.VISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
 						lastSpeedState = SpeedAdjuster.SA_NORMAL;
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 						break;
 					case	SpeedAdjuster.SA_SLOW:
 						btn_ru.setVisibility(View.VISIBLE);
@@ -282,9 +285,9 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.INVISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted()-0.1, lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
 						lastSpeedState = SpeedAdjuster.SA_SLOW;
-						ConsistentStatisticsInfo.infoContent.pace_dist.add(new GraphViewData(ConsistentStatisticsInfo.infoContent.getTimeLasted(), lastSpeedState));
+						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 						break;
 				}
         	}
@@ -294,19 +297,19 @@ public class MusicActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(stp.isPaused()){
+				if(ConsistentContents.soundTouchModule.isPaused()){
 					/*
 					//the last two parameters are speed of playback and pitch in semi-tones.
 					try {
 						// use temporarily - for internal testing
 						AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
-						stp = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
-						//stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
+						ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
+						//ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}*/
-					stp.play();
+					ConsistentContents.soundTouchModule.play();
 			        pedo.startSensor();
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
@@ -316,7 +319,7 @@ public class MusicActivity extends Activity {
 						rht_main_text.setText(goal.getText());
 					}
 				}else{
-					stp.pause();
+					ConsistentContents.soundTouchModule.pause();
 					pedo.stopSensor();
 					goal.pauseGoal();
 					btn_pause.setVisibility(View.GONE);
@@ -329,8 +332,8 @@ public class MusicActivity extends Activity {
 		try {
 			// use temporarily - for internal testing
 			AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
-			stp = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
-			//stp = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
+			ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
+			//ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

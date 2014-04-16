@@ -2,7 +2,7 @@ package com.comp3111.pacekeeper;
 
 import java.text.DecimalFormat;
 
-import com.comp3111.pedometer.ConsistentStatisticsInfo;
+import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.SpeedAdjuster;
 import com.comp3111.pedometer.TimeGoal;
 import com.jjoe64.graphview.GraphView;
@@ -26,7 +26,7 @@ public class ResultActivity extends Activity {
 		setContentView(R.layout.activity_result);
 		TextView test = (TextView) findViewById(R.id.result_textview);
 		test.setText("hihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\n");
-		test.setText(""+ConsistentStatisticsInfo.infoContent.getCaloriesBurn());
+		test.setText(""+ConsistentContents.currentStatInfo.getCaloriesBurn());
 		
 		InitPaceDistGraph();
 		InitJourneyStat();
@@ -60,17 +60,17 @@ public class ResultActivity extends Activity {
     	TextView left_stepsPerMin = (TextView)findViewById(R.id.result_stat_cell3).findViewById(R.id.pedo_left_block_number);
     	TextView left_milesPerHour = (TextView)findViewById(R.id.result_stat_cell4).findViewById(R.id.pedo_left_block_number);
     	TextView left_calories = (TextView)findViewById(R.id.result_stat_cell5).findViewById(R.id.pedo_left_block_number);
-    	left_steps.setText(""+ConsistentStatisticsInfo.infoContent.getTotalSteps());
-		left_miles.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getDistanceTravelled()));
-		left_stepsPerMin.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getStepPerTime()));
-		left_milesPerHour.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getDistancePerTime()));
-		left_calories.setText(""+roundOneDecimal(ConsistentStatisticsInfo.infoContent.getCaloriesBurn()));
+    	left_steps.setText(""+ConsistentContents.currentStatInfo.getTotalSteps());
+		left_miles.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getDistanceTravelled()));
+		left_stepsPerMin.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getStepPerTime()));
+		left_milesPerHour.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getDistancePerTime()));
+		left_calories.setText(""+roundOneDecimal(ConsistentContents.currentStatInfo.getCaloriesBurn()));
 
 	}
 
 	public void InitPaceDistGraph() {
 		// init example series data
-		GraphViewData[] graphData = ConsistentStatisticsInfo.infoContent.pace_dist.toArray(new GraphViewData[ConsistentStatisticsInfo.infoContent.pace_dist.size()]);
+		GraphViewData[] graphData = ConsistentContents.currentStatInfo.pace_dist.toArray(new GraphViewData[ConsistentContents.currentStatInfo.pace_dist.size()]);
 		final GraphViewSeries exampleSeries = new GraphViewSeries(graphData);		
 		final GraphView graphView = new LineGraphView(this, "");
 		graphView.addSeries(exampleSeries); // data

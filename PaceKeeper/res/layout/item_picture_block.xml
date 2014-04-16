@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/button_selector"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:fontFamily="sans-serif-light"
+    android:gravity="top"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/item_picture_pic"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/ic_circle_man" />
+
+    <TextView
+        android:id="@+id/item_picture_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/item_picture_pic"
+        android:layout_marginLeft="8dp"
+        android:text="Achievement Description"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16dp"
+        android:textColor="#707070"
+        android:textStyle="italic" />
+    
+</RelativeLayout>

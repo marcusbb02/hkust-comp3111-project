@@ -1,5 +1,6 @@
 package com.comp3111.pacekeeper;
 
+import com.comp3111.achievement.AchievementActivity;
 import com.comp3111.ui.ExpandAnimation;
 
 import android.os.Bundle;
@@ -33,8 +34,10 @@ public class GreetActivity extends Activity implements OnClickListener{
         screenH = dm.heightPixels;
 		
 		// set up lower ImageButtons onClick action
+		ImageButton greetStatAndAchievement = (ImageButton)findViewById(R.id.greet_stat);
 		ImageButton greetCalibrate = (ImageButton)findViewById(R.id.greet_calibrate);
 		greetCalibrate.setOnClickListener(this);
+		greetStatAndAchievement.setOnClickListener(this);
 
 		// initialize panel animations
 		panel_anim = (View)findViewById(R.id.greet_animate_panel);
@@ -70,7 +73,8 @@ public class GreetActivity extends Activity implements OnClickListener{
 			public void onAnimationEnd(Animation arg0) {
 				// TODO Auto-generated method stub
 				GreetActivity.this.startActivity(GreetActivity.this.intent);
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_in_anim);
+				// animation for leaving activity -> animation for incoming activity
+				overridePendingTransition(R.anim.fade_in, R.anim.hold);
 				//GreetActivity.this.finish();
 			}
 
@@ -103,11 +107,14 @@ public class GreetActivity extends Activity implements OnClickListener{
 	public void onClick(View view) {
 		// View OnClick case switch
 		switch(view.getId()){
+		case R.id.greet_stat:
+			intent = new Intent(this, AchievementActivity.class);
+			startActivity(intent);
+			break;
 		case R.id.greet_calibrate:
 			intent = new Intent(this, CalibrateActivity.class);
-			GreetActivity.this.startActivity(GreetActivity.this.intent);
+			startActivity(GreetActivity.this.intent);
 			break;
-		}	
+		}
 	}
-
 }

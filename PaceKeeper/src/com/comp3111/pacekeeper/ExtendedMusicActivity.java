@@ -164,6 +164,12 @@ public class ExtendedMusicActivity extends FragmentActivity implements
 			return null;
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+	    super.onBackPressed();
+	    overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
+	}
 
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
