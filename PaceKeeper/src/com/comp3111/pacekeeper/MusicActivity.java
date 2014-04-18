@@ -61,6 +61,12 @@ public class MusicActivity extends Activity {
 	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
 	Goal goal = null;
 	
+	// Goal names
+	private static String timeTitle = "Time Goal";
+	private static String stepTitle = "Step Goal";
+	private static String distanceTitle = "Distance Goal";
+	private static String cardioTitle = "Cardio Goal";
+	
 	/**
 	 * Consistent Contents includes
 	 * currentStatInfo : StatisticsInfo
@@ -92,12 +98,36 @@ public class MusicActivity extends Activity {
 			View mainview = (View)findViewById(R.id.pedo_vp_main);
 			mainview.setBackgroundColor(getResources().getColor(R.drawable.color_green));
 			// create goal according to pref selected, and set the text
-		    this.setTitle(extras.getString("goal_type"));
-	        goal = new TimeGoal(){
-				public void updateGoalStateCallback(){
-					rht_main_text.setText(this.getText());
-				}
-			};
+			String title = extras.getString("goal_type");
+		    this.setTitle(title);
+		    if(title.equals(timeTitle)){
+		        goal = new TimeGoal(){
+					public void updateGoalStateCallback(){
+						rht_main_text.setText(this.getText());
+					}
+				};
+		    }
+		    if(title.equals(stepTitle)){
+		        goal = new StepGoal(){
+					public void updateGoalStateCallback(){
+						rht_main_text.setText(this.getText());
+					}
+				};
+		    }
+		    if(title.equals(distanceTitle)){
+		        goal = new DistanceGoal(){
+					public void updateGoalStateCallback(){
+						rht_main_text.setText(this.getText());
+					}
+				};
+		    }
+		    if(title.equals(cardioTitle)){
+		        goal = new StepGoal(){
+					public void updateGoalStateCallback(){
+						rht_main_text.setText(this.getText());
+					}
+				};
+		    }
 			TextView rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_title);
 			rht_text.setText(goal.getTitle());
 			rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_placeholder);
@@ -175,6 +205,11 @@ public class MusicActivity extends Activity {
     }
     
     private void InitViewsListener(ViewGroup leftPanel, final ViewGroup centerPanel, ViewGroup rightPanel) {
+    	// init start distribution
+		ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
+		lastSpeedState = SpeedAdjuster.SA_NORMAL;
+		ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+
     	// rename left cells
     	TextView cell_text = (TextView)leftPanel.findViewById(R.id.pedo_left_cell2).findViewById(R.id.pedo_left_block_desc);
     	cell_text.setText("miles");

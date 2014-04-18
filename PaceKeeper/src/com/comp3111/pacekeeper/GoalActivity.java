@@ -59,6 +59,7 @@ public class GoalActivity extends Activity implements OnClickListener{
 			selection = timeSelection;
 		}
 
+		// building spinner for selection
 		new AlertDialog.Builder(this).setTitle(title)
 									 .setItems(selection, new GoalSelectionListener(goalId, title))
 									 .setNegativeButton("Cancel", null)
@@ -74,7 +75,8 @@ public class GoalActivity extends Activity implements OnClickListener{
 			this.goalId = goalId;
 			this.goalType = goalType;
 		}
-
+		
+		// goal_type = title when passing to MusicActivity intent
 		@Override
 		public void onClick(DialogInterface arg0, int arg1) {
 			// TODO Auto-generated method stub

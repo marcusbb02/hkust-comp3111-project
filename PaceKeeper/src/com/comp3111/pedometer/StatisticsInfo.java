@@ -98,6 +98,10 @@ public class StatisticsInfo {
 		return timeLasted;
 	}
 	
+	public String getDateString() {
+		return recordDateString;
+	}
+	
 	public String toJSON(){
 		String json = new Gson().toJson(this);
 		Log.i("JSON record", json);

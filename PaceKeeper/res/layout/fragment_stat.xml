@@ -29,6 +29,47 @@
                 android:textSize="20dp"
                 android:textStyle="italic" />
 
+            <include
+                android:id="@+id/f_stat_total_steps"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                layout="@layout/item_picture_block_light_blue" />
+            
+            
+            <include
+                android:id="@+id/f_stat_total_miles"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                layout="@layout/item_picture_block_light_purple" />
+            
+            
+            <include
+                android:id="@+id/f_stat_avg_spm"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                layout="@layout/item_picture_block_light_green" />
+            
+            
+            <include
+                android:id="@+id/f_stat_avg_mph"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                layout="@layout/item_picture_block_light_orange" />
+            
+            
+            <include
+                android:id="@+id/f_stat_total_calories"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                layout="@layout/item_picture_block_light_red" />
+            
+            
+            <Button
+                android:id="@+id/f_stat_load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Load record-2014-04-18-15-55-04.dat" />
+
         <TextView
             android:id="@+id/f_stat_all_records"
             android:layout_width="wrap_content"

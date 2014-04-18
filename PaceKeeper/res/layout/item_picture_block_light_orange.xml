@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/card_background_light_orange"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:fontFamily="sans-serif-light"
+    android:gravity="top"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_picture_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/item_picture_pic"
+        android:layout_marginLeft="16dp"
+        android:text="Achievement Description"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16dp"
+        android:textColor="#ff8c0a"
+        android:textStyle="italic" />
+    
+</RelativeLayout>
