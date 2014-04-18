@@ -1,11 +1,12 @@
 package com.comp3111.pedometer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 
 /**
@@ -30,9 +31,12 @@ public class StatisticsInfo {
 	double stepDuration;
 	int totalSteps;
 	double timeLasted = 0.00001;// second
+	String recordDateString;
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		recordDateString = df.format(new Date());
 	}
 	
 	public void addTime(double unit){
@@ -92,6 +96,12 @@ public class StatisticsInfo {
 
 	public double getTimeLasted() {
 		return timeLasted;
+	}
+	
+	public String toJSON(){
+		String json = new Gson().toJson(this);
+		Log.i("JSON record", json);
+		return json;
 	}
 
 }

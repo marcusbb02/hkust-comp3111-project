@@ -59,7 +59,7 @@ public class MusicActivity extends Activity {
 	double time_axis;
 	Pedometer pedo;
 	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
-	Goal goal = new TimeGoal();
+	Goal goal = null;
 	
 	/**
 	 * Consistent Contents includes
@@ -74,6 +74,8 @@ public class MusicActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pedo_viewpager);
+		// reset stat info
+		ConsistentContents.currentStatInfo = new StatisticsInfo(68);
 		InitViewPager();
 		InitImageView();	// for page cursor and album art resizing
         mPager.setCurrentItem(1);
@@ -198,6 +200,16 @@ public class MusicActivity extends Activity {
 		final ImageView btn_rd  = (ImageView)centerPanel.findViewById(R.id.mus_btn_rampdown);
 		gForce.setText(Environment.getExternalStorageDirectory().toString());
 		// right page text and button
+		// assume quick start goal at start, could be replaced by other goals at InitExtra
+        goal = new QuickStartGoal(){
+			public void updateGoalStateCallback(){
+				rht_main_text.setText(this.getText());
+			}
+		};
+		TextView rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_title);
+		rht_text.setText(goal.getTitle());
+		rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_placeholder);
+		rht_text.setText(goal.getPlaceholder());
 		rht_main_text = (TextView)rightPanel.findViewById(R.id.pedo_right_maintext);
 		Button btn_end = (Button)rightPanel.findViewById(R.id.pedo_right_halt);
 		btn_end.setOnClickListener(new OnClickListener(){
@@ -209,7 +221,9 @@ public class MusicActivity extends Activity {
 				goal.pauseGoal();
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
-				intent.putExtra("goal", "true");
+				if(!(goal instanceof QuickStartGoal)){
+					intent.putExtra("goal", "true");
+				}
 				startActivity(intent);
 				MusicActivity.this.finish();
 			}
@@ -265,9 +279,11 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.VISIBLE);
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
-						lastSpeedState = SpeedAdjuster.SA_FAST;
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						if(lastSpeedState != SpeedAdjuster.SA_FAST){
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
+							lastSpeedState = SpeedAdjuster.SA_FAST;
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						}
 						break;
 					case	SpeedAdjuster.SA_NORMAL:
 						btn_ru.setVisibility(View.INVISIBLE);
@@ -275,9 +291,11 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.VISIBLE);
 						btn_f2.setVisibility(View.VISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
-						lastSpeedState = SpeedAdjuster.SA_NORMAL;
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						if(lastSpeedState != SpeedAdjuster.SA_NORMAL){
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
+							lastSpeedState = SpeedAdjuster.SA_NORMAL;
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						}
 						break;
 					case	SpeedAdjuster.SA_SLOW:
 						btn_ru.setVisibility(View.VISIBLE);
@@ -285,9 +303,11 @@ public class MusicActivity extends Activity {
 						btn_rn.setVisibility(View.INVISIBLE);
 						btn_f2.setVisibility(View.INVISIBLE);
 						btn_rd.setVisibility(View.INVISIBLE);
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
-						lastSpeedState = SpeedAdjuster.SA_SLOW;
-						ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						if(lastSpeedState != SpeedAdjuster.SA_SLOW){
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted()-0.1, lastSpeedState));
+							lastSpeedState = SpeedAdjuster.SA_SLOW;
+							ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+						}
 						break;
 				}
         	}

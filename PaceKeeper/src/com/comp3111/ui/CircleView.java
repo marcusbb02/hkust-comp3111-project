@@ -1,5 +1,6 @@
 package com.comp3111.ui;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -50,7 +51,7 @@ public class CircleView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(arcWidth);
         rect = new RectF();
-        setPercentage(65);
+        setPercentage(0);
     }
     
     @Override
@@ -69,4 +70,5 @@ public class CircleView extends View {
         this.percentage = percentage / 100;
         invalidate();
     }
+
 }

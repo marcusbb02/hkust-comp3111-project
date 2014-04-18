@@ -15,8 +15,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 		switch (index) {
 		case 0:
-			return new P_ACH_Fragment();
+			return new STAT_Fragment();
 		case 1:
+			return new P_ACH_Fragment();
+		case 2:
 			return new J_ACH_Fragment();
 		}
 
@@ -25,7 +27,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 2;
+		return 3;
 	}
 
 }

@@ -35,7 +35,7 @@ public class AchievementActivity extends FragmentActivity implements
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "PER-ACH", "JOINT-ACH" };
+	private String[] tabs = { "STAT", "PER-ACH", "JOINT-ACH" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class AchievementActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_achievement);
 
 		// Initilization
-		viewPager = (ViewPager) findViewById(R.id.ach_tab);
+		viewPager = (ViewPager) findViewById(R.id.ach_tab); 
 		actionBar = getActionBar();
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(mAdapter);
@@ -81,10 +81,7 @@ public class AchievementActivity extends FragmentActivity implements
 		dbhelper=new DataBaseHelper(this);
 		
 	//      FrameLayout ll = (FrameLayout)findViewById(R.id.circle_framelayout);
-	
-	
 		
-	
 	}
 
 	
@@ -181,39 +178,7 @@ public class AchievementActivity extends FragmentActivity implements
 		percentage = 100 * num_of_ach_finished() / total_achievements;
 		return percentage;
 	}
-	
-
-
-	public class DrawView extends View {
-
-		Paint mPaint = new Paint();
-
-		public DrawView(Context context) {
-			super(context);
-		}
-
-		@Override
-		public void onDraw(Canvas canvas) {
-
-			int size = 180;
-			int radius = 150;
-			int delta = size - radius;
-			int arcSize = (size - (delta / 2)) * 2;
-			int percent = 67;
-
-			Paint mPaint = new Paint();
-			mPaint.setStyle(Paint.Style.STROKE);
-			mPaint.setColor(Color.argb(193, 167, 222, 243));
-			mPaint.setStrokeWidth(60);
-			mPaint.setAntiAlias(true);
-			RectF box = new RectF(delta, delta, arcSize, arcSize);
-			float sweep = 360 * percent * 0.01f;
-			canvas.drawArc(box, 90, sweep, false, mPaint);
-
-		}
-
-	}	
-	
+		
 }
 
 
