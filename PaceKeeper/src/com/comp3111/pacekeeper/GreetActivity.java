@@ -36,8 +36,10 @@ public class GreetActivity extends Activity implements OnClickListener{
 		// set up lower ImageButtons onClick action
 		ImageButton greetStatAndAchievement = (ImageButton)findViewById(R.id.greet_stat);
 		ImageButton greetCalibrate = (ImageButton)findViewById(R.id.greet_calibrate);
+		ImageButton greetOptions = (ImageButton)findViewById(R.id.greet_options);
 		greetCalibrate.setOnClickListener(this);
 		greetStatAndAchievement.setOnClickListener(this);
+		greetOptions.setOnClickListener(this);
 
 		// initialize panel animations
 		panel_anim = (View)findViewById(R.id.greet_animate_panel);
@@ -113,6 +115,10 @@ public class GreetActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.greet_calibrate:
 			intent = new Intent(this, CalibrateActivity.class);
+			startActivity(GreetActivity.this.intent);
+			break;
+		case R.id.greet_options:
+			intent = new Intent(this, SettingActivity.class);
 			startActivity(GreetActivity.this.intent);
 			break;
 		}
