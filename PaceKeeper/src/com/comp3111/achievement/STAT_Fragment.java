@@ -3,7 +3,7 @@ package com.comp3111.achievement;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.comp3111.local_database.RecordHandler;
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.MusicActivity;
 import com.comp3111.pacekeeper.R;
 import com.comp3111.pacekeeper.ResultActivity;
@@ -75,7 +75,7 @@ public class STAT_Fragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				RecordHandler.readFromRecord("2014-04-18-15-55-04");
+				JSONHandler.readFromRecord("2014-04-18-15-55-04");
 				Intent intent = new Intent(getActivity() , ResultActivity.class);
 				startActivity(intent);
 			}

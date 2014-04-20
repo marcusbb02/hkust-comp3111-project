@@ -2,7 +2,7 @@ package com.comp3111.pacekeeper;
 
 import java.text.DecimalFormat;
 
-import com.comp3111.local_database.RecordHandler;
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.SpeedAdjuster;
 import com.comp3111.pedometer.TimeGoal;
@@ -32,7 +32,7 @@ public class ResultActivity extends Activity {
 		InitPaceDistGraph();
 		InitJourneyStat();
 		InitExtra();
-		RecordHandler.createCurrentRecord();
+		JSONHandler.createCurrentRecord();
 		ConsistentContents.currentStatInfo.toJSON();
 	}
 

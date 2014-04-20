@@ -285,7 +285,7 @@ public class MusicActivity extends Activity {
 
         // init Pedometer, a new thread is preserved for graph updating action
 		// it is running at 100ms = 10Hz
-        pedo = new Pedometer(MusicActivity.this, 100, 10){
+        pedo = new Pedometer(MusicActivity.this, 100){
         	// for immediate actions
         	public void onSensorChangedCallback(float g){
         		gForce.setText("G-Force: " + g);

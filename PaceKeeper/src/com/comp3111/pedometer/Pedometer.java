@@ -10,8 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.util.Log;
 
-public class Pedometer implements SensorEventListener{
-	private final static int pStepDelayNumber = 1;
+public class Pedometer extends PedometerSettings implements SensorEventListener{
 	// for log message title
 	private final static String module_name = "Pedometer";
 	// sensor and its state
@@ -23,11 +22,6 @@ public class Pedometer implements SensorEventListener{
 	protected float pForce;
 	float pLastForceValue = 0.0f;
 	float pForceDiff = 0.0f;
-	//various values for settings
-	float pForceBaseThreshold = 1.3f, pThreshold = 0.5f, pUpperThreshold = 1.0f,
-		  pUpperThresholdRetainProportion = 1.0f, pLowerThresholdRetainProportion = 0.9f;
-	int pStepDurationSample = 10, pStepDurationDiscardThreshold = 20;
-	float pDefaultAverageStepDuration = 4.5f;
 	// thread interval, step counter, step-delay counter (all in terms of iteration)
 	private int pInterval;
 	int pStep = 0, pStepDelay = 0;
@@ -36,7 +30,7 @@ public class Pedometer implements SensorEventListener{
 	int pStepDurationCounter = 0, pCurrentStepDuration = 0, pLastStepDurationArrayPos = 0;
 	float pAverageStepDuration = pDefaultAverageStepDuration;
 	
-	public Pedometer(Context context, int polling_interval, int step_duration_sample_size){
+	public Pedometer(Context context, int polling_interval){
 		// search for acclerometer
 		sensorManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -48,7 +42,6 @@ public class Pedometer implements SensorEventListener{
 		// assign polling interval
 		pInterval = polling_interval;
 		pStep = 0;
-		pStepDurationSample = step_duration_sample_size;
 		pStepDuration = new int[pStepDurationSample];
 		// pre-fill pStepDuration to prevent sudden pace change on start
 		for(int i = 0; i < pStepDurationSample; i++){
@@ -106,11 +99,6 @@ public class Pedometer implements SensorEventListener{
 				// first it must be "active" steps
 				// if "active", record the time (by replacing oldest time) and calculate its average
 				if(pCurrentStepDuration < pStepDurationDiscardThreshold){
-					// if not enough samples, increment the counter and do division 
-					/*if(pStepDurationCounter < pStepDurationSample){
-						pAverageStepDuration = pAverageStepDuration * pStepDurationCounter + pCurrentStepDuration;
-						pAverageStepDuration /= ++pStepDurationCounter;						
-					}else{*/
 						// just minus the farest value and add the most recent one
 						pAverageStepDuration *= pStepDurationSample;
 						pAverageStepDuration += pCurrentStepDuration - pStepDuration[pLastStepDurationArrayPos];

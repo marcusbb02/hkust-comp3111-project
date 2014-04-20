@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.smp.soundtouchandroid.SoundTouchPlayable;
 
-public class SpeedAdjuster {
+public class SpeedAdjuster extends PedometerSettings{
 	
 	// thread handler
 	private static Handler saHandler = new Handler();
@@ -20,12 +20,12 @@ public class SpeedAdjuster {
 	public static final int SA_NORMAL = 0;
 	public static final int SA_SLOW = -1;
 	public static final int SA_NOCHANGE = 99;
-	public static final float SA_TEMPO_FAST = 2.0f;
-	public static final float SA_PITCH_FAST = 1.5f;
-	public static final float SA_TEMPO_NORMAL = 1.0f;
-	public static final float SA_PITCH_NORMAL = 0.0f;
-	public static final float SA_TEMPO_SLOW = 0.5f;
-	public static final float SA_PITCH_SLOW = -1.5f;
+	public static float SA_TEMPO_FAST = 2.0f;
+	public static float SA_PITCH_FAST = 1.5f;
+	public static float SA_TEMPO_NORMAL = 1.0f;
+	public static float SA_PITCH_NORMAL = 0.0f;
+	public static float SA_TEMPO_SLOW = 0.5f;
+	public static float SA_PITCH_SLOW = -1.5f;
 	/*
 	public static final float SA_TEMPO_FAST = 1.5f;
 	public static final float SA_PITCH_FAST = 1.0f;
@@ -35,8 +35,8 @@ public class SpeedAdjuster {
 	public static final float SA_PITCH_SLOW = -1.0f;*/
 	
 	public static void setStepDurationThreshold(Pedometer pedo_obj, float f){
-		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - 1.5f*f;
-		saStepDurationUpperThreshold = pedo_obj.getDefaultAverageStepDuration() + 2*f;
+		saStepDurationLowerThreshold = pedo_obj.getDefaultAverageStepDuration() - SA_LOWER_THRESHOLD_RATIO*f;
+		saStepDurationUpperThreshold = pedo_obj.getDefaultAverageStepDuration() + SA_UPPER_THRESHOLD_RATIO*f;
 	}
 	
 	public static int react(Pedometer pedo_obj, final SoundTouchPlayable st_obj){
