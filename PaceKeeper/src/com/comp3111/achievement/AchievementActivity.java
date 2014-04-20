@@ -41,7 +41,7 @@ public class AchievementActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_achievement);
-
+		
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.ach_tab); 
 		actionBar = getActionBar();

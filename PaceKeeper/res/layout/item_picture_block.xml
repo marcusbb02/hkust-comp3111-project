@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/button_selector"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
+    android:layout_height="wrap_content"
     android:fontFamily="sans-serif-light"
     android:gravity="top"
     android:orientation="vertical" >
@@ -19,10 +19,11 @@
     <TextView
         android:id="@+id/item_picture_desc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/item_picture_pic"
         android:layout_marginLeft="8dp"
+        android:gravity="center"
         android:text="Achievement Description"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16dp"

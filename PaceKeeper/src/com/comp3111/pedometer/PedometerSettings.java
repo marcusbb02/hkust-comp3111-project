@@ -18,5 +18,5 @@ public class PedometerSettings {
 	public static float 
 			SA_LOWER_THRESHOLD_RATIO = 1.5f;		// ratio for the pace to be considered as "fast"
 	public static float 	
-			SA_UPPER_THRESHOLD_RATIO = 1.5f;		// ratio for the pace to be considered as "slow"
+			SA_UPPER_THRESHOLD_RATIO = 2.0f;		// ratio for the pace to be considered as "slow"
 }

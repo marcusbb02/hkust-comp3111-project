@@ -1,17 +1,16 @@
 package com.comp3111.pacekeeper;
 
 import com.comp3111.achievement.AchievementActivity;
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.ui.ExpandAnimation;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageButton;
@@ -27,6 +26,9 @@ public class GreetActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_greet);
+		
+		// load up previous states from files
+		JSONHandler.readAggregatedRecord();
 		
 		// find the display attributes
         DisplayMetrics dm = getResources().getDisplayMetrics();

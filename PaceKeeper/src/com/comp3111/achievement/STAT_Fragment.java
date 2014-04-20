@@ -1,5 +1,9 @@
 package com.comp3111.achievement;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +11,7 @@ import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.MusicActivity;
 import com.comp3111.pacekeeper.R;
 import com.comp3111.pacekeeper.ResultActivity;
+import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.QuickStartGoal;
 
 import android.support.v4.app.Fragment;
@@ -14,10 +19,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class STAT_Fragment extends Fragment {
@@ -28,7 +36,7 @@ public class STAT_Fragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		// inflate the view for this fragment
 		View rootView = inflater.inflate(R.layout.fragment_stat, container, false);
 
 		RelativeLayout rl_ts = (RelativeLayout) rootView.findViewById(R.id.f_stat_total_steps);
@@ -69,17 +77,30 @@ public class STAT_Fragment extends Fragment {
 			firstTime = false;
 		}
 		
-		// test button for retriving json record
-		Button f_stat_load = (Button)rootView.findViewById(R.id.f_stat_load);
-		f_stat_load.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				JSONHandler.readFromRecord("2014-04-18-15-55-04");
-				Intent intent = new Intent(getActivity() , ResultActivity.class);
-				startActivity(intent);
-			}
-		});
+		// inflate buttons for the records and insert into scroll view
+		LinearLayout scrollView = (LinearLayout) rootView.findViewById(R.id.f_stat_scrollLL);
+	    
+	    // iterate through all records from back to front
+	    ArrayList<String> recordStr = ConsistentContents.aggRecords.recordStr;
+	    final ListIterator<String> li = recordStr.listIterator(recordStr.size());
+	    while(li.hasPrevious()){
+		    View v = inflater.inflate(R.layout.item_picture_block, null);	// create template instance for record button
+	    	tv = (TextView) v.findViewById(R.id.item_picture_desc);			// and hook the TextView for changing names
+	    	final String recordDate = li.previous();								// preserve the date of record
+			tv.setText(recordDate);
+			v.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
+					JSONHandler.readFromRecord(recordDate);
+					Intent intent = new Intent(getActivity() , ResultActivity.class);
+					startActivity(intent);
+					getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.hold);
+				}
+			});
+			scrollView.addView(v);
+	    }
+	    
 		return rootView;
 	}
 }

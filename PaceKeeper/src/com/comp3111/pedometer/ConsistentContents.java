@@ -6,5 +6,6 @@ public class ConsistentContents {
 	
 	public static StatisticsInfo currentStatInfo = new StatisticsInfo(68); 
 	public static SoundTouchPlayable soundTouchModule;
+	public static AggregatedRecords aggRecords = new AggregatedRecords();
 
 }

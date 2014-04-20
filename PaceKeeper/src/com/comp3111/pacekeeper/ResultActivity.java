@@ -32,8 +32,8 @@ public class ResultActivity extends Activity {
 		InitPaceDistGraph();
 		InitJourneyStat();
 		InitExtra();
-		JSONHandler.createCurrentRecord();
-		ConsistentContents.currentStatInfo.toJSON();
+		// FIXME : it makes duplicated records
+		ConsistentContents.aggRecords.addCurrentRecord();
 	}
 
 	private void InitExtra() {
