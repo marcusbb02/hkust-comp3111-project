@@ -35,7 +35,7 @@ public class GreetActivity extends Activity implements OnClickListener{
 		
 		// set up lower ImageButtons onClick action
 		ImageButton greetStatAndAchievement = (ImageButton)findViewById(R.id.greet_stat);
-		ImageButton greetCalibrate = (ImageButton)findViewById(R.id.greet_calibrate);
+		ImageButton greetCalibrate = (ImageButton)findViewById(R.id.greet_profilelist);
 		ImageButton greetOptions = (ImageButton)findViewById(R.id.greet_options);
 		greetCalibrate.setOnClickListener(this);
 		greetStatAndAchievement.setOnClickListener(this);
@@ -113,8 +113,8 @@ public class GreetActivity extends Activity implements OnClickListener{
 			intent = new Intent(this, AchievementActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.greet_calibrate:
-			intent = new Intent(this, CalibrateActivity.class);
+		case R.id.greet_profilelist:
+			intent = new Intent(this, ProfileListActivity.class);
 			startActivity(GreetActivity.this.intent);
 			break;
 		case R.id.greet_options:

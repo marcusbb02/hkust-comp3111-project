@@ -57,7 +57,7 @@
 			        android:src="@drawable/ic_button_stat" />
 
 		        <ImageButton
-		            android:id="@+id/greet_calibrate"
+		            android:id="@+id/greet_profilelist"
 		            style="?android:borderlessButtonStyle"
 		            android:layout_width="55dp"
 		            android:layout_height="match_parent"

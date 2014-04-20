@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Setting" >
+    <PreferenceCategory android:title="Pedometer" >
         <Preference
-            android:title="Set Profile" android:summary="Set your current profile">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetClass="com.comp3111.pacekeeper.ProfileListActivity"
-                android:targetPackage="com.comp3111.pacekeeper" />
+            android:title="Advanced settings" android:summary="Change parameters of the Pedometer module">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset" >
-        <Preference android:title="Clear History" android:summary="Clear all your running history"/>
-        <Preference android:title="Reset Application" android:summary="It will clear all the data and reset"/>
+        <Preference android:title="Clear All Records" android:summary="Remove all your running histories"/>
+        <Preference android:title="Reset Application" android:summary="Remove all running histories and profiles and reset Pedometer parameters"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
