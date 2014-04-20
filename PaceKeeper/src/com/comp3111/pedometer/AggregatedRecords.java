@@ -40,7 +40,7 @@ public class AggregatedRecords {
 		// log all records for testing
 		ListIterator<String> listIterator = recordStr.listIterator();
 		while(listIterator.hasNext()){
-			Log.i("tag",listIterator.next());
+			Log.i("Current Record List",listIterator.next());
 		}
 	}
 

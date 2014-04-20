@@ -72,24 +72,27 @@
 
     <TextView
         android:id="@+id/tw_pedo_gf"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/buttons_two"
         android:layout_centerHorizontal="true"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tw_pedo_steps"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tw_pedo_gf"
         android:layout_centerHorizontal="true"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tw_pedo_av_duration"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tw_pedo_steps"
         android:layout_centerHorizontal="true"
         android:text="TextVie2w" />

@@ -3,22 +3,19 @@
 
     <string name="app_name">PaceKeeper</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_pedo">PedoActivity</string>
     <string name="title_activity_music"></string>
-    <string name="title_activity_goal">GoalActivity</string>
+    <string name="title_activity_goal">Goal Selection</string>
     <string name="title_activity_social">SocialActivity</string>
-    <string name="title_activity_stat">StatActivity</string>
-    <string name="title_activity_calibrate">CalibrateActivity</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile">Personal Profiles</string>
     <string name="title_activity_greet">PaceKeeper</string>
-    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_result">Journey\'s Result</string>
     <string name="title_activity_extended_music">ExtendedMusicActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="title_activity_advancedsetting">AdvancedSettingActivity</string>
+    <string name="title_activity_setting">Settings</string>
+    <string name="title_activity_advancedsetting">Advanced Settings</string>
     
    
 

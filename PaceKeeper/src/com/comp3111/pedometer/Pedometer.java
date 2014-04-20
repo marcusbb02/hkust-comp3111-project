@@ -30,6 +30,10 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	int pStepDurationCounter = 0, pCurrentStepDuration = 0, pLastStepDurationArrayPos = 0;
 	float pAverageStepDuration = pDefaultAverageStepDuration;
 	
+	public void resetAverageStepDuration(){
+		pAverageStepDuration = pDefaultAverageStepDuration;
+	}
+	
 	public Pedometer(Context context, int polling_interval){
 		// search for acclerometer
 		sensorManager=(SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -39,7 +43,7 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
         	Log.e(module_name, "Fail to acquire acclerometer from this device!");
         	assert(false);
         }
-		// assign polling interval
+		// assign polling interval and other variables
 		pInterval = polling_interval;
 		pStep = 0;
 		pStepDuration = new int[pStepDurationSample];

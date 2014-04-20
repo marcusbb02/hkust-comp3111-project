@@ -36,11 +36,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.comp3111.pacekeeper.StatActivity"
-            android:label="@string/title_activity_stat"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.comp3111.pacekeeper.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait" >
@@ -55,7 +50,7 @@
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait" >
         </activity>
-                <activity
+        <activity
             android:name="com.comp3111.pacekeeper.AdvancedSettingsActivity"
             android:label="@string/title_activity_advancedsetting"
             android:screenOrientation="portrait" >

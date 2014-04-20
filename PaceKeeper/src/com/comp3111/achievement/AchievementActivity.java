@@ -79,9 +79,7 @@ public class AchievementActivity extends FragmentActivity implements
 		});
 	
 		dbhelper=new DataBaseHelper(this);
-		
-	//      FrameLayout ll = (FrameLayout)findViewById(R.id.circle_framelayout);
-		
+			
 	}
 
 	

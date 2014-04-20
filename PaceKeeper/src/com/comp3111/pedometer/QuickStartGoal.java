@@ -21,7 +21,7 @@ public class QuickStartGoal extends Goal{
 	
 	@Override
 	boolean updateGoalState() {
-		Log.i("tag", "Elapsed: " + secs);
+		Log.i("Goal", "Elapsed: " + secs);
 		secs++;
 		updateGoalStateCallback();
 		if(secs == 0){

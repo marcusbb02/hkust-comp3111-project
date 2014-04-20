@@ -16,6 +16,7 @@ import com.smp.soundtouchandroid.SoundTouchPlayable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.BitmapFactory;
@@ -61,12 +62,6 @@ public class MusicActivity extends Activity {
 	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
 	Goal goal = null;
 	
-	// Goal names
-	private static String timeTitle = "Time Goal";
-	private static String stepTitle = "Step Goal";
-	private static String distanceTitle = "Distance Goal";
-	private static String cardioTitle = "Cardio Goal";
-	
 	/**
 	 * Consistent Contents includes
 	 * currentStatInfo : StatisticsInfo
@@ -87,10 +82,54 @@ public class MusicActivity extends Activity {
         mPager.setCurrentItem(1);
         InitPostView();		// for setting up view's position dynamically
         InitExtra();
+		// request for the default average step duration
+        RequestMode();
 	}
 	
+	private void RequestMode() {
+		// TODO make an alertdialog asking for walk/jog/run, and put the appropriate average step duration to infoContent
+		final Dialog dialog = new Dialog(MusicActivity.this);
+		dialog.setContentView(R.layout.dialog_mode);
+		dialog.setTitle("I would like to ...");
+		// force user to choose from one of the modes
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCancelable(false);
+		
+		// OnClickListener to put appropriate average step duration value to infoContent
+		OnClickListener userModeOCL = new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				switch(arg0.getId()){
+				case R.id.d_mode_walk:
+					PedometerSettings.pDefaultAverageStepDuration = ConsistentContents.currentUserSettings.walkSpeed;
+					break;
+				case R.id.d_mode_jog:
+					PedometerSettings.pDefaultAverageStepDuration = ConsistentContents.currentUserSettings.jogSpeed;
+					break;
+				case R.id.d_mode_run:
+					PedometerSettings.pDefaultAverageStepDuration = ConsistentContents.currentUserSettings.runSpeed;
+					break;
+				}
+				// make the dialog disappear and set the Pedometer for the desired value
+				pedo.resetAverageStepDuration();
+				dialog.dismiss();				
+			}			
+		};
+		
+		// initialize the buttons
+		Button dialog_but = (Button) dialog.findViewById(R.id.d_mode_walk);
+		dialog_but.setOnClickListener(userModeOCL);
+		dialog_but = (Button) dialog.findViewById(R.id.d_mode_jog);
+		dialog_but.setOnClickListener(userModeOCL);
+		dialog_but = (Button) dialog.findViewById(R.id.d_mode_run);
+		dialog_but.setOnClickListener(userModeOCL);
+		// ... and show the dialog
+		dialog.show();
+		
+	}
+
 	private void InitExtra() {
-		// TODO for specifying goals from GoalActivity
+		// for specifying goals from GoalActivity
 		Bundle extras = this.getIntent().getExtras();
 		if ( extras != null ) {
 		  if ( extras.containsKey("goal_type") ) {
@@ -100,28 +139,28 @@ public class MusicActivity extends Activity {
 			// create goal according to pref selected, and set the text
 			String title = extras.getString("goal_type");
 		    this.setTitle(title);
-		    if(title.equals(timeTitle)){
+		    if(title.equals(TimeGoal.TITLE_TEXT)){
 		        goal = new TimeGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
 					}
 				};
 		    }
-		    if(title.equals(stepTitle)){
+		    if(title.equals(StepGoal.TITLE_TEXT)){
 		        goal = new StepGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
 					}
 				};
 		    }
-		    if(title.equals(distanceTitle)){
+		    if(title.equals(DistanceGoal.TITLE_TEXT)){
 		        goal = new DistanceGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
 					}
 				};
 		    }
-		    if(title.equals(cardioTitle)){
+		    if(title.equals("Cardio Goal")){
 		        goal = new StepGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
@@ -164,21 +203,6 @@ public class MusicActivity extends Activity {
 				overridePendingTransition(R.anim.slide_in_from_above, R.anim.hold);
 			}			
 		});
-		/*
-		collpased_player_layout.setOnTouchListener(new SwipeDismissTouchListener(
-			collpased_player_layout,
-			actionBarHeight,
-			null,
-			new SwipeDismissTouchListener.OnDismissCallback(){
-				@Override
-				public void onDismiss(View view, Object token) {
-					// TODO Auto-generated method stub
-					// should be problem of swipeView
-					//view.setY(screenH - actionBarHeight - view.getHeight());
-					//view.requestLayout();
-				}
-			}
-		));*/
 	}
 
 	@Override
@@ -186,6 +210,14 @@ public class MusicActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.calibrate, menu);
 		return true;
+	}
+	
+	@Override
+	public void onBackPressed() {
+	    super.onBackPressed();
+	    ConsistentContents.soundTouchModule.stop();
+		pedo.stopSensor();
+		goal.pauseGoal();
 	}
     
     private void InitViewPager() {

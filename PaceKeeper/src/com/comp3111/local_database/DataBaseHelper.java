@@ -47,7 +47,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL(PROFILE_TABLE);
 
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(null, 'test1', 'test@test.COM', '99', '180', '180', '199','299','399');");
+		"(0, 'test1', 'test@test.COM', '99', '180', '180', '199','299','399');");
 		
 		String ACHEIVEMENT_TABLE = "CREATE TABLE " + ACH_TABLE + " ( " 
 		+ AID		+ " INTEGER PRIMARY KEY AUTOINCREMENT," 
@@ -72,6 +72,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		resetTable(db);
+	}
+
+
+	public void resetTable(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + PRO_TABLE);
 		db.execSQL("DROP TABLE IF EXISTS " + ACH_TABLE);
 		onCreate(db);
