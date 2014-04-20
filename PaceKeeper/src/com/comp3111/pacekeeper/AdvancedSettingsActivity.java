@@ -11,7 +11,7 @@ import android.widget.SeekBar;
 
 public class AdvancedSettingsActivity extends Activity {
 
-	JSONHandler jsonhandler;
+	//JSONHandler consists of static methods for ease 
 	
 	EditText et1;
 	EditText et2;
@@ -72,10 +72,12 @@ public class AdvancedSettingsActivity extends Activity {
 		okbtn = (Button) findViewById(R.id.aas_ok);
 		ccbtn = (Button) findViewById(R.id.aas_cc);
 		
-		setstate();
-		
-	}
-	void setstate(){
+		// TODO: OK button writes the current settings into JSON file using JSONHandler
+		// 		 Add a reset button for going back to original values
+		//		 So just add a method to do
+		//		 1. replace the current values in PedometerSettings class (accessible via ConsistentContents)
+		//		 2. make a toJSON method in PedometerSettings
+		//		 3. write the json string to file by creating method in JSONHandler (see others as example)
 		
 	}
 }

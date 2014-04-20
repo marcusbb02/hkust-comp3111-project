@@ -98,7 +98,9 @@ public class ExtendedMusicActivity extends FragmentActivity implements
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			//NavUtils.navigateUpFromSameTask(this);
+			// HACK: making Up button act as back, but should be following application hierarchy in actual use 
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
