@@ -4,6 +4,10 @@
     <PreferenceCategory android:title="Pedometer" >
         <Preference
             android:title="Advanced settings" android:summary="Change parameters of the Pedometer module">
+                <intent
+             android:action="android.intent.action.VIEW"
+             android:targetPackage="com.comp3111.pacekeeper"
+             android:targetClass="com.comp3111.pacekeeper.AdvancedSettingsActivity" />  
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset" >

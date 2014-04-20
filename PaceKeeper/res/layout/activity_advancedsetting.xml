@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="200px"
+        android:layout_weight="0.28" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="pForceBaseThreshold"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et1"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pThreshold"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et2"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pUpperThreshold"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et3"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pUpperThresholdRetainProportion"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et4"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pLowerThresholdRetainProportion"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et5"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pStepDurationSample"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et6"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pStepDurationDiscardThreshold"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et7"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pDefaultAverageStepDuration"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et8"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="pStepDelayNumber"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et9"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="SA_LOWER_THRESHOLD_RATIO"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et10"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+
+                <TextView
+                    android:id="@+id/aas_t11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="SA_UPPER_THRESHOLD_RATIO"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/aas_et11"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal" >
+
+                    <requestFocus />
+                </EditText>
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/aas_s11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/aas_ok"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.46"
+                    android:text="OK" />
+
+                <Button
+                    android:id="@+id/aas_cc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.46"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

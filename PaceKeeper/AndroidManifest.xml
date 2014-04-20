@@ -55,6 +55,11 @@
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait" >
         </activity>
+                <activity
+            android:name="com.comp3111.pacekeeper.AdvancedSettingsActivity"
+            android:label="@string/title_activity_advancedsetting"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.comp3111.pacekeeper.GreetActivity"
             android:label="@string/title_activity_greet"
