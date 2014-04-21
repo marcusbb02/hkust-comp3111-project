@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -238,7 +239,7 @@ public class ProfileListActivity extends Activity implements
 
 	public void list_refresh() {
 		String[] name_list = get_all_profile_name();
-		String[] des_list= get_all_profile_description();
+		String[] des_list = get_all_profile_description();
 		id_list = get_all_profile_id();
 		color_list = get_all_profile_color();
 		apply_position = get_apply_profile_location();
@@ -261,11 +262,11 @@ public class ProfileListActivity extends Activity implements
 						"name", "desc", "editimg", "bg" }, new int[] {
 						R.id.apply_icon, R.id.p_name, R.id.p_description,
 						R.id.edit_btn, R.id.onclick_bg });
-		
-		if(firsttime){
-		list.setLayoutAnimation(getAnimationController());  
-		firsttime=false;
-		}
+
+//		if (firsttime) {
+	///		list.setLayoutAnimation(getAnimationController());
+	//		firsttime = false;
+	//	}
 
 		list.setAdapter(myadapter);
 
@@ -281,7 +282,6 @@ public class ProfileListActivity extends Activity implements
 				if (temp != null) {
 					ImageView a = (ImageView) temp
 							.findViewById(R.id.onclick_bg);
-					Log.v("A", a.toString());
 					a.setImageAlpha(0);
 				}
 				ImageView a = (ImageView) view.findViewById(R.id.onclick_bg);
@@ -292,8 +292,10 @@ public class ProfileListActivity extends Activity implements
 
 		list.setOnItemLongClickListener(new OnItemLongClickListener() {
 
+	
 			public boolean onItemLongClick(AdapterView<?> arg0,
 					final View arg1, final int pos, long id) {
+				
 				AlertDialog.Builder builderSingle = new AlertDialog.Builder(
 						ProfileListActivity.this);
 				builderSingle.setTitle("Select a colour");
@@ -594,9 +596,9 @@ public class ProfileListActivity extends Activity implements
 		}
 
 	}
-
+/*
 	protected LayoutAnimationController getAnimationController() {
-		int duration = 500;
+		int duration = 400;
 		AnimationSet set = new AnimationSet(true);
 
 		Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -614,25 +616,36 @@ public class ProfileListActivity extends Activity implements
 		controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
 		return controller;
 	}
-
+*/
 }
 
-// animation
-/*
- * class fade_choice { int current = 0; Handler mHandler; Runnable mRunnable;
- * 
- * void color_fade(final View v, final int start, final int finish, final int
- * delta, final int frametime) { current = start;
- * 
- * mHandler = new Handler(); mRunnable = new Runnable() {
- * 
- * @Override public void run() { if (Math.abs(finish - current) < delta - 1) { }
- * else { if (finish > start) current += delta; else current -= delta;
- * v.setBackgroundColor(Color.argb(current, 120, 255, 255));
- * mHandler.postDelayed(this, frametime); } } }; mHandler.postDelayed(mRunnable,
- * 250);
- * 
- * }
- * 
- * }
- */
+class fade_choice {
+	int current = 0;
+	Handler mHandler;
+	Runnable mRunnable;
+
+	void color_fade(final ImageView v, final int start, final int finish,
+			final int delta, final int frametime) {
+		current = start;
+
+		mHandler = new Handler();
+		mRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				if (Math.abs(finish - current) < delta - 1) {
+				} else {
+					if (finish > start)
+						current += delta;
+					else
+						current -= delta;
+					v.setImageAlpha(current);
+					mHandler.postDelayed(this, frametime);
+				}
+			}
+		};
+		mHandler.postDelayed(mRunnable, 250);
+
+	}
+
+}

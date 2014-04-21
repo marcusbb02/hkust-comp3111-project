@@ -38,6 +38,7 @@
         android:choiceMode="singleChoice"
         android:divider="#555555"
         android:dividerHeight="1px"
+      android:layoutAnimation="@anim/list_anim_layout"
         android:scrollingCache="true" >
 
     </ListView>
