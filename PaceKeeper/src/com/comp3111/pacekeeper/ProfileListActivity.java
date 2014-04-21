@@ -36,6 +36,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -69,6 +74,8 @@ public class ProfileListActivity extends Activity implements
 	static private int edit_position = -1;
 	static private int apply_position = 0;
 
+	boolean firsttime = true;
+
 	View prev = null;
 	String strName = null;
 
@@ -87,8 +94,8 @@ public class ProfileListActivity extends Activity implements
 		btnadd.setOnClickListener(this);
 		btnapply.setOnClickListener(this);
 		btndel.setOnClickListener(this);
-		
-		cur_position = -1;		//reset
+
+		cur_position = -1; // reset
 		list_refresh();
 
 	}
@@ -186,7 +193,7 @@ public class ProfileListActivity extends Activity implements
 
 		return output;
 	};
-	
+
 	public int[] get_all_profile_color() {
 		SQLiteDatabase db = dbhelper.getReadableDatabase();
 		List<Integer> al = new ArrayList<Integer>();
@@ -254,6 +261,11 @@ public class ProfileListActivity extends Activity implements
 						"name", "desc", "editimg", "bg" }, new int[] {
 						R.id.apply_icon, R.id.p_name, R.id.p_description,
 						R.id.edit_btn, R.id.onclick_bg });
+		
+		if(firsttime){
+		list.setLayoutAnimation(getAnimationController());  
+		firsttime=false;
+		}
 
 		list.setAdapter(myadapter);
 
@@ -414,21 +426,21 @@ public class ProfileListActivity extends Activity implements
 					}
 				}).show();
 	}
-	
-public void  change_setting_data(){
-	String[] getdata =new String[9];
-	getdata=dbhelper.get_applying_profile_data();
-	UserSettings us=ConsistentContents.currentUserSettings;
-	us.userName=getdata[0];
-	us.userMail=getdata[1];
-	us.age=Integer.valueOf(getdata[2]);
-	us.height=Integer.valueOf(getdata[3]);
-	us.weight=Integer.valueOf(getdata[4]);
-	us.regionID=Integer.valueOf(getdata[5]);
-	us.walkSpeed=Float.valueOf(getdata[6]);
-	us.jogSpeed=Float.valueOf(getdata[7]);
-	us.runSpeed=Float.valueOf(getdata[8]);
-}
+
+	public void change_setting_data() {
+		String[] getdata = new String[9];
+		getdata = dbhelper.get_applying_profile_data();
+		UserSettings us = ConsistentContents.currentUserSettings;
+		us.userName = getdata[0];
+		us.userMail = getdata[1];
+		us.age = Integer.valueOf(getdata[2]);
+		us.height = Integer.valueOf(getdata[3]);
+		us.weight = Integer.valueOf(getdata[4]);
+		us.regionID = Integer.valueOf(getdata[5]);
+		us.walkSpeed = Float.valueOf(getdata[6]);
+		us.jogSpeed = Float.valueOf(getdata[7]);
+		us.runSpeed = Float.valueOf(getdata[8]);
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -581,6 +593,26 @@ public void  change_setting_data(){
 			}
 		}
 
+	}
+
+	protected LayoutAnimationController getAnimationController() {
+		int duration = 500;
+		AnimationSet set = new AnimationSet(true);
+
+		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+		animation.setDuration(duration);
+		set.addAnimation(animation);
+
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				5.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		animation.setDuration(duration);
+		set.addAnimation(animation);
+
+		LayoutAnimationController controller = new LayoutAnimationController(
+				set, 0.4f);
+		controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+		return controller;
 	}
 
 }

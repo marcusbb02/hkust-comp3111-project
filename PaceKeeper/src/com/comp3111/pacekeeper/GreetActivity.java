@@ -118,6 +118,7 @@ public class GreetActivity extends Activity implements OnClickListener{
 		case R.id.greet_profilelist:
 			intent = new Intent(this, ProfileListActivity.class);
 			startActivity(GreetActivity.this.intent);
+			
 			break;
 		case R.id.greet_options:
 			intent = new Intent(this, SettingActivity.class);
