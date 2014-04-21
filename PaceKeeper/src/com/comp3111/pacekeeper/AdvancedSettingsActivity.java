@@ -60,16 +60,16 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		rsbtn.setOnClickListener(this);
 		retrieve_saved_data();
 		
-	    s1.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/0.15*100));
-	    s2.setProgress((int)((Float.valueOf(et1.getText().toString())-0.1)*100));
-	    s3.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
-	    s4.setProgress((int)((Float.valueOf(et1.getText().toString())-0)*100));
-	    s5.setProgress((int)((Float.valueOf(et1.getText().toString())-0)*100));
-	    s6.setProgress((int)((Float.valueOf(et1.getText().toString())-5)/20*100));
-	    s7.setProgress((int)((Float.valueOf(et1.getText().toString())-5)/20*100));
-	    s9.setProgress((int)((Float.valueOf(et1.getText().toString())-1)/4*100));
-	    s10.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
-	    s11.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
+	    s1.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/0.15f*100f));
+	    s2.setProgress((int)((Float.valueOf(et1.getText().toString())-0.1f)*100f));
+	    s3.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
+	    s4.setProgress((int)((Float.valueOf(et1.getText().toString())-0f)*100f));
+	    s5.setProgress((int)((Float.valueOf(et1.getText().toString())-0f)*100f));
+	    s6.setProgress((int)((Float.valueOf(et1.getText().toString())-5f)/20*100f));
+	    s7.setProgress((int)((Float.valueOf(et1.getText().toString())-5f)/20f*100f));
+	    s9.setProgress((int)((Float.valueOf(et1.getText().toString())-1f)/4f*100f));
+	    s10.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
+	    s11.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
 		
 		// JSONHandler
 		// Add a reset button for going back to original values
@@ -79,6 +79,7 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		// 2. make a toJSON method in PedometerSettings
 		// 3. write the json string to file by creating method in JSONHandler
 		// (see others as example)
+	    
 		  s1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
 			    @Override       
 			    public void onStopTrackingTouch(SeekBar seekBar) {      
@@ -90,7 +91,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {   
 
 			    	et1.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -106,7 +106,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			             
 
 			    	et2.setText(String.valueOf(0.1f+1.0f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s3.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -123,7 +122,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et3.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s4.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -140,7 +138,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et4.setText(String.valueOf(1.0f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s5.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -157,7 +154,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et5.setText(String.valueOf(1.0f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s6.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -174,7 +170,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et6.setText(String.valueOf(5f+20f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s7.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -191,7 +186,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et7.setText(String.valueOf(5f+20f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s9.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -208,7 +202,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			           
 
 			    	et9.setText(String.valueOf(1f+4f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 		  s10.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
@@ -225,7 +218,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et10.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});   
 		  
@@ -243,7 +235,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			              
 
 			    	et11.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
-			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
 			    }       
 			});            
 

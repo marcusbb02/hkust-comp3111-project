@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
 
 	private static String DB_NAME = "pacekeeper.db";
-	   private static final int DATABASE_VERSION = 27;
+	   private static final int DATABASE_VERSION = 28;
 	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -38,6 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		String PROFILE_TABLE = "CREATE TABLE " + PRO_TABLE + " ( " 
 		+ PID		+ " INTEGER PRIMARY KEY AUTOINCREMENT," 
 		+ P_NAME 	+ " TEXT," 
+		+ P_DES 	+ " TEXT," 
 		+ P_COL 	+ " INTEGER," 
 		+ P_EMAIL	+ " TEXT," 
 		+ P_AGE 	+ " INTEGER," 
@@ -50,7 +51,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL(PROFILE_TABLE);
 
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(null, 'test', '-8684677','test@KIMSUNG.COM', '99', '180', '180','3', '199','299','399');");
+		"(null, 'test','I am a tea kettle fat and short', '-8684677','test@KIMSUNG.COM', '99', '180', '180','3', '199','299','399');");
 		
 		db.execSQL("CREATE TABLE " + PRO_USING + " ( " + P_AID + " INTEGER" + ");");
 		db.execSQL("INSERT INTO "+PRO_USING+"  Values "+" ('1') ;");

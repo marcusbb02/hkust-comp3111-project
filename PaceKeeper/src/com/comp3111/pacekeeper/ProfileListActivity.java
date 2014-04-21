@@ -1,14 +1,24 @@
 package com.comp3111.pacekeeper;
 
-import static com.comp3111.local_database.DataBaseConstants.*;
+import static com.comp3111.local_database.DataBaseConstants.PID;
+import static com.comp3111.local_database.DataBaseConstants.PRO_TABLE;
+import static com.comp3111.local_database.DataBaseConstants.PRO_USING;
+import static com.comp3111.local_database.DataBaseConstants.P_AGE;
+import static com.comp3111.local_database.DataBaseConstants.P_AID;
+import static com.comp3111.local_database.DataBaseConstants.P_COL;
+import static com.comp3111.local_database.DataBaseConstants.P_DES;
+import static com.comp3111.local_database.DataBaseConstants.P_EMAIL;
+import static com.comp3111.local_database.DataBaseConstants.P_HEI;
+import static com.comp3111.local_database.DataBaseConstants.P_JOG;
+import static com.comp3111.local_database.DataBaseConstants.P_NAME;
+import static com.comp3111.local_database.DataBaseConstants.P_RID;
+import static com.comp3111.local_database.DataBaseConstants.P_SPRINT;
+import static com.comp3111.local_database.DataBaseConstants.P_WALK;
+import static com.comp3111.local_database.DataBaseConstants.P_WEI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.comp3111.local_database.DataBaseHelper;
-import com.comp3111.pedometer.ConsistentContents;
-import com.comp3111.pedometer.UserSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,22 +33,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
+
+import com.comp3111.local_database.DataBaseHelper;
+import com.comp3111.pedometer.ConsistentContents;
+import com.comp3111.pedometer.UserSettings;
 
 public class ProfileListActivity extends Activity implements
 		Button.OnClickListener {
@@ -107,6 +118,7 @@ public class ProfileListActivity extends Activity implements
 			change_setting_data();
 			list_refresh();
 		}
+		cur_position = -1;
 
 	}
 
@@ -153,6 +165,28 @@ public class ProfileListActivity extends Activity implements
 		return output;
 	};
 
+	public String[] get_all_profile_description() {
+		SQLiteDatabase db = dbhelper.getReadableDatabase();
+		List<String> al = new ArrayList<String>();
+
+		String[] columns = { P_DES };
+
+		Cursor cursor = db.query(PRO_TABLE, columns, null, null, null, null,
+				null, null);
+		if (cursor != null) {
+			cursor.moveToFirst();
+			al.add(cursor.getString(0));
+			while (cursor.moveToNext()) {
+				al.add(cursor.getString(0));
+			}
+		}
+
+		String[] output = new String[al.size()];
+		al.toArray(output);
+
+		return output;
+	};
+	
 	public int[] get_all_profile_color() {
 		SQLiteDatabase db = dbhelper.getReadableDatabase();
 		List<Integer> al = new ArrayList<Integer>();
@@ -197,6 +231,7 @@ public class ProfileListActivity extends Activity implements
 
 	public void list_refresh() {
 		String[] name_list = get_all_profile_name();
+		String[] des_list= get_all_profile_description();
 		id_list = get_all_profile_id();
 		color_list = get_all_profile_color();
 		apply_position = get_apply_profile_location();
@@ -205,9 +240,9 @@ public class ProfileListActivity extends Activity implements
 
 		for (int i = 0; i < get_all_profile_id().length; i++) {
 			HashMap<String, Object> item = new HashMap<String, Object>();
-			item.put("applyman", name_list[i]);
+			item.put("applyman", R.drawable.ic_circle_man);
 			item.put("name", name_list[i]);
-			item.put("desc", name_list[i]);
+			item.put("desc", des_list[i]);
 			item.put("editimg", R.drawable.edit);
 			item.put("bg", R.drawable.blue_back);
 
@@ -331,6 +366,7 @@ public class ProfileListActivity extends Activity implements
 		SQLiteDatabase database = dbhelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(P_NAME, "new user");
+		values.put(P_DES, "");
 		values.put(P_EMAIL, "");
 		values.put(P_AGE, 0);
 		values.put(P_COL, -8684677); // (16) FF7B7B7B-100000000

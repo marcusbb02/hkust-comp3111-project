@@ -7,6 +7,7 @@ public interface DataBaseConstants extends BaseColumns{
 	//profile
     public static String PRO_TABLE = "personal_profile"; 
     public static String PID = "profile_id"; 
+    public static String P_DES = "profile_description"; 
     public static String P_NAME = "profile_name"; 
     public static String P_COL = "profile_color"; 
     public static String P_EMAIL = "profile_email"; 

@@ -29,6 +29,7 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	private EditText textjogging = null;
 	private EditText textwalking = null;
 	private EditText textsprinting = null;
+	private EditText textdescription = null;
 	private Button btnok = null;
 	private Button btndel = null;
 	private DataBaseHelper dbhelper;
@@ -39,6 +40,7 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		textname = (EditText) findViewById(R.id.Name);
+		textdescription = (EditText) findViewById(R.id.description);
 		textemail = (EditText) findViewById(R.id.Email);
 		textage = (EditText) findViewById(R.id.Age);
 		textheight = (EditText) findViewById(R.id.Height);
@@ -46,6 +48,7 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		textjogging = (EditText) findViewById(R.id.jogging);
 		textwalking = (EditText) findViewById(R.id.walking);
 		textsprinting = (EditText) findViewById(R.id.sprinting);
+		
 		btnok = (Button) findViewById(R.id.ok_button);
 
 		Bundle extras = getIntent().getExtras();
@@ -57,16 +60,17 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		String[] getv = new String[9];
 		getv = get_profile_data(get_id);
 		textname.setText(getv[0]);
-		textemail.setText(getv[1]);
-		textage.setText(getv[2].toString());
-		textheight.setText(getv[3]);
-		textweight.setText(getv[4]);
-		textjogging.setText(getv[5]);
-		textwalking.setText(getv[6]);
-		textsprinting.setText(getv[7]);
+		textdescription.setText(getv[1]);
+		textemail.setText(getv[2]);
+		textage.setText(getv[3].toString());
+		textheight.setText(getv[4]);
+		textweight.setText(getv[5]);
+		textjogging.setText(getv[6]);
+		textwalking.setText(getv[7]);
+		textsprinting.setText(getv[8]);
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.Profile_layout);
-		layout.setBackgroundColor(Integer.valueOf(getv[8])); // set bg color
+		layout.setBackgroundColor(Integer.valueOf(getv[9])); // set bg color
 
 		btnok.setOnClickListener(this);
 
@@ -92,7 +96,8 @@ public class ProfileActivity extends Activity implements OnClickListener {
 
 		try {
 			values.put(P_NAME, textname.getText().toString());
-			values.put(P_EMAIL, textemail.getText().toString());
+			values.put(P_DES, textemail.getText().toString());
+			values.put(P_EMAIL, textdescription.getText().toString());
 			values.put(P_AGE, Integer.parseInt(textage.getText().toString()));
 			values.put(P_HEI, Integer.parseInt(textheight.getText().toString()));
 			values.put(P_WEI, Integer.parseInt(textweight.getText().toString()));
@@ -120,9 +125,9 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	}
 
 	String[] get_profile_data(int wantid) {
-		String[] output = new String[9];
+		String[] output = new String[10];
 		SQLiteDatabase db = dbhelper.getReadableDatabase();
-		String[] columns = { PID, P_NAME, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
+		String[] columns = { PID, P_NAME, P_DES, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
 				P_WALK, P_SPRINT, P_COL };
 
 		Cursor cursor = db.query(PRO_TABLE, columns,
@@ -133,13 +138,14 @@ public class ProfileActivity extends Activity implements OnClickListener {
 			cursor.moveToFirst();
 			output[0] = cursor.getString(1);
 			output[1] = cursor.getString(2);
-			output[2] = Integer.toString(cursor.getInt(3));
+			output[2] = cursor.getString(3);
 			output[3] = Integer.toString(cursor.getInt(4));
 			output[4] = Integer.toString(cursor.getInt(5));
-			output[5] = Float.toString(cursor.getFloat(6));
+			output[5] = Integer.toString(cursor.getInt(6));
 			output[6] = Float.toString(cursor.getFloat(7));
 			output[7] = Float.toString(cursor.getFloat(8));
-			output[8] = Integer.toString(cursor.getInt(9));
+			output[8] = Float.toString(cursor.getFloat(9));
+			output[9] = Integer.toString(cursor.getInt(10));
 		}
 		return output;
 	};
