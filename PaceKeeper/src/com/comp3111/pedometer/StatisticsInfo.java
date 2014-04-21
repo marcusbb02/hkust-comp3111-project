@@ -25,7 +25,6 @@ public class StatisticsInfo {
 	stepSize stepSizeVariable = stepSize.MEDIUM;
 	int stepLength = 80; // in cm
 	double metValue = 0.2;
-	double calories;
 	double distanceTravelled;
 	double weight = 65;
 	double stepDuration;

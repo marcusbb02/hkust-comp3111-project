@@ -29,13 +29,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class STAT_Fragment extends Fragment {
-	
+
 	public static final int initAnimationDelay = 100;
+	public static final int postDelay = 400;
 	private boolean firstTime = true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		ConsistentContents.aggRecords.recalculateStat();
 		// inflate the view for this fragment
 		View rootView = inflater.inflate(R.layout.fragment_stat, container, false);
 
@@ -45,18 +47,6 @@ public class STAT_Fragment extends Fragment {
 		RelativeLayout rl_am = (RelativeLayout) rootView.findViewById(R.id.f_stat_avg_mph);
 		RelativeLayout rl_tc = (RelativeLayout) rootView.findViewById(R.id.f_stat_total_calories);
 		
-		// set Text for total stat
-		TextView tv = (TextView) rl_ts.findViewById(R.id.item_picture_desc);
-		tv.setText("Total Steps taken: 51282");
-		tv = (TextView) rl_tm.findViewById(R.id.item_picture_desc);
-		tv.setText("Total miles walken: 32713");
-		tv = (TextView) rl_as.findViewById(R.id.item_picture_desc);
-		tv.setText("Average steps per minute: 120");
-		tv = (TextView) rl_am.findViewById(R.id.item_picture_desc);
-		tv.setText("Average miles per hour: 325");
-		tv = (TextView) rl_tc.findViewById(R.id.item_picture_desc);
-		tv.setText("Total calories burnt: 1280");
-		
 		// animation for total stats
 		if(firstTime){
 			Animation slideIn1 = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_left);
@@ -64,18 +54,30 @@ public class STAT_Fragment extends Fragment {
 			Animation slideIn3 = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_left);
 			Animation slideIn4 = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_left);
 			Animation slideIn5 = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_left);
-			slideIn1.setStartTime(AnimationUtils.currentAnimationTimeMillis() + initAnimationDelay);
+			slideIn1.setStartTime(AnimationUtils.currentAnimationTimeMillis() + postDelay + initAnimationDelay);
 			rl_ts.setAnimation(slideIn1);
-			slideIn2.setStartTime(AnimationUtils.currentAnimationTimeMillis() + initAnimationDelay*2);
+			slideIn2.setStartTime(AnimationUtils.currentAnimationTimeMillis() + postDelay + initAnimationDelay*2);
 			rl_tm.setAnimation(slideIn2);
-			slideIn3.setStartTime(AnimationUtils.currentAnimationTimeMillis() + initAnimationDelay*3);
+			slideIn3.setStartTime(AnimationUtils.currentAnimationTimeMillis() + postDelay + initAnimationDelay*3);
 			rl_as.setAnimation(slideIn3);
-			slideIn4.setStartTime(AnimationUtils.currentAnimationTimeMillis() + initAnimationDelay*4);
+			slideIn4.setStartTime(AnimationUtils.currentAnimationTimeMillis() + postDelay + initAnimationDelay*4);
 			rl_am.setAnimation(slideIn4);
-			slideIn5.setStartTime(AnimationUtils.currentAnimationTimeMillis() + initAnimationDelay*5);
+			slideIn5.setStartTime(AnimationUtils.currentAnimationTimeMillis() + postDelay + initAnimationDelay*5);
 			rl_tc.setAnimation(slideIn5);
 			firstTime = false;
 		}
+		
+		// set Text for total stat
+		TextView tv = (TextView) rl_ts.findViewById(R.id.item_picture_desc);
+		tv.setText("Total Steps taken: " + ConsistentContents.aggRecords.totalSteps);
+		tv = (TextView) rl_tm.findViewById(R.id.item_picture_desc);
+		tv.setText("Total miles walken: "+ ConsistentContents.aggRecords.totalMiles);
+		tv = (TextView) rl_as.findViewById(R.id.item_picture_desc);
+		tv.setText("Average steps per minute:"+ ConsistentContents.aggRecords.avgSPM);
+		tv = (TextView) rl_am.findViewById(R.id.item_picture_desc);
+		tv.setText("Average miles per hour: "+ConsistentContents.aggRecords.avgMPH);
+		tv = (TextView) rl_tc.findViewById(R.id.item_picture_desc);
+		tv.setText("Total calories burnt:"+ConsistentContents.aggRecords.calories);
 		
 		// inflate buttons for the records and insert into scroll view
 		LinearLayout scrollView = (LinearLayout) rootView.findViewById(R.id.f_stat_scrollLL);

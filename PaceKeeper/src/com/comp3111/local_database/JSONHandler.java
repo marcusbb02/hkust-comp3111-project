@@ -105,6 +105,16 @@ public class JSONHandler {
         }
 		return true;
 	}
+	
+	public static boolean ifRecordExists(String dateStr) {
+		// fails it if no file exist
+        String filePath = PATH_RECORDS+"record-"+dateStr+".dat";
+        File recordFile = new File(filePath);
+        if (!recordFile.exists()){
+        	return false;
+        }
+		return true;
+	}
 
 	public static boolean writeAggregatedRecords() {
         boolean success = false;
@@ -148,6 +158,8 @@ public class JSONHandler {
 			bf = new BufferedReader(new FileReader(filePath));
 			Gson gson = new Gson();
 			ConsistentContents.aggRecords = gson.fromJson(bf, AggregatedRecords.class);
+			Log.i("JSONTest", "Total records: " + ConsistentContents.aggRecords.recordStr.size());		
+			ConsistentContents.aggRecords.recalculateStat();
 			bf.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
