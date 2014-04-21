@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.comp3111.local_database.DataBaseHelper;
+import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.UserSettings;
 
 import android.annotation.SuppressLint;
@@ -75,7 +76,8 @@ public class ProfileListActivity extends Activity implements
 		btnadd.setOnClickListener(this);
 		btnapply.setOnClickListener(this);
 		btndel.setOnClickListener(this);
-
+		
+		cur_position = -1;		//reset
 		list_refresh();
 
 	}
@@ -380,15 +382,16 @@ public class ProfileListActivity extends Activity implements
 public void  change_setting_data(){
 	String[] getdata =new String[9];
 	getdata=dbhelper.get_applying_profile_data();
-	UserSettings.userName=getdata[0];
-	UserSettings.userMail=getdata[1];
-	UserSettings.age=Integer.valueOf(getdata[2]);
-	UserSettings.height=Integer.valueOf(getdata[3]);
-	UserSettings.weight=Integer.valueOf(getdata[4]);
-	UserSettings.regionID=Integer.valueOf(getdata[5]);
-	UserSettings.walkSpeed=Float.valueOf(getdata[6]);
-	UserSettings.jogSpeed=Float.valueOf(getdata[7]);
-	UserSettings.runSpeed=Float.valueOf(getdata[8]);
+	UserSettings us=ConsistentContents.currentUserSettings;
+	us.userName=getdata[0];
+	us.userMail=getdata[1];
+	us.age=Integer.valueOf(getdata[2]);
+	us.height=Integer.valueOf(getdata[3]);
+	us.weight=Integer.valueOf(getdata[4]);
+	us.regionID=Integer.valueOf(getdata[5]);
+	us.walkSpeed=Float.valueOf(getdata[6]);
+	us.jogSpeed=Float.valueOf(getdata[7]);
+	us.runSpeed=Float.valueOf(getdata[8]);
 }
 
 	@Override

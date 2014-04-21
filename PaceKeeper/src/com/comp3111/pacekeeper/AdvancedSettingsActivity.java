@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 
 public class AdvancedSettingsActivity extends Activity implements OnClickListener {
 
@@ -35,7 +37,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		et5 = (EditText) findViewById(R.id.aas_et5);
 		et6 = (EditText) findViewById(R.id.aas_et6);
 		et7 = (EditText) findViewById(R.id.aas_et7);
-		et8 = (EditText) findViewById(R.id.aas_et8);
 		et9 = (EditText) findViewById(R.id.aas_et9);
 		et10 = (EditText) findViewById(R.id.aas_et10);
 		et11 = (EditText) findViewById(R.id.aas_et11);
@@ -47,7 +48,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		s5 = (SeekBar) findViewById(R.id.aas_s5);
 		s6 = (SeekBar) findViewById(R.id.aas_s6);
 		s7 = (SeekBar) findViewById(R.id.aas_s7);
-		s8 = (SeekBar) findViewById(R.id.aas_s8);
 		s9 = (SeekBar) findViewById(R.id.aas_s9);
 		s10 = (SeekBar) findViewById(R.id.aas_s10);
 		s11 = (SeekBar) findViewById(R.id.aas_s11);
@@ -59,7 +59,18 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		ccbtn.setOnClickListener(this);
 		rsbtn.setOnClickListener(this);
 		retrieve_saved_data();
-		// TODO: OK button writes the current settings into JSON file using
+		
+	    s1.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/0.15*100));
+	    s2.setProgress((int)((Float.valueOf(et1.getText().toString())-0.1)*100));
+	    s3.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
+	    s4.setProgress((int)((Float.valueOf(et1.getText().toString())-0)*100));
+	    s5.setProgress((int)((Float.valueOf(et1.getText().toString())-0)*100));
+	    s6.setProgress((int)((Float.valueOf(et1.getText().toString())-5)/20*100));
+	    s7.setProgress((int)((Float.valueOf(et1.getText().toString())-5)/20*100));
+	    s9.setProgress((int)((Float.valueOf(et1.getText().toString())-1)/4*100));
+	    s10.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
+	    s11.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5)/1.5*100));
+		
 		// JSONHandler
 		// Add a reset button for going back to original values
 		// So just add a method to do
@@ -68,7 +79,173 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		// 2. make a toJSON method in PedometerSettings
 		// 3. write the json string to file by creating method in JSONHandler
 		// (see others as example)
-		
+		  s1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {   
+
+			    	et1.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			             
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			             
+
+			    	et2.setText(String.valueOf(0.1f+1.0f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s3.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			             
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et3.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s4.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			              
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et4.setText(String.valueOf(1.0f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s5.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			              
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			             
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et5.setText(String.valueOf(1.0f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s6.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			            
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et6.setText(String.valueOf(5f+20f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s7.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			         
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et7.setText(String.valueOf(5f+20f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s9.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			              
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			           
+
+			    	et9.setText(String.valueOf(1f+4f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
+		  s10.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			             
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et10.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});   
+		  
+		  s11.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       
+			    @Override       
+			    public void onStopTrackingTouch(SeekBar seekBar) {      
+			              
+			    }       
+			    @Override       
+			    public void onStartTrackingTouch(SeekBar seekBar) {     
+			              
+			    }       
+			    @Override       
+			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
+			              
+
+			    	et11.setText(String.valueOf(0.5f+1.5f * 0.01f * progress));
+			        Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+			    }       
+			});            
 
 	}
 
@@ -95,7 +272,6 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		PedometerSettings.pLowerThresholdRetainProportion =Float.valueOf(et5.getText().toString());
 		PedometerSettings.pStepDurationSample =Integer.valueOf(et6.getText().toString());
 		PedometerSettings.pStepDurationDiscardThreshold =Integer.valueOf(et7.getText().toString());
-		PedometerSettings.pDefaultAverageStepDuration =Float.valueOf(et8.getText().toString());
 		PedometerSettings.pStepDelayNumber =Integer.valueOf(et9.getText().toString());
 		PedometerSettings.SA_LOWER_THRESHOLD_RATIO  =Float.valueOf(et10.getText().toString());
 		PedometerSettings.SA_UPPER_THRESHOLD_RATIO =Float.valueOf(et11.getText().toString());
@@ -109,13 +285,14 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		et5.setText(String.valueOf(PedometerSettings.pLowerThresholdRetainProportion));
 		et6.setText(String.valueOf(PedometerSettings.pStepDurationSample));
 		et7.setText(String.valueOf(PedometerSettings.pStepDurationDiscardThreshold));
-		et8.setText(String.valueOf(PedometerSettings.pDefaultAverageStepDuration));
 		et9.setText(String.valueOf(PedometerSettings.pStepDelayNumber));
 		et10.setText(String.valueOf(PedometerSettings.SA_LOWER_THRESHOLD_RATIO));
 		et11.setText(String.valueOf(PedometerSettings.SA_UPPER_THRESHOLD_RATIO));
 	
 		
 	}
+	
+	
 	
 	
 	void dialog(String os){
