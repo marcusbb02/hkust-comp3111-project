@@ -286,6 +286,7 @@ public class MusicActivity extends Activity {
 				ConsistentContents.soundTouchModule.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
+				ConsistentContents.aggRecords.addCurrentRecord();
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				if(!(goal instanceof QuickStartGoal)){
