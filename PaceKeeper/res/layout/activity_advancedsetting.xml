@@ -30,11 +30,12 @@
 
                 <EditText
                     android:id="@+id/aas_et1"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -65,12 +66,13 @@
 
                 <EditText
                     android:id="@+id/aas_et2"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:ems="10"
+					android:maxLength="6"
                     android:inputType="numberDecimal" >
 
                     <requestFocus />
@@ -100,11 +102,12 @@
 
                 <EditText
                     android:id="@+id/aas_et3"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -135,11 +138,12 @@
 
                 <EditText
                     android:id="@+id/aas_et4"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -170,11 +174,12 @@
 
                 <EditText
                     android:id="@+id/aas_et5"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -205,11 +210,12 @@
 
                 <EditText
                     android:id="@+id/aas_et6"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -240,11 +246,12 @@
 
                 <EditText
                     android:id="@+id/aas_et7"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -275,11 +282,12 @@
 
                 <EditText
                     android:id="@+id/aas_et8"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -310,11 +318,12 @@
 
                 <EditText
                     android:id="@+id/aas_et9"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -345,11 +354,12 @@
 
                 <EditText
                     android:id="@+id/aas_et10"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -380,11 +390,12 @@
 
                 <EditText
                     android:id="@+id/aas_et11"
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
+					android:maxLength="6"
                     android:ems="10"
                     android:inputType="numberDecimal" >
 
@@ -409,6 +420,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.46"
                     android:text="OK" />
+
+                <Button
+                    android:id="@+id/aas_rs"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.46"
+                    android:text="Reset" />
 
                 <Button
                     android:id="@+id/aas_cc"

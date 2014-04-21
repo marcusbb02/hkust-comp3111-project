@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
 
 	private static String DB_NAME = "pacekeeper.db";
-	   private static final int DATABASE_VERSION = 26;
+	   private static final int DATABASE_VERSION = 27;
 	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -43,14 +43,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		+ P_AGE 	+ " INTEGER," 
 		+ P_HEI 	+ " INTEGER," 
 		+ P_WEI 	+ " INTEGER," 
-		+ P_RID     + "INTEGER,"
-		+ P_JOG 	+ " REAL," 
+		+ P_RID     + " INTEGER,"
 		+ P_WALK	+ " REAL," 
+		+ P_JOG 	+ " REAL," 
 		+ P_SPRINT 	+ " REAL " + ");";
 		db.execSQL(PROFILE_TABLE);
 
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(null, 'test', '-8684677','test@KIMSUNG.COM', '99', '180', '180','33', '199','299','399');");
+		"(null, 'test', '-8684677','test@KIMSUNG.COM', '99', '180', '180','3', '199','299','399');");
 		
 		db.execSQL("CREATE TABLE " + PRO_USING + " ( " + P_AID + " INTEGER" + ");");
 		db.execSQL("INSERT INTO "+PRO_USING+"  Values "+" ('1') ;");
@@ -86,10 +86,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		}
 	
 	public String[] get_applying_profile_data() {
-		String[] output = new String[8];
+		String[] output = new String[9];
 		SQLiteDatabase db = this.getReadableDatabase();
-		String[] columns = { PID, P_NAME, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
-				P_WALK, P_SPRINT };
+		String[] columns = { PID, P_NAME, P_EMAIL, P_AGE, P_HEI, P_WEI,P_RID, P_WALK,
+				P_JOG, P_SPRINT };
 
 		Cursor cursor = db.query(PRO_TABLE, columns,
 				PID + " = " + String.valueOf(get_applying_profile()), null, null, null, null,
@@ -102,9 +102,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			output[2] = Integer.toString(cursor.getInt(3));
 			output[3] = Integer.toString(cursor.getInt(4));
 			output[4] = Integer.toString(cursor.getInt(5));
-			output[5] = Float.toString(cursor.getFloat(6));
+			output[5] = Integer.toString(cursor.getInt(6));
 			output[6] = Float.toString(cursor.getFloat(7));
 			output[7] = Float.toString(cursor.getFloat(8));
+			output[8] = Float.toString(cursor.getFloat(9));
 		}
 		return output;
 	}
