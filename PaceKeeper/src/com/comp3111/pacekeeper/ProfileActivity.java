@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 public class ProfileActivity extends Activity implements OnClickListener {
 
@@ -30,7 +31,6 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	private EditText textsprinting = null;
 	private Button btnok = null;
 	private Button btndel = null;
-	private Button backdel = null;
 	private DataBaseHelper dbhelper;
 	private int get_id = -1;
 
@@ -47,8 +47,6 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		textwalking = (EditText) findViewById(R.id.walking);
 		textsprinting = (EditText) findViewById(R.id.sprinting);
 		btnok = (Button) findViewById(R.id.ok_button);
-		btndel = (Button) findViewById(R.id.del_profile_btn);
-		backdel = (Button) findViewById(R.id.back_btn);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -56,48 +54,35 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		}
 
 		dbhelper = new DataBaseHelper(this);
-		String[] getv = new String[8];
+		String[] getv = new String[9];
 		getv = get_profile_data(get_id);
 		textname.setText(getv[0]);
 		textemail.setText(getv[1]);
-		textage.setText(getv[2]);
+		textage.setText(getv[2].toString());
 		textheight.setText(getv[3]);
 		textweight.setText(getv[4]);
 		textjogging.setText(getv[5]);
 		textwalking.setText(getv[6]);
 		textsprinting.setText(getv[7]);
 
+		LinearLayout layout = (LinearLayout) findViewById(R.id.Profile_layout);
+		layout.setBackgroundColor(Integer.valueOf(getv[8])); // set bg color
+
 		btnok.setOnClickListener(this);
-		btndel.setOnClickListener(this);
-		backdel.setOnClickListener(this);
 
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		return true;
 	}
 
 	public void onClick(View v) {
+		Intent intent = new Intent();
 
 		switch (v.getId()) {
 		case R.id.ok_button:
 			update_to_database(get_id);
+			setResult(2, intent);
+			end_activity();
 			break;
 
-		case R.id.del_profile_btn:
-			if (dbhelper.getCount(PRO_TABLE) == 1)
-				one_user_error_dialog();
-			else {
-				Intent intent = new Intent();
-				setResult(1, intent);
-				finish();
-			}
-			break;
-		case R.id.back_btn:
-			finish();
-			break;
+
 		}
 	}
 
@@ -119,18 +104,26 @@ public class ProfileActivity extends Activity implements OnClickListener {
 					Float.parseFloat(textsprinting.getText().toString()));
 			db.update(PRO_TABLE, values, PID + " = " + String.valueOf(wantid),
 					null);
-			update_dialog();
 		} catch (Exception e) {
-			errorinput_dialog();
+			dialog("Invalid input,Please try again!");
 		}
-
 	};
 
+	public void dialog(String os) {
+		new AlertDialog.Builder(ProfileActivity.this).setTitle("Error")
+				.setMessage(os).setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				}).show();
+	}
+
 	String[] get_profile_data(int wantid) {
-		String[] output = new String[8];
+		String[] output = new String[9];
 		SQLiteDatabase db = dbhelper.getReadableDatabase();
 		String[] columns = { PID, P_NAME, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
-				P_WALK, P_SPRINT };
+				P_WALK, P_SPRINT, P_COL };
 
 		Cursor cursor = db.query(PRO_TABLE, columns,
 				PID + " = " + String.valueOf(wantid), null, null, null, null,
@@ -146,40 +139,22 @@ public class ProfileActivity extends Activity implements OnClickListener {
 			output[5] = Float.toString(cursor.getFloat(6));
 			output[6] = Float.toString(cursor.getFloat(7));
 			output[7] = Float.toString(cursor.getFloat(8));
+			output[8] = Integer.toString(cursor.getInt(9));
 		}
 		return output;
 	};
 
-	
-	
-	public void update_dialog() {
-		new AlertDialog.Builder(ProfileActivity.this)
-				.setMessage("The profile has been updated")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				}).show();
+	public void end_activity() {
+		finish();
+		overridePendingTransition(android.R.anim.fade_in,
+				android.R.anim.fade_out);
 	}
 
-	public void one_user_error_dialog() {
-		new AlertDialog.Builder(ProfileActivity.this)
-				.setMessage("It should contain at least one profile")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				}).show();
-	}
-
-	public void errorinput_dialog() {
-		new AlertDialog.Builder(ProfileActivity.this).setTitle("Error")
-				.setMessage("Invalid input,Please try again!")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				}).show();
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(android.R.anim.fade_in,
+				android.R.anim.fade_out);
 	}
 
 }

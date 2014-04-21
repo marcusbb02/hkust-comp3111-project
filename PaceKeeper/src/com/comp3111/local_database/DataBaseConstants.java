@@ -8,13 +8,18 @@ public interface DataBaseConstants extends BaseColumns{
     public static String PRO_TABLE = "personal_profile"; 
     public static String PID = "profile_id"; 
     public static String P_NAME = "profile_name"; 
+    public static String P_COL = "profile_color"; 
     public static String P_EMAIL = "profile_email"; 
     public static String P_AGE = "profile_age"; 
     public static String P_HEI = "profile_height"; 
     public static String P_WEI = "profile_weight"; 
+    public static String P_RID = "region_id"; 
     public static String P_WALK = "profile_walk"; 
     public static String P_JOG = "profile_jog"; 
-    public static String P_SPRINT = "profile_sprint"; 
+    public static String P_SPRINT = "profile_run"; 
+    
+    public static String PRO_USING = "profile_using"; 
+    public static String P_AID = "profile_applying_id"; 
     
 	//personal_acheivements
     public static String ACH_TABLE = "personal_acheivement"; 
@@ -38,7 +43,5 @@ public interface DataBaseConstants extends BaseColumns{
     
     
 }
-
-
 
 

@@ -22,10 +22,11 @@ import android.widget.Toast;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
+	// The Android's default system path of your application database.
 
-    private static final int DATABASE_VERSION = 23;
 	private static String DB_NAME = "pacekeeper.db";
-	
+	   private static final int DATABASE_VERSION = 26;
+	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
 	}
@@ -33,22 +34,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
+//profile
 		String PROFILE_TABLE = "CREATE TABLE " + PRO_TABLE + " ( " 
 		+ PID		+ " INTEGER PRIMARY KEY AUTOINCREMENT," 
 		+ P_NAME 	+ " TEXT," 
+		+ P_COL 	+ " INTEGER," 
 		+ P_EMAIL	+ " TEXT," 
 		+ P_AGE 	+ " INTEGER," 
 		+ P_HEI 	+ " INTEGER," 
 		+ P_WEI 	+ " INTEGER," 
+		+ P_RID     + "INTEGER,"
 		+ P_JOG 	+ " REAL," 
 		+ P_WALK	+ " REAL," 
 		+ P_SPRINT 	+ " REAL " + ");";
 		db.execSQL(PROFILE_TABLE);
 
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(0, 'test1', 'test@test.COM', '99', '180', '180', '199','299','399');");
+		"(null, 'test', '-8684677','test@KIMSUNG.COM', '99', '180', '180','33', '199','299','399');");
 		
+		db.execSQL("CREATE TABLE " + PRO_USING + " ( " + P_AID + " INTEGER" + ");");
+		db.execSQL("INSERT INTO "+PRO_USING+"  Values "+" ('1') ;");
+		
+		//
 		String ACHEIVEMENT_TABLE = "CREATE TABLE " + ACH_TABLE + " ( " 
 		+ AID		+ " INTEGER PRIMARY KEY AUTOINCREMENT," 
 		+ A_NAME 	+ " TEXT," 
@@ -69,22 +76,48 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	    cursor.close();
 	    return c;
 	}
+	
+	public int get_applying_profile() {
+	    String countQuery = "SELECT  * FROM " + PRO_USING;
+	    SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor cursor = db.rawQuery(countQuery, null);
+	    cursor.moveToFirst();
+		return cursor.getInt(0);
+		}
+	
+	public String[] get_applying_profile_data() {
+		String[] output = new String[8];
+		SQLiteDatabase db = this.getReadableDatabase();
+		String[] columns = { PID, P_NAME, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
+				P_WALK, P_SPRINT };
+
+		Cursor cursor = db.query(PRO_TABLE, columns,
+				PID + " = " + String.valueOf(get_applying_profile()), null, null, null, null,
+				null);
+
+		if (cursor != null) {
+			cursor.moveToFirst();
+			output[0] = cursor.getString(1);
+			output[1] = cursor.getString(2);
+			output[2] = Integer.toString(cursor.getInt(3));
+			output[3] = Integer.toString(cursor.getInt(4));
+			output[4] = Integer.toString(cursor.getInt(5));
+			output[5] = Float.toString(cursor.getFloat(6));
+			output[6] = Float.toString(cursor.getFloat(7));
+			output[7] = Float.toString(cursor.getFloat(8));
+		}
+		return output;
+	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		resetTable(db);
-	}
-
-
-	public void resetTable(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + PRO_TABLE);
 		db.execSQL("DROP TABLE IF EXISTS " + ACH_TABLE);
 		onCreate(db);
 	}
 
-
-
-
+	
+	
 
 }
 
