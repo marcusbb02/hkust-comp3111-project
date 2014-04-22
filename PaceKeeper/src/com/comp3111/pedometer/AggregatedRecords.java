@@ -26,6 +26,8 @@ public class AggregatedRecords {
 	}
 	
 	public void recalculateStat(){
+		//preserve current record before recalculating the stat
+		StatisticsInfo tmpInfo = ConsistentContents.currentStatInfo;
 		//rescanRecords();
 		Log.i("recalculateStatInit", ""+recordStr.size());
 		totalSteps=0;
@@ -57,15 +59,17 @@ public class AggregatedRecords {
 			avgSPM=avgSPM/recordStr.size();
 			avgMPH=avgMPH/recordStr.size();
 		}
-		//Log.i("recalculateStatFinal", ""+calories);
+		// resume preserved currentStatInfo
+		ConsistentContents.currentStatInfo = tmpInfo;
 
 	}
 	
 	public void addCurrentRecord(){
 		// create current record to file and recalculate the statistics, also update this aggregated record file
 		if(JSONHandler.createCurrentRecord()){
-			recalculateStat();
+			// order is VERY IMPORTANT in here since recalculateStat does not reserve current record
 			recordStr.add(ConsistentContents.currentStatInfo.recordDateString);
+			recalculateStat();
 			JSONHandler.writeAggregatedRecords();
 		}
 		

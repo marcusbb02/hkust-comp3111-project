@@ -36,6 +36,7 @@ public class StatisticsInfo {
 		setWeight(kilogram);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		recordDateString = df.format(new Date());
+		Log.i("StatisticsInfo", "New record created with DateStr: " + recordDateString);
 	}
 	
 	public void addTime(double unit){
