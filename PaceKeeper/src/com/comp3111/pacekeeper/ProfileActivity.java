@@ -96,8 +96,8 @@ public class ProfileActivity extends Activity implements OnClickListener {
 
 		try {
 			values.put(P_NAME, textname.getText().toString());
-			values.put(P_DES, textemail.getText().toString());
-			values.put(P_EMAIL, textdescription.getText().toString());
+			values.put(P_DES, textdescription.getText().toString());
+			values.put(P_EMAIL, textemail.getText().toString());
 			values.put(P_AGE, Integer.parseInt(textage.getText().toString()));
 			values.put(P_HEI, Integer.parseInt(textheight.getText().toString()));
 			values.put(P_WEI, Integer.parseInt(textweight.getText().toString()));

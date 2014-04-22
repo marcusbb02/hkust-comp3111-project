@@ -60,16 +60,16 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 		rsbtn.setOnClickListener(this);
 		retrieve_saved_data();
 		
-	    s1.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/0.15f*100f));
-	    s2.setProgress((int)((Float.valueOf(et1.getText().toString())-0.1f)*100f));
-	    s3.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
-	    s4.setProgress((int)((Float.valueOf(et1.getText().toString())-0f)*100f));
-	    s5.setProgress((int)((Float.valueOf(et1.getText().toString())-0f)*100f));
-	    s6.setProgress((int)((Float.valueOf(et1.getText().toString())-5f)/20*100f));
-	    s7.setProgress((int)((Float.valueOf(et1.getText().toString())-5f)/20f*100f));
-	    s9.setProgress((int)((Float.valueOf(et1.getText().toString())-1f)/4f*100f));
-	    s10.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
-	    s11.setProgress((int)((Float.valueOf(et1.getText().toString())-0.5f)/1.5f*100f));
+	    s1.setProgress((int)(((Float.valueOf(et1.getText().toString())-0.5f)/1.5f)*100f));
+	    s2.setProgress((int)(((Float.valueOf(et2.getText().toString())-0.1f))*100f));
+	    s3.setProgress((int)(((Float.valueOf(et3.getText().toString())-0.5f)/1.5f)*100f));
+	    s4.setProgress((int)(((Float.valueOf(et4.getText().toString())-0f))*100f));
+	    s5.setProgress((int)(((Float.valueOf(et5.getText().toString())-0f))*100f));
+	    s6.setProgress((int)(((Float.valueOf(et6.getText().toString())-5f)/20)*100f));
+	    s7.setProgress((int)(((Float.valueOf(et7.getText().toString())-5f)/20f)*100f));
+	    s9.setProgress((int)(((Float.valueOf(et9.getText().toString())-1f)/4f)*100f));
+	    s10.setProgress((int)(((Float.valueOf(et10.getText().toString())-0.5f)/1.5f)*100f));
+	    s11.setProgress((int)(((Float.valueOf(et11.getText().toString())-0.5f)/1.5f)*100f));
 		
 		// JSONHandler
 		// Add a reset button for going back to original values

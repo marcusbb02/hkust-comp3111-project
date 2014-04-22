@@ -332,37 +332,34 @@ public class ProfileListActivity extends Activity implements
 										.getWritableDatabase();
 								ContentValues values = new ContentValues();
 								if (strName == "Red") {
-									arg1.setBackgroundColor(Color.RED);
-									values.put(P_COL, Color.RED);
+									arg1.setBackgroundColor(Color.argb(202,255, 175, 175));
+									values.put(P_COL, Color.argb(202,255, 175, 175));
 								} else if (strName == "Orange") {
-									arg1.setBackgroundColor(Color.rgb(255, 146,
-											36));
-									values.put(P_COL, Color.rgb(255, 146, 36));
+									arg1.setBackgroundColor(Color.argb(202,255, 227,
+											160));
+									values.put(P_COL, Color.argb(202,255, 227,
+											160));
 								} else if (strName == "Yellow") {
-									arg1.setBackgroundColor(Color.YELLOW);
-									values.put(P_COL, Color.YELLOW);
+									arg1.setBackgroundColor(Color.argb(202,255, 251, 102));
+									values.put(P_COL, Color.argb(202,255, 251, 102));
 								} else if (strName == "Green") {
-									arg1.setBackgroundColor(Color.GREEN);
-									values.put(P_COL, Color.GREEN);
+									arg1.setBackgroundColor(Color.argb(202,211, 233, 146));
+									values.put(P_COL, Color.argb(202,211, 233, 146));
 								} else if (strName == "Blue") {
-									arg1.setBackgroundColor(Color.BLUE);
-									values.put(P_COL, Color.BLUE);
+									arg1.setBackgroundColor(Color.argb(194,168, 223, 244));
+									values.put(P_COL, Color.argb(194,168, 223, 244));
 								} else if (strName == "Violet") {
-									arg1.setBackgroundColor(Color.rgb(159, 77,
-											149));
-									values.put(P_COL, Color.rgb(159, 77, 149));
+									arg1.setBackgroundColor(Color.argb(202,221, 188,
+											238));
+									values.put(P_COL, Color.argb(202,159, 77, 149));
 								} else if (strName == "Grey") {
-									arg1.setBackgroundColor(Color.rgb(123, 123,
-											123));
-									values.put(P_COL, Color.BLUE);
-								} else if (strName == "Black") {
-									arg1.setBackgroundColor(Color.BLACK);
-									values.put(P_COL, Color.BLUE);
+									arg1.setBackgroundColor(Color.argb(202,215, 209,
+											216));
+									values.put(P_COL, Color.argb(202,215, 209,
+											216));
 								}
 
 								strName = "";
-								int a = Color.RED;
-
 								db.update(PRO_TABLE, values, PID + " = "
 										+ String.valueOf(id_list[pos]), null);
 								color_list = get_all_profile_color();
@@ -429,7 +426,7 @@ public class ProfileListActivity extends Activity implements
 				}).show();
 	}
 
-	public void change_setting_data() {
+	public void change_setting_data() {		//change user setting class 
 		String[] getdata = new String[9];
 		getdata = dbhelper.get_applying_profile_data();
 		UserSettings us = ConsistentContents.currentUserSettings;
@@ -596,27 +593,22 @@ public class ProfileListActivity extends Activity implements
 		}
 
 	}
-/*
-	protected LayoutAnimationController getAnimationController() {
-		int duration = 400;
-		AnimationSet set = new AnimationSet(true);
-
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(duration);
-		set.addAnimation(animation);
-
-		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-				5.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-		animation.setDuration(duration);
-		set.addAnimation(animation);
-
-		LayoutAnimationController controller = new LayoutAnimationController(
-				set, 0.4f);
-		controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
-		return controller;
-	}
-*/
+	/*
+	 * protected LayoutAnimationController getAnimationController() { int
+	 * duration = 400; AnimationSet set = new AnimationSet(true);
+	 * 
+	 * Animation animation = new AlphaAnimation(0.0f, 1.0f);
+	 * animation.setDuration(duration); set.addAnimation(animation);
+	 * 
+	 * animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+	 * Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 5.0f,
+	 * Animation.RELATIVE_TO_SELF, 0.0f); animation.setDuration(duration);
+	 * set.addAnimation(animation);
+	 * 
+	 * LayoutAnimationController controller = new LayoutAnimationController(
+	 * set, 0.4f); controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+	 * return controller; }
+	 */
 }
 
 class fade_choice {
