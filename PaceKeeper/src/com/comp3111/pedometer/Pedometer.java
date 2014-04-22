@@ -168,6 +168,7 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	}
 	
 	public float getDefaultAverageStepDuration(){
+		resetAverageStepDuration();	// to ensure the value is updated
 		return pDefaultAverageStepDuration;
 	}
 
