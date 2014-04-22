@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.*;
 import com.comp3111.swipeview.SwipeDismissTouchListener;
 import com.jjoe64.graphview.GraphView;
@@ -286,8 +287,9 @@ public class MusicActivity extends Activity {
 				ConsistentContents.soundTouchModule.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
-				ConsistentContents.aggRecords.addCurrentRecord();
+				// settle the last distribution state and store to file
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+				ConsistentContents.aggRecords.addCurrentRecord();
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				if(!(goal instanceof QuickStartGoal)){
 					intent.putExtra("goal", "true");

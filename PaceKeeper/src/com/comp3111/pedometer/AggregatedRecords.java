@@ -53,9 +53,11 @@ public class AggregatedRecords {
 				calories=calories+ConsistentContents.currentStatInfo.getCaloriesBurn();
 			}
 		}			
-		avgSPM=avgSPM/recordStr.size();
-		avgMPH=avgMPH/recordStr.size();
-		Log.i("recalculateStatFinal", ""+calories);
+		if(recordStr.size() != 0){
+			avgSPM=avgSPM/recordStr.size();
+			avgMPH=avgMPH/recordStr.size();
+		}
+		//Log.i("recalculateStatFinal", ""+calories);
 
 	}
 	

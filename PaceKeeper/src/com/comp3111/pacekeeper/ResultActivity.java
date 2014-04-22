@@ -26,14 +26,11 @@ public class ResultActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		TextView test = (TextView) findViewById(R.id.result_textview);
-		test.setText("hihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\nhihi\n");
 		test.setText(""+ConsistentContents.currentStatInfo.getCaloriesBurn());
 		
 		InitPaceDistGraph();
 		InitJourneyStat();
 		InitExtra();
-		
-		
 	}
 
 	private void InitExtra() {
