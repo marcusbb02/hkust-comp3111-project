@@ -251,7 +251,7 @@ public class ProfileListActivity extends Activity implements
 			item.put("applyman", R.drawable.ic_circle_man);
 			item.put("name", name_list[i]);
 			item.put("desc", des_list[i]);
-			item.put("editimg", R.drawable.edit);
+			item.put("editimg", R.drawable.ic_action_edit);
 			item.put("bg", R.drawable.blue_back);
 
 			listarray.add(item);

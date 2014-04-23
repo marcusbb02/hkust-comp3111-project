@@ -29,5 +29,15 @@
         android:textSize="16dp"
         android:textColor="#707070"
         android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/item_picture_trop"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="18dp"
+        android:src="@drawable/ic_icon_trophy"
+        android:visibility="invisible" />
     
 </RelativeLayout>

@@ -22,6 +22,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 @SuppressLint("NewApi")
@@ -102,33 +103,19 @@ public class AchievementActivity extends FragmentActivity implements
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
 
-	Achievement get_ach(int wantid) { // get data from database
 
-		Achievement output = new Achievement();
-		SQLiteDatabase db = dbhelper.getReadableDatabase();
-		String[] columns = { AID, A_REC };
-
-		Cursor cursor = db.query(ACH_TABLE, columns, AID + " = " + wantid,
-				null, null, null, null, null);
-		if (cursor != null) {
-			cursor.moveToFirst();
-			output.id = cursor.getInt(0);
-			output.record = cursor.getString(1);
-
-			db.close(); // Closing database connection
-		}
-		return output;
-	}
 
 	ArrayList<Integer> get_latest(String table) { // get latest finishing id in
 													// descending order
+		Log.v("d","s");
 		ArrayList<Integer> output = new ArrayList<Integer>();
 		int i = num_of_ach_finished(table);
-		if (i == 1)
-			output.add(1);
+		if (i == 1){
+			output.add(retrieve_order(1,table));
+		}
 		else if (i > 1) {
-			output.add(2);
-			output.add(1);
+			output.add(retrieve_order(i,table));
+			output.add(retrieve_order(i-1,table));
 		}
 		return output;
 	}

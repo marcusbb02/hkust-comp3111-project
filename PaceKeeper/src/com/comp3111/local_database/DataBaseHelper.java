@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
 
 	private static String DB_NAME = "pacekeeper.db";
-	   private static final int DATABASE_VERSION = 29;
+	   private static final int DATABASE_VERSION = 31;
 	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -64,7 +64,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL(ACHEIVEMENT_TABLE);
 
 		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '2','1');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','2');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','1');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','3');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
 	}
 
 	public int getCount(String table) {
@@ -112,6 +115,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + PRO_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + PRO_USING);
 		db.execSQL("DROP TABLE IF EXISTS " + ACH_TABLE);
 		onCreate(db);
 	}

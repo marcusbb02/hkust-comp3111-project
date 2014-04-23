@@ -2,6 +2,7 @@ package com.comp3111.achievement;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import static com.comp3111.local_database.DataBaseConstants.*;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ public class P_ACH_Fragment extends Fragment {
 
 	// ((MyActivity ) getActivity()).getClassX() ;
 
+	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -51,18 +54,7 @@ public class P_ACH_Fragment extends Fragment {
 		LinearLayout recent_list = (LinearLayout) rootView
 				.findViewById(R.id.p_ach_r_layout);
 
-		// TODO init_recent_achievement_view();
-
 		Global_value gv = (Global_value) getActivity().getApplicationContext();
-
-		// init_all_achievement_view();
-		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
-			View v = inflater.inflate(R.layout.item_picture_block, null);
-			Achievement a = gv.PA.get_acheivement(i);
-			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
-			tv.setText(a.name);
-			all_ach_list.addView(v);
-		}
 
 		// circle view
 		nof = ((AchievementActivity) getActivity())
@@ -70,20 +62,50 @@ public class P_ACH_Fragment extends Fragment {
 		TextView fp = (TextView) rootView.findViewById(R.id.finishpercent);
 		fp.setText(String.valueOf(nof) + "%");
 
-		// recent view
+		// init_all_achievement_view();
+		
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+			View v = inflater.inflate(R.layout.item_picture_block, null);
+			Achievement a = gv.PA.get_acheivement(i);
+			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			tv.setText(a.name);
+			if (a.issucceed()) {
+				ImageView iv = (ImageView) v
+						.findViewById(R.id.item_picture_trop);
+				iv.setVisibility(0);
+				all_ach_list.addView(v);
+			}
+		}
+		
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+			View v = inflater.inflate(R.layout.item_picture_block, null);
+			Achievement a = gv.PA.get_acheivement(i);
+			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			tv.setText(a.name);
+			if (!a.issucceed()) {
+				all_ach_list.addView(v);
+			}
+		}
 
+		// recent view
 		ArrayList<Integer> a = ((AchievementActivity) getActivity())
 				.get_latest(ACH_TABLE);
-		for (int i = 0; i < a.size(); i++) {
-			Achievement b = gv.PA.get_acheivement(i);
-			if (a.get(i) == b.id) {
-				View v = inflater.inflate(R.layout.item_picture_block, null);
-				TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
-				tv.setText(b.name);
-				recent_list.addView(v);
-			}
+		for (int j = 0; j < a.size(); j++)
+			for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+				Achievement b = gv.PA.get_acheivement(i);
+				if (a.get(j) == b.id) {
+					View v = inflater
+							.inflate(R.layout.item_picture_block, null);
+					TextView tv = (TextView) v
+							.findViewById(R.id.item_picture_desc);
+					ImageView iv = (ImageView) v
+							.findViewById(R.id.item_picture_trop);
+					iv.setVisibility(0);
+					tv.setText(b.name);
+					recent_list.addView(v);
+				}
 
-		}
+			}
 		return rootView;
 
 	}
