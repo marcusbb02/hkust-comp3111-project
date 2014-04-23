@@ -42,7 +42,7 @@
                     android:layout_height="200dp" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/finishpercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -62,67 +62,38 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
+                android:text="Recented accomplished..."
+                android:textColor="#555555"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:id="@+id/p_ach_r_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
                 android:text="Accomplishments"
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />
 
-            <include
+            <LinearLayout
+                android:id="@+id/p_ach_a_layout"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                layout="@layout/item_picture_block" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
