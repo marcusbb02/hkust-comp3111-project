@@ -55,6 +55,7 @@ public class P_ACH_Fragment extends Fragment {
 				.findViewById(R.id.p_ach_r_layout);
 
 		Global_value gv = (Global_value) getActivity().getApplicationContext();
+		
 
 		// circle view
 		nof = ((AchievementActivity) getActivity())
@@ -87,6 +88,8 @@ public class P_ACH_Fragment extends Fragment {
 			}
 		}
 
+
+		
 		// recent view
 		ArrayList<Integer> a = ((AchievementActivity) getActivity())
 				.get_latest(ACH_TABLE);

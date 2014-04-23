@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.comp3111.local_database.DataBaseHelper;
 
@@ -28,7 +29,7 @@ public class PersonalAchievement { // for global uses
 		a1.type = "time";
 		a1.threshold = 30;
 		personal_ach_list.add(a1);
-		
+
 		Achievement a2 = new Achievement();
 		a2.id = 2;
 		a2.name = "Run for 60 minutes";
@@ -43,7 +44,6 @@ public class PersonalAchievement { // for global uses
 		a3.threshold = 1000;
 		personal_ach_list.add(a3);
 		dbhelper = new DataBaseHelper(context);
-		
 
 		Achievement a4 = new Achievement();
 		a4.id = 4;
@@ -53,7 +53,7 @@ public class PersonalAchievement { // for global uses
 		personal_ach_list.add(a4);
 		dbhelper = new DataBaseHelper(context);
 		update_record_from_db();
-		
+
 		Achievement a5 = new Achievement();
 		a5.id = 5;
 		a5.name = "walk for 5000 steps";
@@ -87,18 +87,26 @@ public class PersonalAchievement { // for global uses
 
 	}
 
-	public void store_record_to_db(int ach_id ,String record ) {
-		SQLiteDatabase db = dbhelper.getReadableDatabase();
-		Cursor cursor =db.rawQuery("SELECT MAX("+A_ORDER+") FROM "+ACH_TABLE, null);
-		
-		db = dbhelper.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		
-		values.put(A_REC,record);
-		values.put(A_ORDER,cursor.getInt(0)+1);
-		db.update(PRO_TABLE, values, PID + " = " + String.valueOf(ach_id),
-				null);
+	public void store_record(int ach_id, String record) {
+		int lo = 0;
 
+		SQLiteDatabase db = dbhelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT MAX(" + A_ORDER + ") FROM "
+				+ ACH_TABLE, null);
+		if (cursor != null) {
+			cursor.moveToFirst();
+			lo = cursor.getInt(0) + 1;
+		}
+		
+		Log.v("test2",String.valueOf(lo));
+		 db = dbhelper.getWritableDatabase();
+		 ContentValues values = new ContentValues();
+
+		 values.put(A_REC,record);
+		 values.put(A_ORDER,lo);
+		 db.update(ACH_TABLE, values, AID + " = " + String.valueOf(ach_id),
+		 null);
+		 update_record_from_db(); //update
 	}
 
 	ArrayList<Achievement> check_if_achieve(String type, int value) {
