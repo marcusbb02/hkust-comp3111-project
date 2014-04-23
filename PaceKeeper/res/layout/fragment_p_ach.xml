@@ -62,7 +62,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Recented accomplished..."
+                android:text="Recently accomplished..."
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />
