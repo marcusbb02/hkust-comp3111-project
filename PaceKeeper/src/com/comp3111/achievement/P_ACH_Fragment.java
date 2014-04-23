@@ -1,7 +1,12 @@
 package com.comp3111.achievement;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 
+import static com.comp3111.local_database.DataBaseConstants.*;
+import com.comp3111.local_database.DataBaseHelper;
+import com.comp3111.local_database.Global_value;
 import com.comp3111.pacekeeper.R;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,62 +20,108 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class P_ACH_Fragment extends Fragment {
-	
+
 	View rootView;
 	Handler mHandler;
 	Runnable mRunnable;
 	double currentPercentage = 0;
-	public static final int FRAME_RATE = 15; 
+	public static final int FRAME_RATE = 15;
 	public boolean firstTime = true;
+
+	int nof;
+
+	DataBaseHelper db = new DataBaseHelper(getActivity());
+
+	// ((MyActivity ) getActivity()).getClassX() ;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_p_ach, container,
-				false);
+		rootView = inflater.inflate(R.layout.fragment_p_ach, container, false);
 
-		
+		LinearLayout all_ach_list = (LinearLayout) rootView
+				.findViewById(R.id.p_ach_a_layout);
+		LinearLayout recent_list = (LinearLayout) rootView
+				.findViewById(R.id.p_ach_r_layout);
+
+		// TODO init_recent_achievement_view();
+
+		Global_value gv = (Global_value) getActivity().getApplicationContext();
+
+		// init_all_achievement_view();
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+			View v = inflater.inflate(R.layout.item_picture_block, null);
+			Achievement a = gv.PA.get_acheivement(i);
+			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			tv.setText(a.name);
+			all_ach_list.addView(v);
+		}
+
+		// circle view
+		nof = ((AchievementActivity) getActivity())
+				.finish_percentage(ACH_TABLE);
+		TextView fp = (TextView) rootView.findViewById(R.id.finishpercent);
+		fp.setText(String.valueOf(nof) + "%");
+
+		// recent view
+
+		ArrayList<Integer> a = ((AchievementActivity) getActivity())
+				.get_latest(ACH_TABLE);
+		for (int i = 0; i < a.size(); i++) {
+			Achievement b = gv.PA.get_acheivement(i);
+			if (a.get(i) == b.id) {
+				View v = inflater.inflate(R.layout.item_picture_block, null);
+				TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+				tv.setText(b.name);
+				recent_list.addView(v);
+			}
+
+		}
 		return rootView;
 
 	}
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-	    super.setUserVisibleHint(isVisibleToUser);
-	    if (isVisibleToUser && firstTime) { 
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser && firstTime) {
 			// animate percentage animation
-			final com.comp3111.ui.CircleView cv = (com.comp3111.ui.CircleView)rootView.findViewById(R.id.p_ach_circle);
-			final int finalPercentage = 65;
-			
+			final com.comp3111.ui.CircleView cv = (com.comp3111.ui.CircleView) rootView
+					.findViewById(R.id.p_ach_circle);
+			final int finalPercentage = nof;
+
 			cv.setPercentage(0);
 			mHandler = new Handler();
-			mRunnable = new Runnable(){
+			mRunnable = new Runnable() {
 				@Override
 				public void run() {
-					if(finalPercentage - currentPercentage < 0.01){
-						
-					}else{
+					if (finalPercentage - currentPercentage < 0.01) {
+
+					} else {
 						currentPercentage += (finalPercentage - currentPercentage) / 10;
-						cv.setPercentage((int)currentPercentage);
-						Log.i("CircleView",currentPercentage+"+("+finalPercentage+" - "+currentPercentage+")/10");
+						cv.setPercentage((int) currentPercentage);
+						Log.i("CircleView", currentPercentage + "+("
+								+ finalPercentage + " - " + currentPercentage
+								+ ")/10");
 						mHandler.postDelayed(this, FRAME_RATE);
 					}
-				}			
+				}
 			};
 			// defer to run after 0.5s
 			mHandler.postDelayed(mRunnable, 250);
 			firstTime = false;
-	    }
+		}
 	}
-	
+
 	@Override
-	public void onDestroy(){
+	public void onDestroy() {
 		super.onDestroy();
 	}
 

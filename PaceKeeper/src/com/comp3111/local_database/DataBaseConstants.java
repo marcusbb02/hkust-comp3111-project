@@ -25,7 +25,6 @@ public interface DataBaseConstants extends BaseColumns{
 	//personal_acheivements
     public static String ACH_TABLE = "personal_acheivement"; 
     public static String AID = "acheivement_id"; 
-    public static String A_NAME = "acheivement_name"; 
     public static String A_REC = "record"; 
     public static String A_ORDER = "finishing_order"; 
     
