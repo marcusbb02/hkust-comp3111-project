@@ -63,7 +63,6 @@ public class ProfileListActivity extends Activity implements
 	ArrayList<HashMap<String, Object>> listarray;
 
 	private ListView list;
-	private Button btnapply;
 	private ImageButton btnadd;
 	private Button btndel;
 	private DataBaseHelper dbhelper;
@@ -89,11 +88,9 @@ public class ProfileListActivity extends Activity implements
 		list = (ListView) findViewById(R.id.pro_list);
 
 		btnadd = (ImageButton) findViewById(R.id.add_profile_btn);
-		btnapply = (Button) findViewById(R.id.apply_profile_btn);
 		btndel = (Button) findViewById(R.id.del_profile_btn);
 
 		btnadd.setOnClickListener(this);
-		btnapply.setOnClickListener(this);
 		btndel.setOnClickListener(this);
 
 		cur_position = -1; // reset
@@ -105,9 +102,6 @@ public class ProfileListActivity extends Activity implements
 		switch (v.getId()) {
 		case R.id.add_profile_btn:
 			add_item();
-			break;
-		case R.id.apply_profile_btn:
-			change_apply_profile();
 			break;
 		case R.id.del_profile_btn:
 			del_item();
@@ -122,7 +116,6 @@ public class ProfileListActivity extends Activity implements
 		if (cur_position != -1) {
 			values.put(P_AID, id_list[cur_position]);
 			db.update(PRO_USING, values, null, null);
-			dialog("The profile you selected has been applied");
 			change_setting_data();
 			list_refresh();
 		}
@@ -278,7 +271,7 @@ public class ProfileListActivity extends Activity implements
 				cur_position = position;
 				View temp = prev;
 				prev = view;
-				// if (temp != view) { // not click the same item
+
 				if (temp != null) {
 					ImageView a = (ImageView) temp
 							.findViewById(R.id.onclick_bg);
@@ -286,7 +279,9 @@ public class ProfileListActivity extends Activity implements
 				}
 				ImageView a = (ImageView) view.findViewById(R.id.onclick_bg);
 				a.setImageAlpha(255);
-				// }
+
+				change_apply_profile();
+				finish();
 			}
 		});
 
@@ -593,51 +588,4 @@ public class ProfileListActivity extends Activity implements
 		}
 
 	}
-	/*
-	 * protected LayoutAnimationController getAnimationController() { int
-	 * duration = 400; AnimationSet set = new AnimationSet(true);
-	 * 
-	 * Animation animation = new AlphaAnimation(0.0f, 1.0f);
-	 * animation.setDuration(duration); set.addAnimation(animation);
-	 * 
-	 * animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-	 * Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 5.0f,
-	 * Animation.RELATIVE_TO_SELF, 0.0f); animation.setDuration(duration);
-	 * set.addAnimation(animation);
-	 * 
-	 * LayoutAnimationController controller = new LayoutAnimationController(
-	 * set, 0.4f); controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
-	 * return controller; }
-	 */
-}
-
-class fade_choice {
-	int current = 0;
-	Handler mHandler;
-	Runnable mRunnable;
-
-	void color_fade(final ImageView v, final int start, final int finish,
-			final int delta, final int frametime) {
-		current = start;
-
-		mHandler = new Handler();
-		mRunnable = new Runnable() {
-
-			@Override
-			public void run() {
-				if (Math.abs(finish - current) < delta - 1) {
-				} else {
-					if (finish > start)
-						current += delta;
-					else
-						current -= delta;
-					v.setImageAlpha(current);
-					mHandler.postDelayed(this, frametime);
-				}
-			}
-		};
-		mHandler.postDelayed(mRunnable, 250);
-
-	}
-
 }

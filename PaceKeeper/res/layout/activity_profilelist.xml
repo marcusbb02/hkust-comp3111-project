@@ -61,16 +61,6 @@
             android:text="Add" />
 
         <Button
-            android:id="@+id/apply_profile_btn"
-            style="?android:borderlessButtonStyle"
-            android:layout_width="194dp"
-            android:layout_height="61dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/del_profile_btn"
-            android:layout_toRightOf="@+id/add_profile_btn"
-            android:text="Apply" />
-
-        <Button
             android:id="@+id/del_profile_btn"
             style="?android:borderlessButtonStyle"
             android:layout_width="wrap_content"
