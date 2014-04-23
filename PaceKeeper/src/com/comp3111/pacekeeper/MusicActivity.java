@@ -172,6 +172,8 @@ public class MusicActivity extends Activity {
 			rht_text.setText(goal.getTitle());
 			rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_placeholder);
 			rht_text.setText(goal.getPlaceholder());
+			// setup for ResultActivity
+			ConsistentContents.currentStatInfo.journeyType = goal.getTitle();
 		  }
 		}
 	}
@@ -278,6 +280,7 @@ public class MusicActivity extends Activity {
 		rht_text.setText(goal.getTitle());
 		rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_placeholder);
 		rht_text.setText(goal.getPlaceholder());
+		ConsistentContents.currentStatInfo.journeyType = goal.getTitle();
 		rht_main_text = (TextView)rightPanel.findViewById(R.id.pedo_right_maintext);
 		Button btn_end = (Button)rightPanel.findViewById(R.id.pedo_right_halt);
 		btn_end.setOnClickListener(new OnClickListener(){
@@ -289,11 +292,9 @@ public class MusicActivity extends Activity {
 				goal.pauseGoal();
 				// settle the last distribution state and store to file
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
+				ConsistentContents.currentStatInfo.journeyTime = goal.getText();
 				ConsistentContents.aggRecords.addCurrentRecord();
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
-				if(!(goal instanceof QuickStartGoal)){
-					intent.putExtra("goal", "true");
-				}
 				startActivity(intent);
 				MusicActivity.this.finish();
 			}

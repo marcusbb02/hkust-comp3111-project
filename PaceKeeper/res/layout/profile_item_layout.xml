@@ -33,7 +33,7 @@
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/apply_icon"
+        android:layout_centerVertical="true"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/apply_icon"
         android:orientation="vertical" >
@@ -66,20 +66,20 @@
 
     <ImageView
         android:id="@+id/apply_icon"
-        android:layout_width="55dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/onclick_bg"
-        android:layout_alignTop="@+id/onclick_bg"
         android:src="@drawable/ic_circle_man" />
 
     <ImageButton
         android:id="@+id/edit_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignRight="@+id/p_bg"
-        android:layout_alignTop="@+id/linearLayout1"
-        android:layout_marginTop="3dp"
+        android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
-        android:background="@drawable/edit" />
+        android:layout_marginTop="3dp"
+        android:background="@drawable/ic_action_edit" />
 
 </RelativeLayout>

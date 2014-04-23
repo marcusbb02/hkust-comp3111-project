@@ -20,6 +20,7 @@ public class StatisticsInfo {
 		LARGE, MEDIUM, SMALL
 	};
 	
+	// pace distribution graph data
 	public ArrayList<GraphViewData> pace_dist = new ArrayList<GraphViewData>();
 
 	stepSize stepSizeVariable = stepSize.MEDIUM;
@@ -31,6 +32,8 @@ public class StatisticsInfo {
 	int totalSteps;
 	double timeLasted = 0.00001;// second
 	String recordDateString;
+	public String journeyType;		// goals title
+	public String journeyTime;		// time elapsed / steps / etc 
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);

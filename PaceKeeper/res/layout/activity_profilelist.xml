@@ -3,7 +3,9 @@
     android:id="@+id/rm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AAAAAA"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical" >
 
     <TextView
@@ -23,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="0dp"
-        android:text="Long press the item can change the colour"
+        android:text="Long press the item to change the colour"
         android:textColor="#333333"
         android:textSize="16sp"
         android:textStyle="italic" />
@@ -34,13 +36,11 @@
         android:layout_height="140dp"
         android:layout_marginTop="12dp"
         android:layout_weight="0.41"
-        android:background="#FFFFFF"
         android:choiceMode="singleChoice"
         android:divider="#555555"
-        android:dividerHeight="1px"
-      android:layoutAnimation="@anim/list_anim_layout"
+        android:dividerHeight="0px"
+        android:layoutAnimation="@anim/list_anim_layout"
         android:scrollingCache="true" >
-
     </ListView>
 
     <RelativeLayout
@@ -51,14 +51,13 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <Button
+        <ImageButton
             android:id="@+id/add_profile_btn"
-            style="?android:borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="left"
+            android:background="@drawable/ic_action_new"
             android:text="Add" />
 
         <Button
@@ -66,8 +65,7 @@
             style="?android:borderlessButtonStyle"
             android:layout_width="194dp"
             android:layout_height="61dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/del_profile_btn"
             android:layout_toRightOf="@+id/add_profile_btn"
             android:text="Apply" />
@@ -78,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:text="Del" />
     </RelativeLayout>
 

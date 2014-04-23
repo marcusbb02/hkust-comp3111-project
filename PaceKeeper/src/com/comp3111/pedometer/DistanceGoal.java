@@ -6,7 +6,7 @@ public class DistanceGoal extends Goal{
 	
 	// text goes here
 	public static final String TITLE_TEXT = "Distance Goal";
-	public static final String PLACEHOLDER_TEXT = "Remaining distance:";
+	public static final String PLACEHOLDER_TEXT = "Remaining distance";
 	
 	// time variables
 	private long distance = 5000;

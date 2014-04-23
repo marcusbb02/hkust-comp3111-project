@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!-- Dummy item to prevent EditText from receiving focus -->
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="200px"
@@ -35,11 +43,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -49,6 +55,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,10 +84,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:ems="10"
-					android:maxLength="6"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -85,6 +95,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -107,11 +123,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -121,6 +135,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -143,11 +163,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -157,6 +175,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -179,11 +203,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -193,6 +215,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -215,11 +243,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -229,6 +255,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -251,11 +283,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -265,6 +295,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -287,11 +323,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -301,6 +335,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -323,11 +363,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -337,6 +375,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -359,11 +403,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-					android:maxLength="6"
                     android:ems="10"
-                    android:inputType="numberDecimal" >
-
-                    <requestFocus />
+                    android:inputType="numberDecimal"
+                    android:maxLength="6" >
                 </EditText>
             </RelativeLayout>
 
@@ -373,6 +415,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/aas_line_separator" />
 
             <LinearLayout
                 android:layout_width="match_parent"

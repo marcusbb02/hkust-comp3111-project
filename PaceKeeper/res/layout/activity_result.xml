@@ -25,6 +25,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:gravity="center_vertical"
+                android:text="Journey Type"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/result_journey_type"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:text="TYPE_HERE"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/result_goal_title"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:text="GOAL_PLACEHOLDER"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/result_goal_value"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:text="TYPE_HERE"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
                 android:text="Pace distribution"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#FFFFFF"
@@ -32,52 +75,56 @@
                 android:textStyle="italic" />
 
             <RelativeLayout
-    			android:id="@+id/result_chart_wrapper"
-	            style="@style/nowCardStyle"
-    			android:layout_width="match_parent"
-    			android:layout_height="match_parent">    			
-	            <LinearLayout
-	                android:id="@+id/result_chart_container"
-	                android:layout_width="match_parent"
-	                android:layout_height="175dp"
-	                android:orientation="horizontal">
-	            </LinearLayout>
-		        <ImageView
-		            android:layout_width="16dp"
-		            android:layout_height="16dp"
-	        	    android:visibility="visible"
-	        	    android:scaleType="fitCenter"
-		            android:text="Up"
-		            android:layout_alignParentTop="true"
-		            android:src="@drawable/ic_circle_red" />
-		        <ImageView
-		            android:layout_width="16dp"
-		            android:layout_height="16dp"
-	        	    android:visibility="visible"
-	        	    android:scaleType="fitCenter"
-		            android:text="Up"
-		            android:layout_centerVertical="true"
-		            android:src="@drawable/ic_circle_man" />
-		        <ImageView
-		            android:layout_width="16dp"
-		            android:layout_height="16dp"
-	        	    android:visibility="visible"
-	        	    android:scaleType="fitCenter"
-		            android:text="Up"
-		            android:layout_alignParentBottom="true"
-		            android:src="@drawable/ic_circle_green" />
+                android:id="@+id/result_chart_wrapper"
+                style="@style/nowCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:id="@+id/result_chart_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_circle_red"
+                    android:text="Up"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_circle_man"
+                    android:text="Up"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_circle_green"
+                    android:text="Up"
+                    android:visibility="visible" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:gravity="center_vertical"
-                android:text="Journey's statistics"
+                android:text="Journey&apos;s statistics"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
                 android:textStyle="italic" />
-            
+
             <LinearLayout
                 android:id="@+id/result_stat_container"
                 style="@style/nowCardStyle"
@@ -133,7 +180,8 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--  http://stackoverflow.com/questions/6216547/android-dynamically-add-views-into-view -->
+            <!-- http://stackoverflow.com/questions/6216547/android-dynamically-add-views-into-view -->
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -143,13 +191,14 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
                 android:textStyle="italic" />
+
             <LinearLayout
                 android:id="@+id/result_song_container"
                 style="@style/nowCardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-            
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -159,13 +208,14 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
                 android:textStyle="italic" />
+
             <LinearLayout
                 android:id="@+id/result_achievement_container"
                 style="@style/nowCardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-            
+
             <TextView
                 android:id="@+id/result_textview"
                 android:layout_width="wrap_content"

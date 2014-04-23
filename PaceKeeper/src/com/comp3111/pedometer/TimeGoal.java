@@ -6,7 +6,7 @@ public class TimeGoal extends Goal{
 	
 	// text goes here
 	public static final String TITLE_TEXT = "Time Goal";
-	public static final String PLACEHOLDER_TEXT = "Remaining time:";
+	public static final String PLACEHOLDER_TEXT = "Remaining time";
 	
 	// time variables
 	private long secs = 1800;

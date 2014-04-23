@@ -6,7 +6,7 @@ public class StepGoal extends Goal{
 	
 	// text goes here
 	public static final String TITLE_TEXT = "Step Goal";
-	public static final String PLACEHOLDER_TEXT = "Remaining steps:";
+	public static final String PLACEHOLDER_TEXT = "Remaining steps";
 	
 	// step variables
 	private long step = 1000;

@@ -6,7 +6,7 @@ public class QuickStartGoal extends Goal{
 	
 	// text goes here
 	public static final String TITLE_TEXT = "Quick Start";
-	public static final String PLACEHOLDER_TEXT = "Time elapsed:";
+	public static final String PLACEHOLDER_TEXT = "Time elapsed";
 	
 	// time variables
 	private long secs = 0;

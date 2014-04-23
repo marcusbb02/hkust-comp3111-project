@@ -4,7 +4,10 @@ import java.text.DecimalFormat;
 
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.ConsistentContents;
+import com.comp3111.pedometer.DistanceGoal;
+import com.comp3111.pedometer.QuickStartGoal;
 import com.comp3111.pedometer.SpeedAdjuster;
+import com.comp3111.pedometer.StepGoal;
 import com.comp3111.pedometer.TimeGoal;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -28,24 +31,12 @@ public class ResultActivity extends Activity {
 		TextView test = (TextView) findViewById(R.id.result_textview);
 		test.setText(""+ConsistentContents.currentStatInfo.getCaloriesBurn());
 		
-		InitPaceDistGraph();
-		InitJourneyStat();
-		InitExtra();
+		initPaceDistGraph();
+		initJourneyStat();
+		checkGoalType();
 	}
 
-	private void InitExtra() {
-		// TODO for specifying goals from GoalActivity
-		Bundle extras = this.getIntent().getExtras();
-		if ( extras != null ) {
-		  if ( extras.containsKey("goal") ) {
-			// Set the color to different atmosphere
-			View mainview = (View)findViewById(R.id.result_main);
-			mainview.setBackgroundColor(getResources().getColor(R.drawable.color_green));
-		  }
-		}		
-	}
-
-	public void InitJourneyStat() {
+	public void initJourneyStat() {
 		// rename cells
     	TextView cell_text = (TextView)findViewById(R.id.result_stat_cell2).findViewById(R.id.pedo_left_block_desc);
     	cell_text.setText("miles");
@@ -68,7 +59,7 @@ public class ResultActivity extends Activity {
 
 	}
 
-	public void InitPaceDistGraph() {
+	public void initPaceDistGraph() {
 		// init example series data
 		GraphViewData[] graphData = ConsistentContents.currentStatInfo.pace_dist.toArray(new GraphViewData[ConsistentContents.currentStatInfo.pace_dist.size()]);
 		final GraphViewSeries exampleSeries = new GraphViewSeries(graphData);		
@@ -92,6 +83,36 @@ public class ResultActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.result, menu);
 		return true;
+	}
+	
+	public void checkGoalType(){
+		// set the text of placeholders
+	    TextView placeholder = (TextView) findViewById(R.id.result_journey_type);
+	    placeholder.setText(ConsistentContents.currentStatInfo.journeyType);
+	    placeholder = (TextView) findViewById(R.id.result_goal_title);
+	    if(!ConsistentContents.currentStatInfo.journeyType.equals(QuickStartGoal.TITLE_TEXT)){
+			// Set the color to different atmosphere
+			View mainview = (View)findViewById(R.id.result_main);
+			mainview.setBackgroundColor(getResources().getColor(R.drawable.color_green));
+	    } else {
+	    	// set goal target text
+	    	placeholder.setText(QuickStartGoal.PLACEHOLDER_TEXT);
+	    }
+	    if(ConsistentContents.currentStatInfo.journeyType.equals(TimeGoal.TITLE_TEXT)){
+	    	// set goal target text
+	    	placeholder.setText(TimeGoal.PLACEHOLDER_TEXT);
+	    } else if(ConsistentContents.currentStatInfo.journeyType.equals(DistanceGoal.TITLE_TEXT)){
+	    	// set goal target text
+	    	placeholder.setText(DistanceGoal.PLACEHOLDER_TEXT);
+	    } else if(ConsistentContents.currentStatInfo.journeyType.equals(StepGoal.TITLE_TEXT)){
+	    	// set goal target text
+	    	placeholder.setText(StepGoal.PLACEHOLDER_TEXT);
+	    }/* else if(ConsistentContents.currentStatInfo.journeyType.equals(TimeGoal.TITLE_TEXT)){
+	    	// set goal target text
+	    	placeholder.setText(TimeGoal.PLACEHOLDER_TEXT);
+	    }*/
+	    placeholder = (TextView) findViewById(R.id.result_goal_value);
+	    placeholder.setText(ConsistentContents.currentStatInfo.journeyTime);
 	}
 	
     double roundOneDecimal(double d) { 

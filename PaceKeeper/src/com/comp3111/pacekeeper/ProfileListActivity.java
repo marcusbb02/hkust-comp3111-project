@@ -64,7 +64,7 @@ public class ProfileListActivity extends Activity implements
 
 	private ListView list;
 	private Button btnapply;
-	private Button btnadd;
+	private ImageButton btnadd;
 	private Button btndel;
 	private DataBaseHelper dbhelper;
 	ProfileListAdapter myadapter;
@@ -88,7 +88,7 @@ public class ProfileListActivity extends Activity implements
 		dbhelper = new DataBaseHelper(this);
 		list = (ListView) findViewById(R.id.pro_list);
 
-		btnadd = (Button) findViewById(R.id.add_profile_btn);
+		btnadd = (ImageButton) findViewById(R.id.add_profile_btn);
 		btnapply = (Button) findViewById(R.id.apply_profile_btn);
 		btndel = (Button) findViewById(R.id.del_profile_btn);
 
