@@ -23,43 +23,22 @@ public class PersonalAchievement { // for global uses
 
 	public PersonalAchievement(Context context) { // all default personal
 													// achievements
-		Achievement a1 = new Achievement();
-		a1.id = 1;
-		a1.name = "Run for 30 minutes";
-		a1.type = "time";
-		a1.threshold = 30;
+		Achievement a1 = new Achievement(1,"Run for 1 minute","time",1);
+		Achievement a2 = new Achievement(2,"Run for 30 minutes","time",30);
+		Achievement a3 = new Achievement(3,"Run for 60 minutes","time",60);
 		personal_ach_list.add(a1);
-
-		Achievement a2 = new Achievement();
-		a2.id = 2;
-		a2.name = "Run for 60 minutes";
-		a2.type = "time";
-		a2.threshold = 60;
 		personal_ach_list.add(a2);
-
-		Achievement a3 = new Achievement();
-		a3.id = 3;
-		a3.name = "walk for 1000 steps";
-		a3.type = "step";
-		a3.threshold = 1000;
 		personal_ach_list.add(a3);
-		dbhelper = new DataBaseHelper(context);
 
-		Achievement a4 = new Achievement();
-		a4.id = 4;
-		a4.name = "walk for 2000 steps";
-		a4.type = "step";
-		a4.threshold = 2000;
-		personal_ach_list.add(a4);
-		dbhelper = new DataBaseHelper(context);
-		update_record_from_db();
-
-		Achievement a5 = new Achievement();
-		a5.id = 5;
-		a5.name = "walk for 5000 steps";
-		a5.type = "step";
-		a5.threshold = 5000;
-		personal_ach_list.add(a5);
+		Achievement b1 = new Achievement(4,"walk for 100 steps","step",100);
+		Achievement b2 = new Achievement(5,"walk for 1000 steps","step",1000);
+		Achievement b3 = new Achievement(6,"walk for 2000 steps","step",2000);
+		Achievement b4 = new Achievement(7,"walk for 5000 steps","step",5000);
+		personal_ach_list.add(b1);
+		personal_ach_list.add(b2);
+		personal_ach_list.add(b3);
+		personal_ach_list.add(b4);
+		
 		dbhelper = new DataBaseHelper(context);
 		update_record_from_db();
 	}

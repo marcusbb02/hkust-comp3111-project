@@ -63,10 +63,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		+ A_ORDER 	+ " INTEGER" +");";
 		db.execSQL(ACHEIVEMENT_TABLE);
 
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
+		for(int i=0;i<7;i++)
 		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
 	}
 

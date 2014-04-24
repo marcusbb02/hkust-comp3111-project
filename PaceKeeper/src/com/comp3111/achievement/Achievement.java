@@ -7,6 +7,13 @@ public class Achievement {
 	public int threshold = 0;
 	public String record = "";
 
+	Achievement(int id, String name, String type, int threshold) {
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.threshold = threshold;
+	}
+
 	String ach_name() {
 		return name;
 	}
