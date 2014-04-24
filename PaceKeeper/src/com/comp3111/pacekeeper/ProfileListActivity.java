@@ -256,10 +256,10 @@ public class ProfileListActivity extends Activity implements
 						R.id.apply_icon, R.id.p_name, R.id.p_description,
 						R.id.edit_btn, R.id.onclick_bg });
 
-//		if (firsttime) {
-	///		list.setLayoutAnimation(getAnimationController());
-	//		firsttime = false;
-	//	}
+		// if (firsttime) {
+		// / list.setLayoutAnimation(getAnimationController());
+		// firsttime = false;
+		// }
 
 		list.setAdapter(myadapter);
 
@@ -287,10 +287,9 @@ public class ProfileListActivity extends Activity implements
 
 		list.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-	
 			public boolean onItemLongClick(AdapterView<?> arg0,
 					final View arg1, final int pos, long id) {
-				
+
 				AlertDialog.Builder builderSingle = new AlertDialog.Builder(
 						ProfileListActivity.this);
 				builderSingle.setTitle("Select a colour");
@@ -326,31 +325,40 @@ public class ProfileListActivity extends Activity implements
 										.getWritableDatabase();
 								ContentValues values = new ContentValues();
 								if (strName == "Red") {
-									arg1.setBackgroundColor(Color.argb(202,255, 175, 175));
-									values.put(P_COL, Color.argb(202,255, 175, 175));
+									arg1.setBackgroundColor(Color.argb(202,
+											255, 175, 175));
+									values.put(P_COL,
+											Color.argb(202, 255, 175, 175));
 								} else if (strName == "Orange") {
-									arg1.setBackgroundColor(Color.argb(202,255, 227,
-											160));
-									values.put(P_COL, Color.argb(202,255, 227,
-											160));
+									arg1.setBackgroundColor(Color.argb(202,
+											255, 227, 160));
+									values.put(P_COL,
+											Color.argb(202, 255, 227, 160));
 								} else if (strName == "Yellow") {
-									arg1.setBackgroundColor(Color.argb(202,255, 251, 102));
-									values.put(P_COL, Color.argb(202,255, 251, 102));
+									arg1.setBackgroundColor(Color.argb(202,
+											255, 251, 102));
+									values.put(P_COL,
+											Color.argb(202, 255, 251, 102));
 								} else if (strName == "Green") {
-									arg1.setBackgroundColor(Color.argb(202,211, 233, 146));
-									values.put(P_COL, Color.argb(202,211, 233, 146));
+									arg1.setBackgroundColor(Color.argb(202,
+											211, 233, 146));
+									values.put(P_COL,
+											Color.argb(202, 211, 233, 146));
 								} else if (strName == "Blue") {
-									arg1.setBackgroundColor(Color.argb(194,168, 223, 244));
-									values.put(P_COL, Color.argb(194,168, 223, 244));
+									arg1.setBackgroundColor(Color.argb(194,
+											168, 223, 244));
+									values.put(P_COL,
+											Color.argb(194, 168, 223, 244));
 								} else if (strName == "Violet") {
-									arg1.setBackgroundColor(Color.argb(202,221, 188,
-											238));
-									values.put(P_COL, Color.argb(202,159, 77, 149));
+									arg1.setBackgroundColor(Color.argb(202,
+											221, 188, 238));
+									values.put(P_COL,
+											Color.argb(202, 159, 77, 149));
 								} else if (strName == "Grey") {
-									arg1.setBackgroundColor(Color.argb(202,215, 209,
-											216));
-									values.put(P_COL, Color.argb(202,215, 209,
-											216));
+									arg1.setBackgroundColor(Color.argb(202,
+											215, 209, 216));
+									values.put(P_COL,
+											Color.argb(202, 215, 209, 216));
 								}
 
 								strName = "";
@@ -420,7 +428,7 @@ public class ProfileListActivity extends Activity implements
 				}).show();
 	}
 
-	public void change_setting_data() {		//change user setting class 
+	public void change_setting_data() { // change user setting class
 		String[] getdata = new String[9];
 		getdata = dbhelper.get_applying_profile_data();
 		UserSettings us = ConsistentContents.currentUserSettings;
@@ -441,6 +449,8 @@ public class ProfileListActivity extends Activity implements
 			if (resultCode == 0) { // no change
 				edit_position = -1;
 			} else if (resultCode == 2) { // update call
+				if (apply_position == edit_position)
+					change_setting_data();
 				edit_position = -1;
 				cur_position = -1;
 				dialog("The profile has been updated");
