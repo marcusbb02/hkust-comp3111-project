@@ -109,7 +109,7 @@ public class PersonalAchievement { // for global uses
 		 update_record_from_db(); //update
 	}
 
-	ArrayList<Achievement> check_if_achieve(String type, int value) {
+public 	ArrayList<Achievement> check_if_achieve(String type, int value) {
 		ArrayList<Achievement> sublist = new ArrayList<Achievement>();
 		for (int i = 0; i < personal_ach_list.size(); i++)
 			if (personal_ach_list.get(i).type.equals(type)

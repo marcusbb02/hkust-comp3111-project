@@ -304,7 +304,6 @@ public class ProfileListActivity extends Activity implements
 				arrayAdapter.add("Blue");
 				arrayAdapter.add("Violet");
 				arrayAdapter.add("Grey");
-				arrayAdapter.add("Black");
 				builderSingle.setNegativeButton("cancel",
 						new DialogInterface.OnClickListener() {
 

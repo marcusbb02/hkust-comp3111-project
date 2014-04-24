@@ -48,7 +48,7 @@ public class AggregatedRecords {
 				//ConsistentContents.currentStatInfo.distanceTravelled
 				totalMiles+=ConsistentContents.currentStatInfo.distanceTravelled;
 				//ConsistentContents.currentStatInfo.getStepPerTime()
-				avgSPM=avgSPM+ConsistentContents.currentStatInfo.getDistancePerTime();
+				avgSPM=avgSPM+ConsistentContents.currentStatInfo.getStepPerTime();
 				//ConsistentContents.currentStatInfo.getDistancePerTime()
 				avgMPH=avgMPH+ConsistentContents.currentStatInfo.getDistancePerTime();
 				//ConsistentContents.currentStatInfo.calories

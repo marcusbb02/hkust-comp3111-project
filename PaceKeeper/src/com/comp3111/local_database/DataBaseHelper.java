@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
 
 	private static String DB_NAME = "pacekeeper.db";
-	   private static final int DATABASE_VERSION = 31;
+	   private static final int DATABASE_VERSION = 32;
 	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -49,9 +49,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		+ P_JOG 	+ " REAL," 
 		+ P_SPRINT 	+ " REAL " + ");";
 		db.execSQL(PROFILE_TABLE);
-
+//default
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(null, 'test','I am a tea kettle fat and short', '-8684677','test@KIMSUNG.COM', '99', '180', '180','3', '199','299','399');");
+		"(null, 'Default','I am a tea kettle fat and short', '-8684677','test@default.com', '20', '170', '68','0', '5.0','4.5','4.0');");
 		
 		db.execSQL("CREATE TABLE " + PRO_USING + " ( " + P_AID + " INTEGER" + ");");
 		db.execSQL("INSERT INTO "+PRO_USING+"  Values "+" ('1') ;");
@@ -64,9 +64,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL(ACHEIVEMENT_TABLE);
 
 		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','2');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','1');");
-		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , 'test','3');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
+		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
 		db.execSQL("INSERT INTO "+ACH_TABLE+"  Values "+"(null , '','0');");
 	}
 
