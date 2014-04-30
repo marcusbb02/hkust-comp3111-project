@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.comp3111.pacekeeper"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application android:name="com.comp3111.local_database.Global_value"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light" > 	
+        <activity
+            android:name="com.comp3111.pacekeeper.PedoActivity"
+            android:label="@string/title_activity_pedo"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.MusicActivity"
+            android:label="@string/title_activity_music"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.GoalActivity"
+            android:label="@string/title_activity_goal"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.SocialActivity"
+            android:label="@string/title_activity_social"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.ProfileListActivity"
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.achievement.AchievementActivity"
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.AdvancedSettingsActivity"
+            android:label="@string/title_activity_advancedsetting"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.GreetActivity"
+            android:label="@string/title_activity_greet"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.ResultActivity"
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.ExtendedMusicActivity"
+            android:label="@string/title_activity_extended_music"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.comp3111.pacekeeper.MusicActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.comp3111.pacekeeper.MusicActivity" />
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.comp3111.pacekeeper.GreetActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.comp3111.pacekeeper.GreetActivity" />
+        </activity>
+    </application>
+</manifest>
