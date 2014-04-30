@@ -60,7 +60,7 @@ public class P_ACH_Fragment extends Fragment {
 		// circle view
 		nof = ((AchievementActivity) getActivity())
 				.finish_percentage(ACH_TABLE);
-		TextView fp = (TextView) rootView.findViewById(R.id.finishpercent);
+		TextView fp = (TextView) rootView.findViewById(R.id.p_ach_finishpercent);
 		fp.setText(String.valueOf(nof) + "%");
 
 		// init_all_achievement_view();

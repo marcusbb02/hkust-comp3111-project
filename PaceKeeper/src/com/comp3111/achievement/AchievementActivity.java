@@ -35,8 +35,8 @@ public class AchievementActivity extends FragmentActivity implements
 	private ActionBar actionBar;
 	// Tab titles
 	// private String[] tabs = { "STAT", "PER-ACH", "JOINT-ACH" };
-	private int[] tabs = { R.drawable.ic_button_calibrate,
-			R.drawable.ic_button_calibrate, R.drawable.ic_button_calibrate };
+	private int[] tabs = { R.drawable.ic_action_view_as_list,
+			R.drawable.ic_action_person, R.drawable.ic_action_group };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

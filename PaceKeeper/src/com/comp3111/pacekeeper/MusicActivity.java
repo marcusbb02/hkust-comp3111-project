@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comp3111.achievement.PersonalAchievement;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.*;
 import com.comp3111.swipeview.SwipeDismissTouchListener;
@@ -62,6 +63,7 @@ public class MusicActivity extends Activity {
 	Pedometer pedo;
 	int lastSpeedState = SpeedAdjuster.SA_NORMAL;
 	Goal goal = null;
+	//public PersonalAchievement per_ach = new PersonalAchievement(this);
 	
 	/**
 	 * Consistent Contents includes
@@ -91,7 +93,7 @@ public class MusicActivity extends Activity {
 		// TODO make an alertdialog asking for walk/jog/run, and put the appropriate average step duration to infoContent
 		final Dialog dialog = new Dialog(MusicActivity.this);
 		dialog.setContentView(R.layout.dialog_mode);
-		dialog.setTitle("I would like to ...");
+		dialog.setTitle("I would like to");
 		// force user to choose from one of the modes
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.setCancelable(false);
@@ -118,12 +120,11 @@ public class MusicActivity extends Activity {
 		};
 		
 		// initialize the buttons
-		Button dialog_but = (Button) dialog.findViewById(R.id.d_mode_walk);
+		RelativeLayout dialog_but = (RelativeLayout) dialog.findViewById(R.id.d_mode_walk);
 		dialog_but.setOnClickListener(userModeOCL);
-		dialog_but = (Button) dialog.findViewById(R.id.d_mode_jog);
+		dialog_but = (RelativeLayout) dialog.findViewById(R.id.d_mode_jog);
 		dialog_but.setOnClickListener(userModeOCL);
-		dialog_but = (Button) dialog.findViewById(R.id.d_mode_run);
-		dialog_but.setOnClickListener(userModeOCL);
+ 		dialog_but.setOnClickListener(userModeOCL);
 		// ... and show the dialog
 		dialog.show();
 		

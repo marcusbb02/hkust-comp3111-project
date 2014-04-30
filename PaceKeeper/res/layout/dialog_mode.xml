@@ -3,24 +3,65 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
- 
-    <Button
+
+    <RelativeLayout
         android:id="@+id/d_mode_walk"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_weight="1"
-        android:text="Walk" />
-    <Button
+        android:background="@drawable/dialog_mode_walk_selector">
+        <TextView
+            android:id="@+id/d_mode_walk_text"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textStyle="italic"
+            android:text="Walk"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:id="@+id/d_mode_jog"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_weight="1"
-        android:text="Jog" />
-    <Button
+        android:background="@drawable/dialog_mode_jog_selector">
+        <TextView
+            android:id="@+id/d_mode_jog_text"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textStyle="italic"
+            android:text="Jog"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:id="@+id/d_mode_run"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_weight="1"
-        android:text="Run" />
- 
+        android:background="@drawable/dialog_mode_run_selector">
+        <TextView
+            android:id="@+id/d_mode_run_text"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textStyle="italic"
+            android:text="Run"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
 </LinearLayout>

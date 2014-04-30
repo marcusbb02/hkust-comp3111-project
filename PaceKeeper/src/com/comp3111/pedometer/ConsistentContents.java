@@ -1,5 +1,6 @@
 package com.comp3111.pedometer;
 
+import com.comp3111.achievement.PersonalAchievement;
 import com.smp.soundtouchandroid.SoundTouchPlayable;
 
 public class ConsistentContents {

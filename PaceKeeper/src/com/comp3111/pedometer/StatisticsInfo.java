@@ -33,7 +33,7 @@ public class StatisticsInfo {
 	double timeLasted = 0.00001;// second
 	String recordDateString;
 	public String journeyType;		// goals title
-	public String journeyTime;		// time elapsed / steps / etc 
+	public String journeyTime;		// time elapsed / steps / etc
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);

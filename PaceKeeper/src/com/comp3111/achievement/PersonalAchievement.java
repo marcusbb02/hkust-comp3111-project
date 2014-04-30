@@ -30,14 +30,21 @@ public class PersonalAchievement { // for global uses
 		personal_ach_list.add(a2);
 		personal_ach_list.add(a3);
 
-		Achievement b1 = new Achievement(4,"walk for 100 steps","step",100);
-		Achievement b2 = new Achievement(5,"walk for 1000 steps","step",1000);
-		Achievement b3 = new Achievement(6,"walk for 2000 steps","step",2000);
-		Achievement b4 = new Achievement(7,"walk for 5000 steps","step",5000);
+		Achievement b1 = new Achievement(4,"Walk for 100 steps","step",100);
+		Achievement b2 = new Achievement(5,"Walk for 1000 steps","step",1000);
+		Achievement b3 = new Achievement(6,"Walk for 2000 steps","step",2000);
+		Achievement b4 = new Achievement(7,"Walk for 5000 steps","step",5000);
 		personal_ach_list.add(b1);
 		personal_ach_list.add(b2);
 		personal_ach_list.add(b3);
 		personal_ach_list.add(b4);
+		
+		/*Achievement c1 = new Achievement(8,"Go for 500 miles","dist",500);
+		Achievement c2 = new Achievement(9,"Go for 1000 miles","dist",1000);
+		Achievement c3 = new Achievement(10,"Go for 2000 miles","dist",2000);
+		personal_ach_list.add(c1);
+		personal_ach_list.add(c2);
+		personal_ach_list.add(c3);*/
 		
 		dbhelper = new DataBaseHelper(context);
 		update_record_from_db();
