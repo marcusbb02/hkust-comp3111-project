@@ -358,7 +358,7 @@ public class ProfileListActivity extends Activity implements
                          @Override
                          public void onSwipeLeft(ListView listView,
                                          int[] reverseSortedPositions) {
-                                 // Log.i(this.getClass().getName(),
+                                 // Log.i(this.getClass().getName(), 
                                  // "swipe left : pos="+reverseSortedPositions[0]);
                                  // TODO : YOUR CODE HERE FOR LEFT ACTION
                          }
@@ -585,7 +585,7 @@ public class ProfileListActivity extends Activity implements
 				this.parent = parent;
 			}
 
-			@Override
+			@Override 
 			public void onClick(View v) {
 
 				switch (v.getId()) {

@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.comp3111.local_database.DataBaseHelper;
+import com.comp3111.local_database.Global_value;
+import com.comp3111.pedometer.ConsistentContents;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,7 +22,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class SettingActivity extends PreferenceActivity {
-
+	
+	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,8 +47,12 @@ public class SettingActivity extends PreferenceActivity {
 		}
 	}
 	
+	public static void deletesqltable() {
 
+		
+	}
 
+	
 
 
 }
@@ -77,8 +84,16 @@ class CARDialogPreference extends DialogPreference {
 
 class RESETDialogPreference extends DialogPreference {
 
+	DataBaseHelper dbhelper=null;
+	Global_value gv;
+	Context c;
+	
 	public RESETDialogPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		c=context;
+		dbhelper=new DataBaseHelper(context);
+		gv = (Global_value) context.getApplicationContext();
+		
 	}
 
 	public void onClick(DialogInterface dialog, int which) {
@@ -86,25 +101,25 @@ class RESETDialogPreference extends DialogPreference {
 		switch (which) {
 		case -1:
 			SettingActivity.deleteFiles();
-			break;
+			dbhelper.close();
+			delete_sql_database();
+			gv.PA.update_record_from_db();			//update globle achievement values
+			
+			break;	
 		}
 	}
 
-
+	void delete_sql_database(){
+		c.deleteDatabase("pacekeeper.db");
+	}
+	
+	
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
 		persistBoolean(positiveResult);
 	}
 
-	public static void deletesqltable() {
-	//	DataBaseHelper dbhelper=new DataBaseHelper(getActivity());
-	//	SQLiteDatabase db = dbhelper.getWritableDatabase();
-		
-	//	db.execSQL("DROP TABLE IF EXISTS " + PRO_TABLE);
-	//	db.execSQL("DROP TABLE IF EXISTS " + PRO_USING);
-	//	db.execSQL("DROP TABLE IF EXISTS " + ACH_TABLE);
-//		dbhelper.onCreate(db);
-	}
+
 
 }
