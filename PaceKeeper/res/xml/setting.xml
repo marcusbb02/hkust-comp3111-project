@@ -3,16 +3,28 @@
 
     <PreferenceCategory android:title="Pedometer" >
         <Preference
-            android:title="Advanced settings" android:summary="Change parameters of the Pedometer module">
-                <intent
-             android:action="android.intent.action.VIEW"
-             android:targetPackage="com.comp3111.pacekeeper"
-             android:targetClass="com.comp3111.pacekeeper.AdvancedSettingsActivity" />  
+            android:summary="Change parameters of the Pedometer module"
+            android:title="Advanced settings" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.comp3111.pacekeeper.AdvancedSettingsActivity"
+                android:targetPackage="com.comp3111.pacekeeper" />
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset" >
-        <Preference android:title="Clear All Records" android:summary="Remove all your running histories"/>
-        <Preference android:title="Reset Application" android:summary="Remove all running histories and profiles and reset Pedometer parameters"/>
+        <com.comp3111.pacekeeper.CARDialogPreference
+            android:dialogMessage="Are you sure?"
+            android:negativeButtonText="No"
+            android:positiveButtonText="Yes"
+            android:summary="Remove all your running histories"
+            android:title="Clear All Records" />
+
+        <com.comp3111.pacekeeper.RESETDialogPreference
+            android:dialogMessage="Are you sure?"
+            android:negativeButtonText="No"
+            android:positiveButtonText="Yes"
+            android:summary="Remove all running histories and profiles and reset Pedometer parameters"
+            android:title="Reset Application" />
     </PreferenceCategory>
 
 </PreferenceScreen>
