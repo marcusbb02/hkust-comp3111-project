@@ -26,7 +26,7 @@ public class PersonalAchievement { // for global uses
 		Achievement a1 = new Achievement(1,"Run for 1 minute","time",1);
 		Achievement a2 = new Achievement(2,"Run for 30 minutes","time",30);
 		Achievement a3 = new Achievement(3,"Run for 60 minutes","time",60);
-		personal_ach_list.add(a1);
+		personal_ach_list.add(a1); 
 		personal_ach_list.add(a2);
 		personal_ach_list.add(a3);
 
@@ -38,7 +38,7 @@ public class PersonalAchievement { // for global uses
 		personal_ach_list.add(b2);
 		personal_ach_list.add(b3);
 		personal_ach_list.add(b4);
-		
+		  
 		/*Achievement c1 = new Achievement(8,"Go for 500 miles","dist",500);
 		Achievement c2 = new Achievement(9,"Go for 1000 miles","dist",1000);
 		Achievement c3 = new Achievement(10,"Go for 2000 miles","dist",2000);

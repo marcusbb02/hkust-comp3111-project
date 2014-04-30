@@ -13,6 +13,7 @@ import com.comp3111.pedometer.ConsistentContents;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,15 +23,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class SettingActivity extends PreferenceActivity {
-	
-	 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.setting);
 
 	}
-	
+
 	public static void deleteFiles() {
 
 		final String path = Environment.getExternalStorageDirectory()
@@ -46,21 +46,20 @@ public class SettingActivity extends PreferenceActivity {
 			}
 		}
 	}
-	
+
 	public static void deletesqltable() {
 
-		
 	}
-
-	
-
 
 }
 
 class CARDialogPreference extends DialogPreference {
 
+	Context c;
+
 	public CARDialogPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		c = context;
 	}
 
 	public void onClick(DialogInterface dialog, int which) {
@@ -68,11 +67,17 @@ class CARDialogPreference extends DialogPreference {
 		switch (which) {
 		case -1:
 			SettingActivity.deleteFiles();
+			restart_app();
 			break;
 		}
 	}
-	
 
+	void restart_app() {
+		Intent i = c.getPackageManager().getLaunchIntentForPackage(
+				c.getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		c.startActivity(i);
+	}
 
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
@@ -84,16 +89,16 @@ class CARDialogPreference extends DialogPreference {
 
 class RESETDialogPreference extends DialogPreference {
 
-	DataBaseHelper dbhelper=null;
+	DataBaseHelper dbhelper = null;
 	Global_value gv;
 	Context c;
-	
+
 	public RESETDialogPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		c=context;
-		dbhelper=new DataBaseHelper(context);
+		c = context;
+		dbhelper = new DataBaseHelper(context);
 		gv = (Global_value) context.getApplicationContext();
-		
+
 	}
 
 	public void onClick(DialogInterface dialog, int which) {
@@ -103,23 +108,27 @@ class RESETDialogPreference extends DialogPreference {
 			SettingActivity.deleteFiles();
 			dbhelper.close();
 			delete_sql_database();
-			gv.PA.update_record_from_db();			//update globle achievement values
-			
-			break;	
+			gv.PA.update_record_from_db(); // update globle achievement values
+			restart_app();
+			break;
 		}
 	}
 
-	void delete_sql_database(){
+	void delete_sql_database() {
 		c.deleteDatabase("pacekeeper.db");
 	}
-	
-	
+
+	void restart_app() {
+		Intent i = c.getPackageManager().getLaunchIntentForPackage(
+				c.getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		c.startActivity(i);
+	}
+
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
 		persistBoolean(positiveResult);
 	}
-
-
 
 }
