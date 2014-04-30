@@ -1,24 +1,11 @@
 package com.comp3111.pacekeeper;
 
-import static com.comp3111.local_database.DataBaseConstants.PID;
-import static com.comp3111.local_database.DataBaseConstants.PRO_TABLE;
-import static com.comp3111.local_database.DataBaseConstants.PRO_USING;
-import static com.comp3111.local_database.DataBaseConstants.P_AGE;
-import static com.comp3111.local_database.DataBaseConstants.P_AID;
-import static com.comp3111.local_database.DataBaseConstants.P_COL;
-import static com.comp3111.local_database.DataBaseConstants.P_DES;
-import static com.comp3111.local_database.DataBaseConstants.P_EMAIL;
-import static com.comp3111.local_database.DataBaseConstants.P_HEI;
-import static com.comp3111.local_database.DataBaseConstants.P_JOG;
-import static com.comp3111.local_database.DataBaseConstants.P_NAME;
-import static com.comp3111.local_database.DataBaseConstants.P_RID;
-import static com.comp3111.local_database.DataBaseConstants.P_SPRINT;
-import static com.comp3111.local_database.DataBaseConstants.P_WALK;
-import static com.comp3111.local_database.DataBaseConstants.P_WEI;
+import static com.comp3111.local_database.DataBaseConstants.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,17 +18,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -50,12 +30,15 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comp3111.local_database.DataBaseHelper;
 import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.UserSettings;
+import com.comp3111.ui.SwipeListViewTouchListener;
 
 public class ProfileListActivity extends Activity implements
 		Button.OnClickListener {
@@ -63,8 +46,7 @@ public class ProfileListActivity extends Activity implements
 	ArrayList<HashMap<String, Object>> listarray;
 
 	private ListView list;
-	private ImageButton btnadd;
-	private Button btndel;
+	private LinearLayout btnadd;
 	private DataBaseHelper dbhelper;
 	ProfileListAdapter myadapter;
 
@@ -73,6 +55,8 @@ public class ProfileListActivity extends Activity implements
 	static private int cur_position = -1;
 	static private int edit_position = -1;
 	static private int apply_position = 0;
+	
+	public static String[] randomNames = {"Kim Sung", "Chill Wong", "Orchin", "Wyman", "Henry", "Alex", "Mars"};
 
 	boolean firsttime = true;
 
@@ -87,11 +71,9 @@ public class ProfileListActivity extends Activity implements
 		dbhelper = new DataBaseHelper(this);
 		list = (ListView) findViewById(R.id.pro_list);
 
-		btnadd = (ImageButton) findViewById(R.id.add_profile_btn);
-		btndel = (Button) findViewById(R.id.del_profile_btn);
+		btnadd = (LinearLayout) findViewById(R.id.add_profile_layout);
 
 		btnadd.setOnClickListener(this);
-		btndel.setOnClickListener(this);
 
 		cur_position = -1; // reset
 		list_refresh();
@@ -100,11 +82,8 @@ public class ProfileListActivity extends Activity implements
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.add_profile_btn:
+		case R.id.add_profile_layout:
 			add_item();
-			break;
-		case R.id.del_profile_btn:
-			del_item();
 			break;
 		}
 
@@ -261,8 +240,7 @@ public class ProfileListActivity extends Activity implements
 		// firsttime = false;
 		// }
 
-		list.setAdapter(myadapter);
-
+		list.setAdapter(myadapter);		
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@SuppressLint("NewApi")
 			@Override
@@ -281,7 +259,6 @@ public class ProfileListActivity extends Activity implements
 				a.setImageAlpha(255);
 
 				change_apply_profile();
-				finish();
 			}
 		});
 
@@ -373,12 +350,43 @@ public class ProfileListActivity extends Activity implements
 				return true;
 			}
 		});
+		
+		// swipe to delete listener
+		 SwipeListViewTouchListener touchListener = new SwipeListViewTouchListener(
+                 list,
+                 new SwipeListViewTouchListener.OnSwipeCallback() {
+                         @Override
+                         public void onSwipeLeft(ListView listView,
+                                         int[] reverseSortedPositions) {
+                                 // Log.i(this.getClass().getName(),
+                                 // "swipe left : pos="+reverseSortedPositions[0]);
+                                 // TODO : YOUR CODE HERE FOR LEFT ACTION
+                         }
+
+                         @Override
+                         public void onSwipeRight(ListView listView,
+                                         int[] reverseSortedPositions) {
+                             // Log.i(ProfileMenuActivity.class.getClass().getName(),
+                             // "swipe right : pos="+reverseSortedPositions[0]);
+                             // TODO : YOUR CODE HERE FOR RIGHT ACTION
+                    	 	cur_position = reverseSortedPositions[0];
+                    	 	del_item();
+                         }
+                 }, false, // example : left action =without dismiss
+                 false, // example : right action without dismiss animation
+                 false, false);
+		list.setOnTouchListener(touchListener);
+		
 	}
 
 	public void add_item() {
+		// get a pre-defined name
+		Random rand = new Random();
+		int n = rand.nextInt(randomNames.length-1) + 1;
+		
 		SQLiteDatabase database = dbhelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(P_NAME, "new user");
+		values.put(P_NAME, randomNames[n]);
 		values.put(P_DES, "");
 		values.put(P_EMAIL, "");
 		values.put(P_AGE, 0);
@@ -392,7 +400,7 @@ public class ProfileListActivity extends Activity implements
 		database.insert(PRO_TABLE, null, values);
 		cur_position = -1;
 		list_refresh();
-		dialog("a profile new user has been added");
+		//dialog("a profile new user has been added");
 	}
 
 	public void del_item() {
@@ -409,7 +417,7 @@ public class ProfileListActivity extends Activity implements
 							null);
 					edit_position = -1;
 					cur_position = -1;
-					dialog("The profile has been deleted");
+					//dialog("The profile has been deleted");
 					list_refresh();
 				}
 

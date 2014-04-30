@@ -3,9 +3,6 @@
     android:id="@+id/rm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical" >
 
     <TextView
@@ -14,6 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="12dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:text="Select the profile you want to apply:"
         android:textColor="#333333"
         android:textSize="21dp"
@@ -25,6 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:text="Long press the item to change the colour"
         android:textColor="#333333"
         android:textSize="16sp"
@@ -43,11 +46,12 @@
         android:scrollingCache="true" >
     </ListView>
 
-    <RelativeLayout
-        android:id="@+id/RelativeLayout1"
+    <LinearLayout
+        android:id="@+id/add_profile_layout"
         android:layout_width="match_parent"
         android:layout_height="67dp"
         android:layout_gravity="right"
+        android:background="#EEEEEE"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -55,19 +59,18 @@
             android:id="@+id/add_profile_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
             android:background="@drawable/ic_action_new"
             android:text="Add" />
 
-        <Button
-            android:id="@+id/del_profile_btn"
-            style="?android:borderlessButtonStyle"
+        <TextView
+            android:id="@+id/textView1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="Del" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Add new Profile"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#555555"
+            android:textStyle="italic" />
+    </LinearLayout>
 
 </LinearLayout>

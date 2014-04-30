@@ -8,7 +8,6 @@ import java.util.List;
 import com.comp3111.achievement.PersonalAchievement;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.*;
-import com.comp3111.swipeview.SwipeDismissTouchListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
