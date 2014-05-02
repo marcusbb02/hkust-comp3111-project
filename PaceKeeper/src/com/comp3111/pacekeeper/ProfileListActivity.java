@@ -22,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -49,6 +51,7 @@ public class ProfileListActivity extends Activity implements
 	private LinearLayout btnadd;
 	private DataBaseHelper dbhelper;
 	ProfileListAdapter myadapter;
+	private boolean addItemFlag = false;
 
 	private int id_list[];
 	private int color_list[];
@@ -373,7 +376,7 @@ public class ProfileListActivity extends Activity implements
                     	 	del_item();
                          }
                  }, false, // example : left action =without dismiss
-                 false, // example : right action without dismiss animation
+                 true, // example : right action without dismiss animation
                  false, false);
 		list.setOnTouchListener(touchListener);
 		
@@ -383,10 +386,11 @@ public class ProfileListActivity extends Activity implements
 		// get a pre-defined name
 		Random rand = new Random();
 		int n = rand.nextInt(randomNames.length-1) + 1;
+		String randName = randomNames[n];
 		
 		SQLiteDatabase database = dbhelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(P_NAME, randomNames[n]);
+		values.put(P_NAME, randName);
 		values.put(P_DES, "");
 		values.put(P_EMAIL, "");
 		values.put(P_AGE, 0);
@@ -399,7 +403,21 @@ public class ProfileListActivity extends Activity implements
 		values.put(P_SPRINT, 0);
 		database.insert(PRO_TABLE, null, values);
 		cur_position = -1;
-		list_refresh();
+		//list_refresh();
+		// just add an item instead of refreshing
+		String[] name_list = get_all_profile_name();
+		String[] des_list = get_all_profile_description();
+		id_list = get_all_profile_id();
+		color_list = get_all_profile_color();
+		apply_position = get_apply_profile_location();
+		HashMap<String, Object> item = new HashMap<String, Object>();
+		item.put("name", randName);
+		item.put("desc", "");
+		item.put("editimg", R.drawable.ic_action_edit);
+		item.put("bg", R.drawable.blue_back);
+		listarray.add(item);
+		myadapter.notifyDataSetChanged();
+		addItemFlag = true;
 		//dialog("a profile new user has been added");
 	}
 
@@ -569,7 +587,14 @@ public class ProfileListActivity extends Activity implements
 				itemView.ib.setOnClickListener(new ItemButton_Click(position,
 						parent, convertView));
 			}
-
+	
+			// animate the new record
+			Animation anim = AnimationUtils.loadAnimation(ProfileListActivity.this, R.anim.list_anim);
+			anim.setDuration(500);
+			if(position == getCount() - 1 && addItemFlag == true){
+				convertView.startAnimation(anim);
+				addItemFlag = false;
+			}
 			return convertView;
 
 		}
