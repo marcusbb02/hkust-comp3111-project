@@ -45,6 +45,14 @@ public class SettingActivity extends PreferenceActivity {
 			} catch (IOException e) {
 			}
 		}
+		
+		// all-records
+		file = new File(path + "all-records.dat");
+		if(file.exists()){
+			file.delete();
+		}
+		// reset aggregated records
+		ConsistentContents.aggRecords.recordStr = null;
 	}
 
 	public static void deletesqltable() {

@@ -51,7 +51,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL(PROFILE_TABLE);
 //default
 		db.execSQL("INSERT INTO "+PRO_TABLE+"  Values "+
-		"(null, 'Default','I am a tea kettle fat and short', '-8684677','test@default.com', '20', '170', '68','0', '5.0','4.5','4.0');");
+		"(null, 'Default','Default description', '-8684677','test@default.com', '20', '170', '68','0', '5.0','4.5','4.0');");
 		
 		db.execSQL("CREATE TABLE " + PRO_USING + " ( " + P_AID + " INTEGER" + ");");
 		db.execSQL("INSERT INTO "+PRO_USING+"  Values "+" ('1') ;");

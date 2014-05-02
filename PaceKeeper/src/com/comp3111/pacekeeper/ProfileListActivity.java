@@ -361,46 +361,47 @@ public class ProfileListActivity extends Activity implements
                          @Override
                          public void onSwipeLeft(ListView listView,
                                          int[] reverseSortedPositions) {
-                                 // Log.i(this.getClass().getName(), 
-                                 // "swipe left : pos="+reverseSortedPositions[0]);
-                                 // TODO : YOUR CODE HERE FOR LEFT ACTION
+                     	 	cur_position = reverseSortedPositions[0];
+                     	 	del_item();
                          }
 
                          @Override
                          public void onSwipeRight(ListView listView,
                                          int[] reverseSortedPositions) {
-                             // Log.i(ProfileMenuActivity.class.getClass().getName(),
-                             // "swipe right : pos="+reverseSortedPositions[0]);
-                             // TODO : YOUR CODE HERE FOR RIGHT ACTION
                     	 	cur_position = reverseSortedPositions[0];
                     	 	del_item();
                          }
-                 }, false, // example : left action =without dismiss
+                 }, true, // example : left action =without dismiss
                  true, // example : right action without dismiss animation
                  false, false);
 		list.setOnTouchListener(touchListener);
+		// Setting this scroll listener is required to ensure that during
+		// ListView scrolling,
+		// we don't look for swipes.
+		list.setOnScrollListener(
+				touchListener.makeScrollListener());
 		
 	}
 
 	public void add_item() {
 		// get a pre-defined name
 		Random rand = new Random();
-		int n = rand.nextInt(randomNames.length-1) + 1;
+		int n = rand.nextInt(randomNames.length-1);
 		String randName = randomNames[n];
 		
 		SQLiteDatabase database = dbhelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(P_NAME, randName);
-		values.put(P_DES, "");
-		values.put(P_EMAIL, "");
-		values.put(P_AGE, 0);
+		values.put(P_DES, "Default description");
+		values.put(P_EMAIL, randName+"@stu.ust.hk");
+		values.put(P_AGE, 18);
 		values.put(P_COL, -8684677); // (16) FF7B7B7B-100000000
-		values.put(P_HEI, 0);
-		values.put(P_WEI, 0);
+		values.put(P_HEI, 170);
+		values.put(P_WEI, 68);
 		values.put(P_RID, 1);
-		values.put(P_WALK, 0);
-		values.put(P_JOG, 0);
-		values.put(P_SPRINT, 0);
+		values.put(P_WALK, 6.0);
+		values.put(P_JOG, 4.5);
+		values.put(P_SPRINT, 3.0);
 		database.insert(PRO_TABLE, null, values);
 		cur_position = -1;
 		//list_refresh();
@@ -412,7 +413,7 @@ public class ProfileListActivity extends Activity implements
 		apply_position = get_apply_profile_location();
 		HashMap<String, Object> item = new HashMap<String, Object>();
 		item.put("name", randName);
-		item.put("desc", "");
+		item.put("desc", "Default description");
 		item.put("editimg", R.drawable.ic_action_edit);
 		item.put("bg", R.drawable.blue_back);
 		listarray.add(item);

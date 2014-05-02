@@ -1,4 +1,5 @@
 package com.comp3111.pacekeeper;
+
 import static com.comp3111.local_database.DataBaseConstants.*;
 
 import com.comp3111.local_database.DataBaseHelper;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -48,7 +51,7 @@ public class ProfileActivity extends Activity implements OnClickListener {
 		textjogging = (EditText) findViewById(R.id.jogging);
 		textwalking = (EditText) findViewById(R.id.walking);
 		textsprinting = (EditText) findViewById(R.id.sprinting);
-		
+
 		btnok = (Button) findViewById(R.id.ok_button);
 
 		Bundle extras = getIntent().getExtras();
@@ -85,8 +88,6 @@ public class ProfileActivity extends Activity implements OnClickListener {
 			setResult(2, intent);
 			end_activity();
 			break;
-
-
 		}
 	}
 
@@ -127,8 +128,8 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	String[] get_profile_data(int wantid) {
 		String[] output = new String[10];
 		SQLiteDatabase db = dbhelper.getReadableDatabase();
-		String[] columns = { PID, P_NAME, P_DES, P_EMAIL, P_AGE, P_HEI, P_WEI, P_JOG,
-				P_WALK, P_SPRINT, P_COL };
+		String[] columns = { PID, P_NAME, P_DES, P_EMAIL, P_AGE, P_HEI, P_WEI,
+				P_JOG, P_WALK, P_SPRINT, P_COL };
 
 		Cursor cursor = db.query(PRO_TABLE, columns,
 				PID + " = " + String.valueOf(wantid), null, null, null, null,
@@ -151,6 +152,9 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	};
 
 	public void end_activity() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		View v = this.getCurrentFocus();
+		imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 		finish();
 		overridePendingTransition(android.R.anim.fade_in,
 				android.R.anim.fade_out);
@@ -164,5 +168,3 @@ public class ProfileActivity extends Activity implements OnClickListener {
 	}
 
 }
-
-
