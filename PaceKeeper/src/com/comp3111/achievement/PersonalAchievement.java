@@ -50,10 +50,18 @@ public class PersonalAchievement { // for global uses
 		update_record_from_db();
 	}
 
+	public Achievement get_acheivement_by_id(int id) {
+		Achievement output=null;
+		for(int i=0;i<personal_ach_list.size();i++)
+			if(personal_ach_list.get(i).id== id)
+				output=personal_ach_list.get(i);
+		return output;
+	}
+
 	public Achievement get_acheivement(int index) {
 		return personal_ach_list.get(index);
 	}
-
+	
 	public int get_num_of_p_ach() {
 		return personal_ach_list.size();
 	}
@@ -63,7 +71,7 @@ public class PersonalAchievement { // for global uses
 		for (int i = 0; i < personal_ach_list.size(); i++) {
 			String[] columns = { A_REC };
 			Cursor cursor = db.query(ACH_TABLE, columns,
-					AID + " = " + String.valueOf(get_acheivement(i).id), null,
+					AID + " = " + String.valueOf(personal_ach_list.get(i).id), null,
 					null, null, null, null);
 			if (cursor != null) {
 				cursor.moveToFirst();
@@ -111,4 +119,14 @@ public 	ArrayList<Achievement> check_if_achieve(String type, int value) {
 				sublist.add(personal_ach_list.get(i));
 		return sublist;
 	}
+
+public 	ArrayList<Integer> check_if_achieve2(String type, int value) {
+	ArrayList<Integer> sublist = new ArrayList<Integer>();
+	for (int i = 0; i < personal_ach_list.size(); i++)
+		if (personal_ach_list.get(i).type.equals(type)
+				&& value >= personal_ach_list.get(i).threshold
+				&& !personal_ach_list.get(i).issucceed())
+			sublist.add(personal_ach_list.get(i).id);
+	return sublist;
+}
 }

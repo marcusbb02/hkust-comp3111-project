@@ -165,33 +165,18 @@ public class ResultActivity extends Activity {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		Global_value gv = (Global_value) getApplicationContext();
 
-		// check step
-		ArrayList<Achievement> a = gv.PA.check_if_achieve("step",
-				ConsistentContents.aggRecords.totalSteps);
-		for (int i = 0; i < a.size(); i++) {
 
+		Log.v("check cc",String.valueOf(ConsistentContents.currentStatInfo.ach_list.size()));
+		for (int i = 0; i < ConsistentContents.currentStatInfo.ach_list.size(); i++) {
+			Achievement geta=gv.PA.get_acheivement_by_id(ConsistentContents.currentStatInfo.ach_list.get(i));
 			//gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-			gv.PA.store_record(a.get(i).id, ConsistentContents.currentStatInfo.getDateString());
+			gv.PA.store_record(geta.id, ConsistentContents.currentStatInfo.getDateString());
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
-			tv.setText(a.get(i).name);
+			tv.setText(geta.name);
 			ach_l.addView(v);
 		}
-		// check time
 
-		ArrayList<Achievement> b = gv.PA
-				.check_if_achieve(
-						"time",
-						(int) ConsistentContents.aggRecords.totalSec / 60);
-		Log.v("Check Time", String.valueOf((int) ConsistentContents.aggRecords.totalSec / 60));
-		for (int i = 0; i < b.size(); i++) {
-			//gv.PA.store_record(b.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-			gv.PA.store_record(b.get(i).id, ConsistentContents.currentStatInfo.getDateString());
-			View v = vi.inflate(R.layout.item_picture_block, null);
-			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
-			tv.setText(b.get(i).name);
-			ach_l.addView(v);
-		}
 
 	}
 

@@ -34,6 +34,7 @@ public class StatisticsInfo {
 	String recordDateString;
 	public String journeyType;		// goals title
 	public String journeyTime;		// time elapsed / steps / etc
+	public ArrayList<Integer> ach_list=new ArrayList<Integer>();
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);
@@ -105,9 +106,13 @@ public class StatisticsInfo {
 		return recordDateString;
 	}
 	
+	public ArrayList<Integer> get_PA_list() {
+		return ach_list;
+	}
+	
 	public String toJSON(){
 		String json = new Gson().toJson(this);
-		Log.i("JSON record", json);
+		Log.i("JSON record2", json);
 		return json;
 	}
 

@@ -5,7 +5,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comp3111.achievement.Achievement;
 import com.comp3111.achievement.PersonalAchievement;
+import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pedometer.*;
 import com.jjoe64.graphview.GraphView;
@@ -26,6 +28,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -287,20 +290,27 @@ public class MusicActivity extends Activity {
 		btn_end.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
+				
 				// stop soundtouch component and else, then launch ResultActivity
 				ConsistentContents.soundTouchModule.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
+				succeed_pa_list_to_cc();
 				// settle the last distribution state and store to file
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				ConsistentContents.currentStatInfo.journeyTime = goal.getText();
 				ConsistentContents.aggRecords.addCurrentRecord();
+				
+
+				
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				startActivity(intent);
 				MusicActivity.this.finish();
 			}
 		});
 				
+
+		
 		// center page graph
 		// init example series data
 		final GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {new GraphViewData(0, 0.0d)});		
@@ -433,6 +443,18 @@ public class MusicActivity extends Activity {
 
 	}
 
+	void succeed_pa_list_to_cc(){
+		Global_value gv = (Global_value) getApplicationContext();		//put personal_ach id into statistic info
+		ArrayList<Integer> pa1 = gv.PA.check_if_achieve2("step",		
+				ConsistentContents.aggRecords.totalSteps);
+		Log.v("pa1",String.valueOf(pa1.size()));
+		ArrayList<Integer> pa2 = gv.PA.check_if_achieve2("time",
+				(int) ConsistentContents.aggRecords.totalSec / 60);
+		Log.v("pa2",String.valueOf(pa2.size()));
+		ConsistentContents.currentStatInfo.ach_list=pa1;
+		ConsistentContents.currentStatInfo.ach_list.addAll(pa2);
+	}
+    
 	public class MyPagerAdapter extends PagerAdapter {
         public List<View> mListViews;
 
