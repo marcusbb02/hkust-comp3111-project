@@ -73,7 +73,7 @@ public class P_ACH_Fragment extends Fragment {
 
 		// init_all_achievement_view();
 
-		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { // succeed
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { 				// succeed
 			View v = inflater.inflate(R.layout.item_picture_block, null);
 			final Achievement a = gv.PA.get_acheivement(i);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
@@ -88,12 +88,11 @@ public class P_ACH_Fragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					Log.v("record", a.record);
-					Builder MyAlertDialog = new AlertDialog.Builder(
-							getActivity());
-					MyAlertDialog.setMessage("Date: " + a.record);
-					MyAlertDialog.setTitle("Record");
-					MyAlertDialog.show();
+					// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
+					JSONHandler.readFromRecord(a.record);
+					Intent intent = new Intent(getActivity() , ResultActivity.class);
+					startActivity(intent);
+					getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.hold);
 				}
 
 			});
@@ -130,18 +129,11 @@ public class P_ACH_Fragment extends Fragment {
 
 						@Override
 						public void onClick(View v) {
-							Log.v("record", b.record);
 							// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
 							JSONHandler.readFromRecord(b.record);
 							Intent intent = new Intent(getActivity() , ResultActivity.class);
 							startActivity(intent);
 							getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.hold);
-							/*
-							Builder MyAlertDialog = new AlertDialog.Builder(
-									getActivity());
-							MyAlertDialog.setMessage("Date: " + b.record);
-							MyAlertDialog.setTitle("Record");
-							MyAlertDialog.show();*/
 						}
 
 					});
