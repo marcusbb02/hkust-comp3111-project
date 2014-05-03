@@ -12,8 +12,7 @@
         android:background="@drawable/dialog_mode_walk_selector">
         <TextView
             android:id="@+id/d_mode_walk_text"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -21,7 +20,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="italic"
             android:text="Walk"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
     
     <RelativeLayout
@@ -32,8 +31,7 @@
         android:background="@drawable/dialog_mode_jog_selector">
         <TextView
             android:id="@+id/d_mode_jog_text"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -41,7 +39,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="italic"
             android:text="Jog"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
     
     <RelativeLayout
@@ -52,8 +50,7 @@
         android:background="@drawable/dialog_mode_run_selector">
         <TextView
             android:id="@+id/d_mode_run_text"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -61,7 +58,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="italic"
             android:text="Run"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 
 </LinearLayout>

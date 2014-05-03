@@ -123,6 +123,7 @@ public class MusicActivity extends Activity {
 		dialog_but.setOnClickListener(userModeOCL);
 		dialog_but = (RelativeLayout) dialog.findViewById(R.id.d_mode_jog);
 		dialog_but.setOnClickListener(userModeOCL);
+		dialog_but = (RelativeLayout) dialog.findViewById(R.id.d_mode_run);
  		dialog_but.setOnClickListener(userModeOCL);
 		// ... and show the dialog
 		dialog.show();
