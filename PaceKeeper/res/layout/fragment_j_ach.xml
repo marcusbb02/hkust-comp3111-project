@@ -13,10 +13,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-		    android:paddingBottom="@dimen/activity_vertical_margin"
-		    android:paddingLeft="@dimen/activity_horizontal_margin"
-		    android:paddingRight="@dimen/activity_horizontal_margin"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <TextView
                 android:id="@+id/j_ach_your_progress"
@@ -24,44 +24,102 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Select contribution"
+                android:text="Your profile"
+                android:textColor="#555555"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+            
+            <TextView
+                android:id="@+id/j_ach_your_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Region represented"
+                android:textColor="#555555"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+            
+            <TextView
+                android:id="@+id/j_ach_your_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:text="All contributions"
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp" >
-
-                <com.comp3111.ui.CircleView
-                    android:id="@+id/j_ach_circle"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp" />
-
+                android:id="@+id/j_ach_btn_steps"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@drawable/light_blue_button_selector" >                
                 <TextView
-                    android:id="@+id/j_ach_finishpercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-thin"
-                    android:text="65%"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#333333"
-                    android:textSize="36dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="Steps"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#0092c8"
+                    android:textSize="16dp"
                     android:textStyle="italic" />
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_action_collapse_light_blue" />
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/p_ach_r_layout"
+            <RelativeLayout
+                android:id="@+id/j_ach_btn_dist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-            </LinearLayout>
+                android:layout_height="75dp"
+                android:background="@drawable/light_purple_button_selector" >                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:text="Distance"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#9123c8"
+                    android:textSize="16dp"
+                    android:textStyle="italic" />
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_action_collapse_light_purple" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/j_ach_btn_calories"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@drawable/light_red_button_selector" >                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:text="Calories"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#c90000"
+                    android:textSize="16dp"
+                    android:textStyle="italic" />
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_action_collapse_light_red" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

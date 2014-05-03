@@ -43,6 +43,7 @@ public class ResultActivity extends Activity {
 		initPaceDistGraph();
 		initJourneyStat();
 		checkGoalType();
+		ConsistentContents.aggRecords.recalculateStat();
 		check_achievement();
 
 	}
@@ -181,12 +182,11 @@ public class ResultActivity extends Activity {
 		ArrayList<Achievement> b = gv.PA
 				.check_if_achieve(
 						"time",
-						(int) (ConsistentContents.aggRecords.totalSteps / ConsistentContents.aggRecords.avgSPM));
-		Log.v("dd", String.valueOf((int) (ConsistentContents.aggRecords.totalSteps / ConsistentContents.aggRecords.avgSPM)));
+						(int) ConsistentContents.aggRecords.totalSec / 60);
+		Log.v("Check Time", String.valueOf((int) ConsistentContents.aggRecords.totalSec / 60));
 		for (int i = 0; i < b.size(); i++) {
-
 			//gv.PA.store_record(b.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-			gv.PA.store_record(a.get(i).id, ConsistentContents.currentStatInfo.getDateString());
+			gv.PA.store_record(b.get(i).id, ConsistentContents.currentStatInfo.getDateString());
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(b.get(i).name);

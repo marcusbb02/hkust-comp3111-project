@@ -14,6 +14,7 @@ public class AggregatedRecords {
 	public double avgSPM = 0;
 	public double avgMPH = 0;
 	public double calories = 0;
+	public long totalSec = 0;
 	public ArrayList<String> recordStr = new ArrayList<String>();
 	
 	public void rescanRecords(){
@@ -35,6 +36,7 @@ public class AggregatedRecords {
 		avgSPM = 0;
 		avgMPH = 0;
 		calories = 0;
+		totalSec = 0;
 		// TODO: fetch each of the JSON record, and recalculate all stat info
 		ListIterator<String> listIterator = recordStr.listIterator();
 		while(listIterator.hasNext()){
@@ -53,6 +55,8 @@ public class AggregatedRecords {
 				avgMPH=avgMPH+ConsistentContents.currentStatInfo.getDistancePerTime();
 				//ConsistentContents.currentStatInfo.calories
 				calories=calories+ConsistentContents.currentStatInfo.getCaloriesBurn();
+				//ConsistentContents.currentStatInfo.time
+				totalSec+=ConsistentContents.currentStatInfo.getTimeLasted();
 			}
 		}			
 		if(recordStr.size() != 0){
