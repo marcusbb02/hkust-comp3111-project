@@ -58,9 +58,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		 *            An array of positions to dismiss, sorted in descending
 		 *            order for convenience.
 		 */
-		void onSwipeLeft(ListView listView, int[] reverseSortedPositions);
+		void onSwipeLeft(ListView listView, int[] reverseSortedPositions, int reverseSortedPositionsSize);
 
-		void onSwipeRight(ListView listView, int[] reverseSortedPositions);
+		void onSwipeRight(ListView listView, int[] reverseSortedPositions, int reverseSortedPositionsSize);
 	}
 
 	/**
@@ -338,9 +338,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 						swipePositions[i] = mPendingSwipes.get(i).position;
 					}
 					if (swipeRight)
-						mCallback.onSwipeRight(mListView, swipePositions);
+						mCallback.onSwipeRight(mListView, swipePositions, mPendingSwipes.size());
 					else
-						mCallback.onSwipeLeft(mListView, swipePositions);
+						mCallback.onSwipeLeft(mListView, swipePositions, mPendingSwipes.size());
 
 					ViewGroup.LayoutParams lp;
 					for (PendingSwipeData pendingDismiss : mPendingSwipes) {

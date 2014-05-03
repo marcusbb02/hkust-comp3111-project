@@ -1,5 +1,7 @@
 package com.comp3111.ui;
 
+import com.comp3111.pacekeeper.R;
+
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -25,6 +27,11 @@ public class CircleView extends View {
     RectF rect;
     float percentage = 0;
     int arcWidth = 80;
+    
+    // colors
+    public static final int LIGHT_BLUE = 0;
+    public static final int GREEN = 1;
+    
 
 	public CircleView(Context context) {
 		super(context);
@@ -66,6 +73,19 @@ public class CircleView extends View {
             canvas.drawArc(rect, 270, -(360*percentage), false, paint);
         }
     }
+    
+    public void setColor(int colorTag){
+    	switch(colorTag){
+    	case 0:
+            paint.setColor(Color.parseColor("#a8dff4"));
+            break;
+    	case 1:
+            paint.setColor(Color.parseColor("#109D59"));
+            break;
+    		
+    	}
+    }
+    
     public void setPercentage(float percentage) {
         this.percentage = percentage / 100;
         invalidate();

@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comp3111.local_database.DataBaseHelper;
 import com.comp3111.pedometer.ConsistentContents;
@@ -360,16 +361,20 @@ public class ProfileListActivity extends Activity implements
                  new SwipeListViewTouchListener.OnSwipeCallback() {
                          @Override
                          public void onSwipeLeft(ListView listView,
-                                         int[] reverseSortedPositions) {
-                     	 	cur_position = reverseSortedPositions[0];
-                     	 	del_item();
+                                         int[] reverseSortedPositions, int reverseSortedPositionsSize) {
+                        	 for(int i = 0; i < reverseSortedPositionsSize; i++){
+                        		cur_position = reverseSortedPositions[i];
+                        		del_item();
+                        	 }
                          }
 
                          @Override
                          public void onSwipeRight(ListView listView,
-                                         int[] reverseSortedPositions) {
-                    	 	cur_position = reverseSortedPositions[0];
-                    	 	del_item();
+                                         int[] reverseSortedPositions, int reverseSortedPositionsSize) {
+                        	 for(int i = 0; i < reverseSortedPositionsSize; i++){
+                        		cur_position = reverseSortedPositions[i];
+                        		del_item();
+                        	 }
                          }
                  }, true, // example : left action =without dismiss
                  true, // example : right action without dismiss animation
@@ -428,15 +433,19 @@ public class ProfileListActivity extends Activity implements
 			dialog("It should contain at least one profile");
 		else {
 			if (cur_position != -1) { // currently selected
-				if (dbhelper.get_applying_profile() == id_list[cur_position])
-					dialog("You are applying this profile");
-				else {
+				if (dbhelper.get_applying_profile() == id_list[cur_position]){
+            		String deletedUser = ProfileListActivity.this.listarray.get(cur_position).get("name").toString();
+            		Toast.makeText(ProfileListActivity.this, "The profile " + deletedUser + " is currently using and cannot be deleted" , Toast.LENGTH_SHORT).show();
+				} else {
 					SQLiteDatabase db = dbhelper.getWritableDatabase();
 					db.delete(PRO_TABLE, PID + "=" + id_list[cur_position],
 							null);
+					//dialog("The profile has been deleted");
+					String deletedUser = ProfileListActivity.this.listarray.get(cur_position).get("name").toString();
+            		Toast.makeText(ProfileListActivity.this, "The profile " + deletedUser + " has been deleted" , Toast.LENGTH_SHORT).show();
+            		// reset position
 					edit_position = -1;
 					cur_position = -1;
-					//dialog("The profile has been deleted");
 					list_refresh();
 				}
 
