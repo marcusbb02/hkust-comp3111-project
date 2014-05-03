@@ -453,6 +453,8 @@ public class MusicActivity extends Activity {
 		Log.v("pa2",String.valueOf(pa2.size()));
 		ConsistentContents.currentStatInfo.ach_list=pa1;
 		ConsistentContents.currentStatInfo.ach_list.addAll(pa2);
+		for(int i=0;i< ConsistentContents.currentStatInfo.ach_list.size();i++)
+		gv.PA.store_record(ConsistentContents.currentStatInfo.ach_list.get(i), ConsistentContents.currentStatInfo.getDateString());
 	}
     
 	public class MyPagerAdapter extends PagerAdapter {
