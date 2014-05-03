@@ -72,6 +72,13 @@ public class PersonalAchievement { // for global uses
 		}
 
 	}
+	
+	public void reset_record() {
+		for (int i = 0; i < personal_ach_list.size(); i++) {
+			personal_ach_list.get(i).record = "";
+		}
+
+	}
 
 	public void store_record(int ach_id, String record) {
 		int lo = 0;

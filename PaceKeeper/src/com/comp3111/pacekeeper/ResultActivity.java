@@ -1,7 +1,9 @@
 package com.comp3111.pacekeeper;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.comp3111.achievement.Achievement;
 import com.comp3111.local_database.Global_value;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -166,13 +169,12 @@ public class ResultActivity extends Activity {
 				ConsistentContents.aggRecords.totalSteps);
 		for (int i = 0; i < a.size(); i++) {
 
-			gv.PA.store_record(a.get(i).id, "33");
+			gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(a.get(i).name);
 			ach_l.addView(v);
 		}
-
 		// check time
 
 		ArrayList<Achievement> b = gv.PA
@@ -182,7 +184,7 @@ public class ResultActivity extends Activity {
 		Log.v("dd", String.valueOf((int) (ConsistentContents.aggRecords.totalSteps / ConsistentContents.aggRecords.avgSPM)));
 		for (int i = 0; i < b.size(); i++) {
 
-			gv.PA.store_record(b.get(i).id, "33");
+			gv.PA.store_record(b.get(i).id, new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(b.get(i).name);

@@ -45,10 +45,10 @@ public class SettingActivity extends PreferenceActivity {
 			} catch (IOException e) {
 			}
 		}
-		
+
 		// all-records
 		file = new File(path + "all-records.dat");
-		if(file.exists()){
+		if (file.exists()) {
 			file.delete();
 		}
 		// reset aggregated records
@@ -116,7 +116,7 @@ class RESETDialogPreference extends DialogPreference {
 			SettingActivity.deleteFiles();
 			dbhelper.close();
 			delete_sql_database();
-			gv.PA.update_record_from_db(); // update globle achievement values
+			gv.PA.reset_record(); // update globle achievement values
 			restart_app();
 			break;
 		}
