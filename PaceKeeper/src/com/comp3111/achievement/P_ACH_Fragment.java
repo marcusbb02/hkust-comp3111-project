@@ -87,7 +87,8 @@ public class P_ACH_Fragment extends Fragment {
 					Log.v("record", a.record);
 					Builder MyAlertDialog = new AlertDialog.Builder(
 							getActivity());
-					MyAlertDialog.setMessage("Date:" + a.record);
+					MyAlertDialog.setMessage("Date: " + a.record);
+					MyAlertDialog.setTitle("Record");
 					MyAlertDialog.show();
 				}
 
@@ -128,7 +129,8 @@ public class P_ACH_Fragment extends Fragment {
 							Log.v("record", b.record);
 							Builder MyAlertDialog = new AlertDialog.Builder(
 									getActivity());
-							MyAlertDialog.setMessage("Date:" + b.record);
+							MyAlertDialog.setMessage("Date: " + b.record);
+							MyAlertDialog.setTitle("Record");
 							MyAlertDialog.show();
 						}
 
