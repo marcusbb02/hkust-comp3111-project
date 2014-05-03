@@ -169,7 +169,7 @@ public class ResultActivity extends Activity {
 				ConsistentContents.aggRecords.totalSteps);
 		for (int i = 0; i < a.size(); i++) {
 
-			gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
+			gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(a.get(i).name);

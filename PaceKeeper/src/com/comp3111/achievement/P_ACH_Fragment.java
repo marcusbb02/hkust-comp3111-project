@@ -3,6 +3,8 @@ package com.comp3111.achievement;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 
 import static com.comp3111.local_database.DataBaseConstants.*;
@@ -20,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -47,6 +50,7 @@ public class P_ACH_Fragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		rootView = inflater.inflate(R.layout.fragment_p_ach, container, false);
 
 		LinearLayout all_ach_list = (LinearLayout) rootView
@@ -55,19 +59,19 @@ public class P_ACH_Fragment extends Fragment {
 				.findViewById(R.id.p_ach_r_layout);
 
 		Global_value gv = (Global_value) getActivity().getApplicationContext();
-		
 
 		// circle view
 		nof = ((AchievementActivity) getActivity())
 				.finish_percentage(ACH_TABLE);
-		TextView fp = (TextView) rootView.findViewById(R.id.p_ach_finishpercent);
+		TextView fp = (TextView) rootView
+				.findViewById(R.id.p_ach_finishpercent);
 		fp.setText(String.valueOf(nof) + "%");
 
 		// init_all_achievement_view();
-		
-		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { // succeed
 			View v = inflater.inflate(R.layout.item_picture_block, null);
-			Achievement a = gv.PA.get_acheivement(i);
+			final Achievement a = gv.PA.get_acheivement(i);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(a.name);
 			if (a.issucceed()) {
@@ -76,9 +80,21 @@ public class P_ACH_Fragment extends Fragment {
 				iv.setVisibility(0);
 				all_ach_list.addView(v);
 			}
+			v.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Log.v("record", a.record);
+					Builder MyAlertDialog = new AlertDialog.Builder(
+							getActivity());
+					MyAlertDialog.setMessage("Date:" + a.record);
+					MyAlertDialog.show();
+				}
+
+			});
 		}
-		
-		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
+
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { // not succeed
 			View v = inflater.inflate(R.layout.item_picture_block, null);
 			Achievement a = gv.PA.get_acheivement(i);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
@@ -88,14 +104,12 @@ public class P_ACH_Fragment extends Fragment {
 			}
 		}
 
-
-		
 		// recent view
 		ArrayList<Integer> a = ((AchievementActivity) getActivity())
 				.get_latest(ACH_TABLE);
 		for (int j = 0; j < a.size(); j++)
 			for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) {
-				Achievement b = gv.PA.get_acheivement(i);
+				final Achievement b = gv.PA.get_acheivement(i);
 				if (a.get(j) == b.id) {
 					View v = inflater
 							.inflate(R.layout.item_picture_block, null);
@@ -106,6 +120,19 @@ public class P_ACH_Fragment extends Fragment {
 					iv.setVisibility(0);
 					tv.setText(b.name);
 					recent_list.addView(v);
+
+					v.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Log.v("record", b.record);
+							Builder MyAlertDialog = new AlertDialog.Builder(
+									getActivity());
+							MyAlertDialog.setMessage("Date:" + b.record);
+							MyAlertDialog.show();
+						}
+
+					});
 				}
 
 			}
