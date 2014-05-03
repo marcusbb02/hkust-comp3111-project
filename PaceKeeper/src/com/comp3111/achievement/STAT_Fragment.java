@@ -104,23 +104,7 @@ public class STAT_Fragment extends Fragment {
 			scrollView.addView(v);
 	    }
 	    
-	    fetchConsistentContents(rootView);
-	    
 		return rootView;
-	}
-
-	private void fetchConsistentContents(View v) {
-		TextView tv = (TextView) v.findViewById(R.id.f_stat_scrollLL).findViewById(R.id.f_stat_cc);
-		tv.setText(	"ConsistentContents debug: \n\n" + 
-					"currentStatInfo recordDateStr: \n" + 
-					ConsistentContents.currentStatInfo.getDateString() + "\n\n" + 
-					"currentUserSettings: \n" + 
-					"userName = " + ConsistentContents.currentUserSettings.userName + 
-					"\nuserMail = " + ConsistentContents.currentUserSettings.userMail + 
-					"\nwalkSpeed = " + ConsistentContents.currentUserSettings.walkSpeed + 
-					"\njogSpeed = " + ConsistentContents.currentUserSettings.jogSpeed + 
-					"\nrunSpeed = " + ConsistentContents.currentUserSettings.runSpeed);
-
 	}
 	
     double roundOneDecimal(double d) { 

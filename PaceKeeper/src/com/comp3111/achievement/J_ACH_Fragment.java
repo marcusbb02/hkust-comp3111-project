@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class J_ACH_Fragment extends Fragment {
 
@@ -32,10 +33,26 @@ public class J_ACH_Fragment extends Fragment {
 				showContribution(0, "Step Contribution");
 			}			
 		});
+		
+		fetchConsistentContents(rootView);
 		return rootView;
 	}
 	
 
+	private void fetchConsistentContents(View v) {
+		TextView tv = (TextView) v.findViewById(R.id.j_ach_your_progress_cc);
+		tv.setText(	"ConsistentContents debug: \n\n" + 
+					"currentStatInfo recordDateStr: \n" + 
+					ConsistentContents.currentStatInfo.getDateString() + "\n\n" + 
+					"currentUserSettings: \n" + 
+					"userName = " + ConsistentContents.currentUserSettings.userName + 
+					"\nuserMail = " + ConsistentContents.currentUserSettings.userMail + 
+					"\nwalkSpeed = " + ConsistentContents.currentUserSettings.walkSpeed + 
+					"\njogSpeed = " + ConsistentContents.currentUserSettings.jogSpeed + 
+					"\nrunSpeed = " + ConsistentContents.currentUserSettings.runSpeed);
+
+	}
+	
 	private void showContribution(int id, String title) {
 		// TODO make an alertdialog for details of contribution
 		final Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge);
