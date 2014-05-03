@@ -250,15 +250,18 @@
                     <Button
                         android:id="@+id/ok_button"
                         style="?android:attr/buttonStyleSmall"
-                        android:layout_width="173dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="OK" />
 
                     <Button
                         android:id="@+id/cal_btn"
-                        android:layout_width="match_parent"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test" />
+                        android:layout_weight="1"
+                        android:text="Cancel" />
 
                 </LinearLayout>
             </LinearLayout>

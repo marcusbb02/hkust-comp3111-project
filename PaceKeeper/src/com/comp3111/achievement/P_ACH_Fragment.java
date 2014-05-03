@@ -6,11 +6,15 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.Intent;
 
 import static com.comp3111.local_database.DataBaseConstants.*;
 import com.comp3111.local_database.DataBaseHelper;
 import com.comp3111.local_database.Global_value;
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.R;
+import com.comp3111.pacekeeper.ResultActivity;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -127,11 +131,17 @@ public class P_ACH_Fragment extends Fragment {
 						@Override
 						public void onClick(View v) {
 							Log.v("record", b.record);
+							// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
+							JSONHandler.readFromRecord(b.record);
+							Intent intent = new Intent(getActivity() , ResultActivity.class);
+							startActivity(intent);
+							getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.hold);
+							/*
 							Builder MyAlertDialog = new AlertDialog.Builder(
 									getActivity());
 							MyAlertDialog.setMessage("Date: " + b.record);
 							MyAlertDialog.setTitle("Record");
-							MyAlertDialog.show();
+							MyAlertDialog.show();*/
 						}
 
 					});

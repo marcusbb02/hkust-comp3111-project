@@ -169,7 +169,8 @@ public class ResultActivity extends Activity {
 				ConsistentContents.aggRecords.totalSteps);
 		for (int i = 0; i < a.size(); i++) {
 
-			gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+			//gv.PA.store_record(a.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+			gv.PA.store_record(a.get(i).id, ConsistentContents.currentStatInfo.getDateString());
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(a.get(i).name);
@@ -184,7 +185,8 @@ public class ResultActivity extends Activity {
 		Log.v("dd", String.valueOf((int) (ConsistentContents.aggRecords.totalSteps / ConsistentContents.aggRecords.avgSPM)));
 		for (int i = 0; i < b.size(); i++) {
 
-			gv.PA.store_record(b.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+			//gv.PA.store_record(b.get(i).id, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+			gv.PA.store_record(a.get(i).id, ConsistentContents.currentStatInfo.getDateString());
 			View v = vi.inflate(R.layout.item_picture_block, null);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(b.get(i).name);
