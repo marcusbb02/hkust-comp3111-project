@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
 
 	private static String DB_NAME = "pacekeeper.db";
-	   private static final int DATABASE_VERSION = 32;
+	   public static int DATABASE_VERSION = 32;
 	   
 	public DataBaseHelper(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);

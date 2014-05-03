@@ -23,22 +23,20 @@ public class PersonalAchievement { // for global uses
 
 	public PersonalAchievement(Context context) { // all default personal
 													// achievements
-		Achievement a1 = new Achievement(1,"Run for 1 minute","time",1);
-		Achievement a2 = new Achievement(2,"Run for 30 minutes","time",30);
-		Achievement a3 = new Achievement(3,"Run for 60 minutes","time",60);
-		personal_ach_list.add(a1); 
-		personal_ach_list.add(a2);
-		personal_ach_list.add(a3);
 
-		Achievement b1 = new Achievement(4,"Walk for 100 steps","step",100);
-		Achievement b2 = new Achievement(5,"Walk for 1000 steps","step",1000);
-		Achievement b3 = new Achievement(6,"Walk for 2000 steps","step",2000);
-		Achievement b4 = new Achievement(7,"Walk for 5000 steps","step",5000);
-		personal_ach_list.add(b1);
-		personal_ach_list.add(b2);
-		personal_ach_list.add(b3);
-		personal_ach_list.add(b4);
+
+		personal_ach_list.add(new Achievement("Run for 1 minute","time",1)); 
+		personal_ach_list.add(new Achievement("Run for 30 minutes","time",30));
+		personal_ach_list.add(new Achievement("Run for 60 minutes","time",60));
+
+
+		personal_ach_list.add(new Achievement("Walk for 100 steps","step",100));
+		personal_ach_list.add(new Achievement("Walk for 1000 steps","step",1000));
+		personal_ach_list.add(new Achievement("Walk for 2000 steps","step",2000));
+		personal_ach_list.add(new Achievement("Walk for 5000 steps","step",5000));
 		  
+		for(int i=0;i<personal_ach_list.size();i++)
+			personal_ach_list.get(i).id=i+1;
 		/*Achievement c1 = new Achievement(8,"Go for 500 miles","dist",500);
 		Achievement c2 = new Achievement(9,"Go for 1000 miles","dist",1000);
 		Achievement c3 = new Achievement(10,"Go for 2000 miles","dist",2000);

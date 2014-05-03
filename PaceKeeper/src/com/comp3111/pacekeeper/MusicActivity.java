@@ -295,10 +295,12 @@ public class MusicActivity extends Activity {
 				ConsistentContents.soundTouchModule.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
-				succeed_pa_list_to_cc();
+
 				// settle the last distribution state and store to file
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				ConsistentContents.currentStatInfo.journeyTime = goal.getText();
+				Log.v("tts",String.valueOf(ConsistentContents.aggRecords.totalSteps));
+				succeed_pa_list_to_cc();				//TODO : [bug] aggregate record updates after the checking
 				ConsistentContents.aggRecords.addCurrentRecord();
 				
 
@@ -398,7 +400,6 @@ public class MusicActivity extends Activity {
         btn_pp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				if(ConsistentContents.soundTouchModule.isPaused()){
 					/*
 					//the last two parameters are speed of playback and pitch in semi-tones.
@@ -437,7 +438,6 @@ public class MusicActivity extends Activity {
 			ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
 			//ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -527,12 +527,10 @@ public class MusicActivity extends Activity {
 
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
-			// TODO Auto-generated method stub
 		}
 
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
-			// TODO Auto-generated method stub
 			
 		}
     }

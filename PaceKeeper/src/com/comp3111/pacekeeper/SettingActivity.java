@@ -123,7 +123,8 @@ class RESETDialogPreference extends DialogPreference {
 	}
 
 	void delete_sql_database() {
-		c.deleteDatabase("pacekeeper.db");
+		c.deleteDatabase("pacekeeper.db");	//delete
+		new DataBaseHelper(c);				//recreate
 	}
 
 	void restart_app() {
