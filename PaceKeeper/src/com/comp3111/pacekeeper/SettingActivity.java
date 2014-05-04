@@ -10,6 +10,7 @@ import java.io.IOException;
 import com.comp3111.local_database.DataBaseHelper;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.pedometer.ConsistentContents;
+import com.comp3111.pedometer.UserSettings;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,15 +47,6 @@ public class SettingActivity extends PreferenceActivity {
 		final String path = Environment.getExternalStorageDirectory()
 				.toString() + "/pacekeeper/";
 		File file = new File(path);
-
-		if (file.exists()) {
-			String deleteCmd = "rm -r " + path;
-			Runtime runtime = Runtime.getRuntime();
-			try {
-				runtime.exec(deleteCmd);
-			} catch (IOException e) {
-			}
-		}
 
 		// all-records
 		file = new File(path + "all-records.dat");
@@ -124,6 +116,7 @@ class RESETDialogPreference extends DialogPreference {
 			dbhelper.close();
 			delete_sql_database();
 			gv.PA.reset_record(); // update globle achievement values
+			ConsistentContents.currentUserSettings=new UserSettings();	//reset user setting
 			restart_app();
 			break;
 		}
@@ -133,8 +126,6 @@ class RESETDialogPreference extends DialogPreference {
 
 		SQLiteDatabase db = dbhelper.getWritableDatabase();
 		dbhelper.onUpgrade(db, DataBaseHelper.DATABASE_VERSION, DataBaseHelper.DATABASE_VERSION);
-	//	c.deleteDatabase("pacekeeper.db");	//delete
-	//	new DataBaseHelper(c);				//recreate
 	}
 
 	void restart_app() {
