@@ -32,6 +32,14 @@
         android:textStyle="italic" />
 
     <ImageView
+        android:id="@+id/item_picture_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_action_collapse" />
+    
+    <ImageView
         android:id="@+id/item_picture_trop"
         android:layout_width="30dp"
         android:layout_height="30dp"

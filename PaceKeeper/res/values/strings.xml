@@ -7,7 +7,7 @@
     <string name="title_activity_music"></string>
     <string name="title_activity_goal">Goal Selection</string>
     <string name="title_activity_social">SocialActivity</string>
-    <string name="title_activity_profile">Personal Profiles</string>
+    <string name="title_activity_profile">Personal Profile</string>
     <string name="title_activity_greet">PaceKeeper</string>
     <string name="title_activity_result">Journey\'s Result</string>
     <string name="title_activity_extended_music">ExtendedMusicActivity</string>
@@ -16,7 +16,7 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_setting">Settings</string>
     <string name="title_activity_advancedsetting">Advanced Settings</string>
-    
-   
+    <string name="title_activity_joint_stat">JointStatActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

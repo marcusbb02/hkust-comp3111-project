@@ -27,10 +27,13 @@ public class CircleView extends View {
     RectF rect;
     float percentage = 0;
     int arcWidth = 80;
+    int startOffset = 0;
     
     // colors
     public static final int LIGHT_BLUE = 0;
     public static final int GREEN = 1;
+    public static final int LIGHT_GREY = 2;
+    public static final int RED = 3;
     
 
 	public CircleView(Context context) {
@@ -70,7 +73,7 @@ public class CircleView extends View {
         int top = 0;
         rect.set(left + arcWidth/2, top + arcWidth/2, left+width - arcWidth/2, top + width - arcWidth/2); 
         if(percentage!=0) {
-            canvas.drawArc(rect, 270, -(360*percentage), false, paint);
+            canvas.drawArc(rect, 270-(360*startOffset / 100), -(360*percentage), false, paint);
         }
     }
     
@@ -80,10 +83,19 @@ public class CircleView extends View {
             paint.setColor(Color.parseColor("#a8dff4"));
             break;
     	case 1:
-            paint.setColor(Color.parseColor("#109D59"));
+            paint.setColor(Color.parseColor("#d3e992"));
             break;
-    		
+    	case 2:
+            paint.setColor(Color.parseColor("#DEDEDE"));
+            break;
+    	case 3:
+            paint.setColor(Color.parseColor("#ffafaf"));
+            break;    		
     	}
+    }
+    
+    public void setStartOffset(int startPercentage){
+    	startOffset = startPercentage;
     }
     
     public void setPercentage(float percentage) {

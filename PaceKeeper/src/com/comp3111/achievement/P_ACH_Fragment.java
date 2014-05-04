@@ -84,6 +84,8 @@ public class P_ACH_Fragment extends Fragment {
 				ImageView iv = (ImageView) v
 						.findViewById(R.id.item_picture_trop);
 				iv.setVisibility(0);
+				iv = (ImageView) v.findViewById(R.id.item_picture_arrow);
+				iv.setVisibility(4);
 				all_ach_list.addView(v);
 			}
 			v.setOnClickListener(new OnClickListener() {
@@ -109,6 +111,8 @@ public class P_ACH_Fragment extends Fragment {
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
 			tv.setText(a.name);
 			if (!a.issucceed()) {
+				ImageView iv = (ImageView) v.findViewById(R.id.item_picture_arrow);
+				iv.setVisibility(4);
 				all_ach_list.addView(v);
 			}
 		}

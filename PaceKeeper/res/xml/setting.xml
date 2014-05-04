@@ -11,6 +11,13 @@
                 android:targetPackage="com.comp3111.pacekeeper" />
         </Preference>
     </PreferenceCategory>
+    <PreferenceCategory android:title="Contributon" >
+        <Preference
+            android:key="region"
+            android:summary="Change region represented on this device"
+            android:title="Region settings" >
+        </Preference>
+    </PreferenceCategory>
     <PreferenceCategory android:title="Reset" >
         <com.comp3111.pacekeeper.CARDialogPreference
             android:dialogMessage="Are you sure?"
