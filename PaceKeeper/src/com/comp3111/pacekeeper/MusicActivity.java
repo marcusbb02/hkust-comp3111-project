@@ -446,13 +446,13 @@ public class MusicActivity extends Activity {
 
 	void succeed_pa_list_to_cc(){
 		Global_value gv = (Global_value) getApplicationContext();		//put personal_ach id into statistic info
-		ArrayList<Integer> pa1 = gv.PA.check_if_achieve2("step",		
+		ArrayList<Integer> pa1 = gv.PA.check_if_achieve("step",		
 				ConsistentContents.aggRecords.totalSteps+(int)ConsistentContents.currentStatInfo.getTotalSteps());
 		Log.v("pa1",String.valueOf(pa1.size()));
-		ArrayList<Integer> pa2 = gv.PA.check_if_achieve2("time",
-				(int) ConsistentContents.aggRecords.totalSec / 60+(int)ConsistentContents.currentStatInfo.getTimeLasted()/60);
+		ArrayList<Integer> pa2 = gv.PA.check_if_achieve("time",
+				(int) (ConsistentContents.aggRecords.totalSec +ConsistentContents.currentStatInfo.getTimeLasted())/60);
 		Log.v("pa2",String.valueOf(pa2.size()));
-		ArrayList<Integer> pa3 = gv.PA.check_if_achieve2("dist",
+		ArrayList<Integer> pa3 = gv.PA.check_if_achieve("dist",
 				(int)ConsistentContents.aggRecords.totalMiles+(int)ConsistentContents.currentStatInfo.getDistanceTravelled());
 		Log.v("pa3",String.valueOf(pa3.size()));
 		ConsistentContents.currentStatInfo.ach_list=pa1;

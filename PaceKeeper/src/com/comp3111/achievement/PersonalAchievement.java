@@ -107,7 +107,7 @@ public class PersonalAchievement { // for global uses
 
 
 
-public 	ArrayList<Integer> check_if_achieve2(String type, int value) {
+public 	ArrayList<Integer> check_if_achieve(String type, int value) {
 	ArrayList<Integer> sublist = new ArrayList<Integer>();
 	for (int i = 0; i < personal_ach_list.size(); i++)
 		if (personal_ach_list.get(i).type.equals(type)
