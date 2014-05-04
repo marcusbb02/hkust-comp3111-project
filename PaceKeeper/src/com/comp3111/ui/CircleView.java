@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class CircleView extends View {
@@ -20,7 +22,7 @@ public class CircleView extends View {
 	int radius = 150;
 	int delta = size - radius;
 	int arcSize = (size - (delta / 2)) * 2;
-	int percent = 66;
+	int percent = 0;
 
     Paint paint;
     Paint bgpaint;
@@ -28,6 +30,29 @@ public class CircleView extends View {
     float percentage = 0;
     int arcWidth = 80;
     int startOffset = 0;
+    
+    //Runnable postCall;
+    
+    // for animation
+	float currentPercentage = 0, finalPercentage = percentage;
+	
+    private Runnable animator = new Runnable() {
+        @Override
+        public void run() {
+			currentPercentage += (finalPercentage - currentPercentage) / 10;
+        	Log.i("CircleView", "currentPercentage: " + currentPercentage * 100);
+			setPercentage((currentPercentage * 100));
+			
+            if (finalPercentage - currentPercentage >= 0.001) {
+                postDelayed(this, 10);
+            } else {
+            	if(finalPercentage == 1){
+            		setPercentage(100);
+            	}
+        		//onPostAnimateCircle();
+            }
+        }
+    };
     
     // colors
     public static final int LIGHT_BLUE = 0;
@@ -39,7 +64,17 @@ public class CircleView extends View {
 	public CircleView(Context context) {
 		super(context);
 	}
+	/*
+	public void setPostCall(Runnable runnable){
+		postCall = runnable;
+	}
 	
+	protected void onPostAnimateCircle() {
+		if(postCall != null){
+			post(postCall);
+		}
+	}*/
+
 	public CircleView(Context context, AttributeSet attrs) {
 	    super(context, attrs);
 	    init();
@@ -50,8 +85,11 @@ public class CircleView extends View {
 	    init();
 	}
 
-	public void setParameter(int persentage) {	//set persentage
-		this.percent = persentage;
+	public void animateCircle(int delayMSec, float toPercentage){
+		currentPercentage = 0;
+		finalPercentage = toPercentage / 100;
+        removeCallbacks(animator);
+        postDelayed(animator, delayMSec);
 	}
 	
     private void init() {
@@ -72,9 +110,9 @@ public class CircleView extends View {
         int width = getWidth();
         int top = 0;
         rect.set(left + arcWidth/2, top + arcWidth/2, left+width - arcWidth/2, top + width - arcWidth/2); 
-        if(percentage!=0) {
+        //if(percentage!=0) {
             canvas.drawArc(rect, 270-(360*startOffset / 100), -(360*percentage), false, paint);
-        }
+        //}
     }
     
     public void setColor(int colorTag){
@@ -97,7 +135,7 @@ public class CircleView extends View {
     public void setStartOffset(int startPercentage){
     	startOffset = startPercentage;
     }
-    
+
     public void setPercentage(float percentage) {
         this.percentage = percentage / 100;
         invalidate();

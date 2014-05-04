@@ -2,11 +2,13 @@ package com.comp3111.achievement;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.comp3111.pacekeeper.MusicActivity;
 import com.comp3111.pacekeeper.R;
+import com.comp3111.pacekeeper.ResultActivity;
 import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.PedometerSettings;
 import com.comp3111.ui.CircleView;
@@ -110,49 +112,10 @@ public class J_ACH_Fragment extends Fragment {
 	}
 
 	private void showContribution(int id, String title, int regionPer, int devicePer) {
-		/*
-		// TODO make an alertdialog for details of contribution
-		final Dialog dialog = new Dialog(getActivity());
-		dialog.setTitle(title);
-		dialog.setContentView(R.layout.dialog_joint_stat);
-		
-		final CircleView CV = (CircleView)dialog.findViewById(R.id.j_ach_circle);
-		final CircleView regionCV = (CircleView)dialog.findViewById(R.id.j_ach_circle_region);
-		final CircleView deviceCV = (CircleView)dialog.findViewById(R.id.j_ach_circle_device);
-		CV.setColor(CircleView.LIGHT_GREY);
-		CV.setPercentage(100);
-		regionCV.setColor(CircleView.GREEN);
-		regionCV.setPercentage(regionPer - devicePer);
-		deviceCV.setColor(CircleView.LIGHT_BLUE);
-		deviceCV.setStartOffset(regionPer - devicePer);
-		deviceCV.setPercentage(devicePer);
-		// animate the circle
-		currentPercentage = 0;
-		finalPercentage = 100;
-		CV.setPercentage(0);
-		mHandler = new Handler();
-		mRunnable = new Runnable() {
-			@Override
-			public void run() {
-				CircleView cv = CV;
-				if (finalPercentage - currentPercentage < 0.01) {
-
-				} else {
-					currentPercentage += (finalPercentage - currentPercentage) / 10;
-					cv.setPercentage((int) currentPercentage);
-					Log.i("CircleView", currentPercentage + "+("
-							+ finalPercentage + " - " + currentPercentage
-							+ ")/10");
-					mHandler.postDelayed(this, FRAME_RATE);
-				}
-			}
-		};
-		// defer to run after 0.5s
-		mHandler.postDelayed(mRunnable, 250);	
-		
-		// ... and show the dialog
-		dialog.show();
-		*/
+		Intent intent = new Intent(getActivity(), JointStatActivity.class);
+		intent.putExtra("regionPer", regionPer);
+		intent.putExtra("devicePer", devicePer);
+		startActivity(intent);
 	}
 
 }

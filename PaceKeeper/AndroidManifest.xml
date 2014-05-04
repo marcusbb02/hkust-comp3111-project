@@ -90,7 +90,7 @@
                 android:value="com.comp3111.pacekeeper.GreetActivity" />
         </activity>
         <activity
-            android:name="com.comp3111.pacekeeper.JointStatActivity"
+            android:name="com.comp3111.achievement.JointStatActivity"
             android:label="@string/title_activity_joint_stat"
             android:parentActivityName="com.comp3111.achievement.AchievementActivity" >
             <meta-data

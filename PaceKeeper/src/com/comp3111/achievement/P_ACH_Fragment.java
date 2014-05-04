@@ -164,26 +164,7 @@ public class P_ACH_Fragment extends Fragment {
 			final com.comp3111.ui.CircleView cv = (com.comp3111.ui.CircleView) rootView
 					.findViewById(R.id.p_ach_circle);
 			final int finalPercentage = nof;
-
-			cv.setPercentage(0);
-			mHandler = new Handler();
-			mRunnable = new Runnable() {
-				@Override
-				public void run() {
-					if (finalPercentage - currentPercentage < 0.01) {
-
-					} else {
-						currentPercentage += (finalPercentage - currentPercentage) / 10;
-						cv.setPercentage((int) currentPercentage);
-						Log.i("CircleView", currentPercentage + "+("
-								+ finalPercentage + " - " + currentPercentage
-								+ ")/10");
-						mHandler.postDelayed(this, FRAME_RATE);
-					}
-				}
-			};
-			// defer to run after 0.5s
-			mHandler.postDelayed(mRunnable, 250);
+			cv.animateCircle(250, nof);
 			firstTime = false;
 		}
 	}
