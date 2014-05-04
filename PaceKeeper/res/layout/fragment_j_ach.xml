@@ -28,9 +28,22 @@
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />
+            
+            <TextView
+                android:id="@+id/j_ach_region_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="center"
+                android:text="Sai Kung"
+                android:textColor="#555555"
+                android:textSize="20dp"
+                android:textStyle="italic" />
 
             <RelativeLayout
                 android:id="@+id/j_ach_map"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
@@ -45,7 +58,7 @@
                     android:id="@+id/j_ach_map_loc"
                     android:layout_width="wrap_content"
                     android:layout_height="300dp"
-                    android:src="@drawable/map_region01" />
+                    android:src="@drawable/map_region13" />
             </RelativeLayout>
 
             <TextView

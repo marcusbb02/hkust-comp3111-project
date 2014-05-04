@@ -51,14 +51,35 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp" />                
             </RelativeLayout>
-
+            
+            <TextView
+                android:id="@+id/j_stat_region_con"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Contribution by your region "
+                android:textColor="#FF109D59"
+                android:textSize="16dp"
+                android:textStyle="italic" />
+            <TextView
+                android:id="@+id/j_stat_device_con"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Contribution by your device "
+                android:textColor="#FFDC4437"
+                android:textSize="16dp"
+                android:textStyle="italic" />
+            
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Top contributors in your region"
+                android:text="Top contributors"
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />

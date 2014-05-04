@@ -33,6 +33,7 @@ public class J_ACH_Fragment extends Fragment {
 	public boolean firstTime = true;
 	public ProgressDialog pd;
 	public ImageView regionIV;
+	public TextView regionTV;
 	Handler mHandler;
 	Runnable mRunnable;
 	int circleToAnimate = 3, circleAnimating = 1;
@@ -53,7 +54,7 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(0, "Step Contribution", 5325, 328+ConsistentContents.aggRecords.totalSteps, ConsistentContents.aggRecords.totalSteps);
+				showContribution(0, "Step Contribution", 5238, 638+ConsistentContents.aggRecords.totalSteps, ConsistentContents.aggRecords.totalSteps);
 			}			
 		});
 		RelativeLayout rl_dist = (RelativeLayout) rootView.findViewById(R.id.j_ach_btn_dist);
@@ -61,7 +62,7 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(1, "Distance Contribution",1034, (int)(235+ConsistentContents.aggRecords.totalMiles), (int) ConsistentContents.aggRecords.totalMiles);
+				showContribution(1, "Distance Contribution",1034, (int)(459+ConsistentContents.aggRecords.totalMiles), (int) ConsistentContents.aggRecords.totalMiles);
 			}			
 		});
 		RelativeLayout rl_calories = (RelativeLayout) rootView.findViewById(R.id.j_ach_btn_calories);
@@ -69,11 +70,12 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(2, "Calories Contribution", 459, (int)(171+ConsistentContents.aggRecords.calories), (int) ConsistentContents.aggRecords.calories);
+				showContribution(2, "Calories Contribution", 459, (int)(153+ConsistentContents.aggRecords.calories), (int) ConsistentContents.aggRecords.calories);
 			}			
 		});
 
 		regionIV = (ImageView) rootView.findViewById(R.id.j_ach_map_loc);
+		regionTV = (TextView) rootView.findViewById(R.id.j_ach_region_title);
 		animateRegion();
 		
 		return rootView;
@@ -100,6 +102,7 @@ public class J_ACH_Fragment extends Fragment {
 		if(regionIV != null){
 			Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
 			regionIV.setAnimation(anim);
+			regionTV.setAnimation(anim);
 			anim.setStartOffset(1500);
 			anim.setFillAfter(true);
 			anim.start();
@@ -117,6 +120,7 @@ public class J_ACH_Fragment extends Fragment {
 
 	private void showContribution(int id, String title, int totalNo, int regionNo, int deviceNo) {
 		Intent intent = new Intent(getActivity(), JointStatActivity.class);
+		intent.putExtra("title", title);
 		intent.putExtra("totalNo", totalNo);
 		intent.putExtra("regionNo", regionNo);
 		intent.putExtra("deviceNo", deviceNo);

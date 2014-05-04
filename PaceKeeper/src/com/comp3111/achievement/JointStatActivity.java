@@ -34,12 +34,19 @@ public class JointStatActivity extends Activity {
 		//get info from extra
 		Bundle params = getIntent().getExtras();
 		if (params != null) {
+			setTitle(params.getString("title"));
 			totalNo = params.getInt("totalNo");
 			regionNo = params.getInt("regionNo");
+			deviceNo = params.getInt("deviceNo");
 			contributors = params.getStringArray("contributors");
 		}
 		regionPer = (int) (regionNo / (double) totalNo * 100);
 		devicePer = (int) (deviceNo / (double) totalNo * 100);
+		// write contribution percentage
+		TextView tv = (TextView) findViewById(R.id.j_stat_region_con);
+		tv.setText(regionPer + "% contributed by your region");
+		tv = (TextView) findViewById(R.id.j_stat_device_con);
+		tv.setText(devicePer + "% contributed by your device");
 		// Show the Up button in the action bar.
 		setupActionBar();
 		animateCircles();
