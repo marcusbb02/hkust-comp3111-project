@@ -24,6 +24,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -101,6 +102,8 @@ public class STAT_Fragment extends Fragment {
 					getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.hold);
 				}
 			});
+			ImageView iv = (ImageView) v.findViewById(R.id.item_picture_arrow);
+			iv.setVisibility(0);
 			scrollView.addView(v);
 	    }
 	    

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#EDEDED"
     android:orientation="horizontal" >
 
     <ScrollView
@@ -48,18 +49,8 @@
                 <com.comp3111.ui.CircleView
                     android:id="@+id/j_ach_circle_device"
                     android:layout_width="200dp"
-                    android:layout_height="200dp" />
-                
-                
+                    android:layout_height="200dp" />                
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/p_ach_r_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,13 +58,13 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Top contributors"
+                android:text="Top contributors in your region"
                 android:textColor="#555555"
                 android:textSize="20dp"
                 android:textStyle="italic" />
 
             <LinearLayout
-                android:id="@+id/p_ach_a_layout"
+                android:id="@+id/j_ach_con_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >

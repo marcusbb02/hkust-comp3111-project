@@ -1,18 +1,30 @@
 package com.comp3111.achievement;
 
+import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.R;
+import com.comp3111.pacekeeper.ResultActivity;
 import com.comp3111.pacekeeper.R.layout;
 import com.comp3111.pacekeeper.R.menu;
 import com.comp3111.ui.CircleView;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class JointStatActivity extends Activity {
 	
+	String[] contributors;
+	public int totalNo, regionNo, deviceNo;
 	public int regionPer, devicePer;
 
 	@Override
@@ -22,13 +34,28 @@ public class JointStatActivity extends Activity {
 		//get info from extra
 		Bundle params = getIntent().getExtras();
 		if (params != null) {
-			regionPer = params.getInt("regionPer");
-			devicePer = params.getInt("devicePer");
+			totalNo = params.getInt("totalNo");
+			regionNo = params.getInt("regionNo");
+			contributors = params.getStringArray("contributors");
 		}
-
+		regionPer = (int) (regionNo / (double) totalNo * 100);
+		devicePer = (int) (deviceNo / (double) totalNo * 100);
 		// Show the Up button in the action bar.
 		setupActionBar();
 		animateCircles();
+		inflateContributors();
+	}
+
+	private void inflateContributors() {
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		LinearLayout ll_contr = (LinearLayout) findViewById(R.id.j_ach_con_layout);
+		for (int i = 0; i < contributors.length; i++) {
+			View v = inflater.inflate(R.layout.item_picture_block, null);
+			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			tv.setText(contributors[i]);
+			ll_contr.addView(v);
+		}
+
 	}
 
 	private void animateCircles() {

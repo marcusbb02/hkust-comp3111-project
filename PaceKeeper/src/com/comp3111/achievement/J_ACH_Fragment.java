@@ -38,6 +38,10 @@ public class J_ACH_Fragment extends Fragment {
 	int circleToAnimate = 3, circleAnimating = 1;
 	int finalPercentage, currentPercentage;
 	public static final int FRAME_RATE = 20;
+	
+	public String[][] contributors = {{"AAAAAA - 3723 steps", "Chill Wong - 2130 steps", "Keven Kasten - 1745 steps"}
+									 ,{"AAAAAA - 673 miles", "Chill Wong - 325 miles", "Keven Kasten - 143 miles"}
+									 ,{"AAAAAA - 239 calories", "Chill Wong - 158 calories", "Keven Kasten - 79 calories"}};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +53,7 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(0, "Step Contribution", 38, 4);
+				showContribution(0, "Step Contribution", 5325, 328+ConsistentContents.aggRecords.totalSteps, ConsistentContents.aggRecords.totalSteps);
 			}			
 		});
 		RelativeLayout rl_dist = (RelativeLayout) rootView.findViewById(R.id.j_ach_btn_dist);
@@ -57,7 +61,7 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(0, "Distance Contribution", 45, 6);
+				showContribution(1, "Distance Contribution",1034, (int)(235+ConsistentContents.aggRecords.totalMiles), (int) ConsistentContents.aggRecords.totalMiles);
 			}			
 		});
 		RelativeLayout rl_calories = (RelativeLayout) rootView.findViewById(R.id.j_ach_btn_calories);
@@ -65,7 +69,7 @@ public class J_ACH_Fragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showContribution(0, "Calories Contribution", 75, 12);
+				showContribution(2, "Calories Contribution", 459, (int)(171+ConsistentContents.aggRecords.calories), (int) ConsistentContents.aggRecords.calories);
 			}			
 		});
 
@@ -111,10 +115,12 @@ public class J_ACH_Fragment extends Fragment {
 		}
 	}
 
-	private void showContribution(int id, String title, int regionPer, int devicePer) {
+	private void showContribution(int id, String title, int totalNo, int regionNo, int deviceNo) {
 		Intent intent = new Intent(getActivity(), JointStatActivity.class);
-		intent.putExtra("regionPer", regionPer);
-		intent.putExtra("devicePer", devicePer);
+		intent.putExtra("totalNo", totalNo);
+		intent.putExtra("regionNo", regionNo);
+		intent.putExtra("deviceNo", deviceNo);
+		intent.putExtra("contributors", contributors[id]);
 		startActivity(intent);
 	}
 
