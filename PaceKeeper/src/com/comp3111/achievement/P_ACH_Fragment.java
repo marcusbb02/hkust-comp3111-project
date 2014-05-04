@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class P_ACH_Fragment extends Fragment {
 
@@ -44,7 +45,8 @@ public class P_ACH_Fragment extends Fragment {
 	public static final int FRAME_RATE = 15;
 	public boolean firstTime = true;
 
-	int nof;
+	int nof=0;
+	Toast tst=null ;
 
 	DataBaseHelper db = new DataBaseHelper(getActivity());
 
@@ -88,6 +90,9 @@ public class P_ACH_Fragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
+					 if(tst!=null) tst.cancel();
+					tst =Toast.makeText(rootView.getContext(), "Achieved time: "+a.record, Toast.LENGTH_LONG);
+					tst.show();
 					// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
 					JSONHandler.readFromRecord(a.record);
 					Intent intent = new Intent(getActivity() , ResultActivity.class);
@@ -98,7 +103,7 @@ public class P_ACH_Fragment extends Fragment {
 			});
 		}
 
-		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { // not succeed
+		for (int i = 0; i < gv.PA.get_num_of_p_ach(); i++) { 						// not succeed
 			View v = inflater.inflate(R.layout.item_picture_block, null);
 			Achievement a = gv.PA.get_acheivement(i);
 			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
@@ -129,6 +134,9 @@ public class P_ACH_Fragment extends Fragment {
 
 						@Override
 						public void onClick(View v) {
+							 if(tst!=null)tst.cancel();
+							tst =Toast.makeText(rootView.getContext(), "Achieved time: "+b.record, Toast.LENGTH_LONG);
+							tst.show();
 							// when clicked, retrieve json object, replace the record in ConsistentContents and show to user
 							JSONHandler.readFromRecord(b.record);
 							Intent intent = new Intent(getActivity() , ResultActivity.class);
