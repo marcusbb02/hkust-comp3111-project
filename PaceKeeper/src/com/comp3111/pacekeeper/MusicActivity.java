@@ -300,13 +300,14 @@ public class MusicActivity extends Activity {
 				ConsistentContents.currentStatInfo.pace_dist.add(new GraphViewData(ConsistentContents.currentStatInfo.getTimeLasted(), lastSpeedState));
 				ConsistentContents.currentStatInfo.journeyTime = goal.getText();
 				Log.v("tts",String.valueOf(ConsistentContents.aggRecords.totalSteps));
-				succeed_pa_list_to_cc();				//TODO : [bug] aggregate record updates after the checking
+				succeed_pa_list_to_cc();//////////////////////
 				ConsistentContents.aggRecords.addCurrentRecord();
 				
 
 				
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				startActivity(intent);
+				Log.v("tts",String.valueOf(ConsistentContents.aggRecords.totalSteps));
 				MusicActivity.this.finish();
 			}
 		});
@@ -446,13 +447,17 @@ public class MusicActivity extends Activity {
 	void succeed_pa_list_to_cc(){
 		Global_value gv = (Global_value) getApplicationContext();		//put personal_ach id into statistic info
 		ArrayList<Integer> pa1 = gv.PA.check_if_achieve2("step",		
-				ConsistentContents.aggRecords.totalSteps);
+				ConsistentContents.aggRecords.totalSteps+(int)ConsistentContents.currentStatInfo.getTotalSteps());
 		Log.v("pa1",String.valueOf(pa1.size()));
 		ArrayList<Integer> pa2 = gv.PA.check_if_achieve2("time",
-				(int) ConsistentContents.aggRecords.totalSec / 60);
+				(int) ConsistentContents.aggRecords.totalSec / 60+(int)ConsistentContents.currentStatInfo.getTimeLasted()/60);
 		Log.v("pa2",String.valueOf(pa2.size()));
+		ArrayList<Integer> pa3 = gv.PA.check_if_achieve2("dist",
+				(int)ConsistentContents.aggRecords.totalMiles+(int)ConsistentContents.currentStatInfo.getDistanceTravelled());
+		Log.v("pa3",String.valueOf(pa3.size()));
 		ConsistentContents.currentStatInfo.ach_list=pa1;
 		ConsistentContents.currentStatInfo.ach_list.addAll(pa2);
+		ConsistentContents.currentStatInfo.ach_list.addAll(pa3);
 		for(int i=0;i< ConsistentContents.currentStatInfo.ach_list.size();i++)
 		gv.PA.store_record(ConsistentContents.currentStatInfo.ach_list.get(i), ConsistentContents.currentStatInfo.getDateString());
 	}

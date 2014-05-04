@@ -29,20 +29,17 @@ public class PersonalAchievement { // for global uses
 		personal_ach_list.add(new Achievement("Run for 30 minutes","time",30));
 		personal_ach_list.add(new Achievement("Run for 60 minutes","time",60));
 
-
+		personal_ach_list.add(new Achievement("Walk for 10 steps","step",10));
 		personal_ach_list.add(new Achievement("Walk for 100 steps","step",100));
 		personal_ach_list.add(new Achievement("Walk for 1000 steps","step",1000));
 		personal_ach_list.add(new Achievement("Walk for 2000 steps","step",2000));
-		personal_ach_list.add(new Achievement("Walk for 5000 steps","step",5000));
-		  
+
+		personal_ach_list.add(new Achievement("Go for 50 miles","dist",50));
+		personal_ach_list.add(new Achievement("Go for 500 miles","dist",500));
+		personal_ach_list.add(new Achievement("Go for 1000 miles","dist",1000));
+		
 		for(int i=0;i<personal_ach_list.size();i++)
 			personal_ach_list.get(i).id=i+1;
-		/*Achievement c1 = new Achievement(8,"Go for 500 miles","dist",500);
-		Achievement c2 = new Achievement(9,"Go for 1000 miles","dist",1000);
-		Achievement c3 = new Achievement(10,"Go for 2000 miles","dist",2000);
-		personal_ach_list.add(c1);
-		personal_ach_list.add(c2);
-		personal_ach_list.add(c3);*/
 		
 		dbhelper = new DataBaseHelper(context);
 		update_record_from_db();

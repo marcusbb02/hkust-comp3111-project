@@ -55,9 +55,6 @@ public class SettingActivity extends PreferenceActivity {
 		ConsistentContents.aggRecords.recordStr = null;
 	}
 
-	public static void deletesqltable() {
-
-	}
 
 }
 
@@ -123,8 +120,11 @@ class RESETDialogPreference extends DialogPreference {
 	}
 
 	void delete_sql_database() {
-		c.deleteDatabase("pacekeeper.db");	//delete
-		new DataBaseHelper(c);				//recreate
+
+		SQLiteDatabase db = dbhelper.getWritableDatabase();
+		dbhelper.onUpgrade(db, DataBaseHelper.DATABASE_VERSION, DataBaseHelper.DATABASE_VERSION);
+	//	c.deleteDatabase("pacekeeper.db");	//delete
+	//	new DataBaseHelper(c);				//recreate
 	}
 
 	void restart_app() {
