@@ -401,7 +401,13 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				this, true, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 				MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
 				MediaStore.Audio.Media.TITLE_KEY);
+		
+		Singleton_PlayerInfoHolder.getInstance().currentList = new MediaList(
+				this, false, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+				MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
+				MediaStore.Audio.Media.TITLE_KEY);
 
+		Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
 		// Initialise the TabHost
 
 		this.initialiseTabHost(savedInstanceState);
