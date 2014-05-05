@@ -11,6 +11,7 @@ import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.musicplayerpackage.MainMusicPlayerActivity;
 import com.comp3111.pacekeeper.musicplayerpackage.STMediaPlayer;
+import com.comp3111.pacekeeper.musicplayerpackage.Singleton_PlayerInfoHolder;
 import com.comp3111.pedometer.*;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -435,7 +436,9 @@ public class MusicActivity extends Activity {
 		//the last two parameters are speed of playback and pitch in semi-tones.
 		try {
 			// use temporarily - for internal testing
-			AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
+			Singleton_PlayerInfoHolder.loadLists(this);
+			Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
+			//AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
 			ConsistentContents.playerInfoHolder.player = new STMediaPlayer(this);
 			//ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList.nextFile(ConsistentContents.playerInfoHolder.currentFile);
 		} catch (IOException e) {

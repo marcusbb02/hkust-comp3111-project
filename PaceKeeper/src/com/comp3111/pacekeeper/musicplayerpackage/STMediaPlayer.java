@@ -19,7 +19,8 @@ public class STMediaPlayer {
 	}
 	
 	public STMediaPlayer(Activity context) throws IOException{
-		AssetFileDescriptor assetFd = context.getAssets().openFd("test.mp3");
+		//AssetFileDescriptor assetFd = context.getAssets().openFd("test.mp3");
+		String assetFd = Singleton_PlayerInfoHolder.getInstance().currentFile;
 		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(assetFd, 0, 1.0f, 1.0f);
 	}
 

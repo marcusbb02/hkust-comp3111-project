@@ -392,22 +392,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		// Inflate the layout
 		setContentView(R.layout.mainmusicplayeractivity_layout);
-
-		if(Singleton_PlayerInfoHolder.getInstance().albumsList == null)
-		Singleton_PlayerInfoHolder.getInstance().albumsList = new AlbumList(
-				this);
-		if(Singleton_PlayerInfoHolder.getInstance().allSongsList == null)
-		Singleton_PlayerInfoHolder.getInstance().allSongsList = new MediaList(
-				this, true, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
-				MediaStore.Audio.Media.TITLE_KEY);
-		
-		Singleton_PlayerInfoHolder.getInstance().currentList = new MediaList(
-				this, false, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-				MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
-				MediaStore.Audio.Media.TITLE_KEY);
-
-		Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
+		//Singleton_PlayerInfoHolder.loadLists(this);
+		//Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
 		// Initialise the TabHost
 
 		this.initialiseTabHost(savedInstanceState);
@@ -469,6 +455,11 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onResume();
 		playerInfoHolder.player.setOnCompletionListener(onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
+		if (playerInfoHolder.currentFile != null){
+			playerInfoHolder.setAlbumArt(showAlbumArtButton, playerInfoHolder.currentFile, false);
+			songInfoTextView.setText(playerInfoHolder.allSongsList.getTitle(playerInfoHolder.currentFile) + "-"	+ playerInfoHolder.allSongsList.getArtist(playerInfoHolder.currentFile));
+		}
+		/*
 		if (playerInfoHolder.player.isPlaying() == true) {
 			if (playerInfoHolder.currentFile != null){
 				playerInfoHolder.setAlbumArt(showAlbumArtButton, playerInfoHolder.currentFile, false);
@@ -477,7 +468,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				
 			}
 
-		}// else
+		}*/// else
 		//	stopPlay();
 	}
 

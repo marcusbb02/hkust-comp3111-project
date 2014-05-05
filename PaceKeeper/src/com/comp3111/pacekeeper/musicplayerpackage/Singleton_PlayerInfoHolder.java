@@ -8,10 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,6 +33,21 @@ public class Singleton_PlayerInfoHolder {
 	public static MediaList allSongsList;
 	public static MediaList currentList;
 	public static AlbumList albumsList;
+	
+	public static void loadLists(Activity mActivity){
+		if(Singleton_PlayerInfoHolder.getInstance().albumsList == null)
+			Singleton_PlayerInfoHolder.getInstance().albumsList = new AlbumList(
+					mActivity);
+			if(Singleton_PlayerInfoHolder.getInstance().allSongsList == null)
+			Singleton_PlayerInfoHolder.getInstance().allSongsList = new MediaList(
+					mActivity, true, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
+					MediaStore.Audio.Media.TITLE_KEY);
+			Singleton_PlayerInfoHolder.getInstance().currentList = new MediaList(
+					mActivity, false, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
+					MediaStore.Audio.Media.TITLE_KEY);
+	}
 
 	public static Singleton_PlayerInfoHolder getInstance() {
 		if (uniqueInstance == null) {
