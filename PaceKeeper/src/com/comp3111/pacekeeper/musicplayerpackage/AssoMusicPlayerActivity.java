@@ -211,7 +211,7 @@ public class AssoMusicPlayerActivity extends Activity {
 	 * 
 	 */
 	protected void resetStatus() {
-		if (!playerInfoHolder.isStarted) {
+		if (!playerInfoHolder.isStarted()) {
 			albumArtView.setImageDrawable(getResources().getDrawable(
 					R.drawable.ic_expandplayer_placeholder));
 		} else {
@@ -338,7 +338,7 @@ public class AssoMusicPlayerActivity extends Activity {
 
 		updatePosition2();
 
-		playerInfoHolder.isStarted = true;
+		playerInfoHolder.setStarted(true);
 	}
 
 	private void stopPlay() {
@@ -356,7 +356,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		handler.removeCallbacks(updatePositionRunnable2);
 		seekbar.setProgress(0);
 
-		playerInfoHolder.isStarted = false;
+		playerInfoHolder.setStarted(false);
 	}
 
 	private View.OnClickListener onButtonClick = new View.OnClickListener() {
@@ -370,7 +370,7 @@ public class AssoMusicPlayerActivity extends Activity {
 					playerInfoHolder.player.pause();
 					playButton.setImageResource(R.drawable.ic_action_play);
 				} else {
-					if (playerInfoHolder.isStarted) {
+					if (playerInfoHolder.isStarted()) {
 
 						playerInfoHolder.player.start();
 						playButton.setImageResource(R.drawable.ic_action_pause);

@@ -415,6 +415,7 @@ public class MusicActivity extends Activity {
 			public void onClick(View arg0) {
 				if(!ConsistentContents.playerInfoHolder.player.isPlaying()){
 					ConsistentContents.playerInfoHolder.player.start();
+					ConsistentContents.playerInfoHolder.setStarted(true);
 			        pedo.startSensor();
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
@@ -425,6 +426,7 @@ public class MusicActivity extends Activity {
 					}
 				}else{
 					ConsistentContents.playerInfoHolder.player.pause();
+					ConsistentContents.playerInfoHolder.setStarted(false);
 					pedo.stopSensor();
 					goal.pauseGoal();
 					btn_pause.setVisibility(View.GONE);

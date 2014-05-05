@@ -1,10 +1,10 @@
 package com.comp3111.pacekeeper.musicplayerpackage;
+
 import com.comp3111.pacekeeper.R;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-
 
 import android.app.Activity;
 import android.content.Context;
@@ -123,8 +123,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				+ playerInfoHolder.allSongsList
 						.getArtist(playerInfoHolder.currentFile));
 
-		seekbar.setProgress(0);
-
 		playerInfoHolder.player.stop();
 		playerInfoHolder.player.reset();
 
@@ -140,13 +138,15 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 
+		seekbar.setProgress(0);
+		
 		seekbar.setMax(playerInfoHolder.player.getDuration());
 
 		playButton.setImageResource(R.drawable.ic_action_pause);
 
 		updatePosition();
 
-		playerInfoHolder.isStarted = true;
+		playerInfoHolder.setStarted(true);
 	}
 
 	private void stopPlay() {
@@ -161,7 +161,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		handler.removeCallbacks(updatePositionRunnable);
 		seekbar.setProgress(0);
 
-		playerInfoHolder.isStarted = false;
+		playerInfoHolder.setStarted(false);
 		Log.i("stopPlay", "Song stopped");
 	}
 
@@ -172,11 +172,11 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 		handler.postDelayed(updatePositionRunnable, UPDATE_FREQUENCY);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-	    super.onBackPressed();
-	    overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
+		super.onBackPressed();
+		overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
 		handler.removeCallbacks(updatePositionRunnable);
 		finish();
 	}
@@ -186,11 +186,11 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onDestroy();
 		handler.removeCallbacks(updatePositionRunnable);
 		/*
-		playerInfoHolder.player.stop();
-		playerInfoHolder.player.reset();
-		playerInfoHolder.player.release();
-
-		playerInfoHolder.player = null;*/
+		 * playerInfoHolder.player.stop(); playerInfoHolder.player.reset();
+		 * playerInfoHolder.player.release();
+		 * 
+		 * playerInfoHolder.player = null;
+		 */
 	}
 
 	private com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener onCompletion = new com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener() {
@@ -238,7 +238,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 					playerInfoHolder.player.pause();
 					playButton.setImageResource(R.drawable.ic_action_play);
 				} else {
-					if (playerInfoHolder.isStarted) {
+					if (playerInfoHolder.isStarted()) {
 
 						playerInfoHolder.player.start();
 						playButton.setImageResource(R.drawable.ic_action_pause);
@@ -392,8 +392,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		// Inflate the layout
 		setContentView(R.layout.mainmusicplayeractivity_layout);
-		//Singleton_PlayerInfoHolder.loadLists(this);
-		//Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
+		// Singleton_PlayerInfoHolder.loadLists(this);
+		// Singleton_PlayerInfoHolder.getInstance().currentFile =
+		// Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
 		// Initialise the TabHost
 
 		this.initialiseTabHost(savedInstanceState);
@@ -455,21 +456,41 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onResume();
 		playerInfoHolder.player.setOnCompletionListener(onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
-		if (playerInfoHolder.currentFile != null){
-			playerInfoHolder.setAlbumArt(showAlbumArtButton, playerInfoHolder.currentFile, false);
-			songInfoTextView.setText(playerInfoHolder.allSongsList.getTitle(playerInfoHolder.currentFile) + "-"	+ playerInfoHolder.allSongsList.getArtist(playerInfoHolder.currentFile));
+		if (playerInfoHolder.currentFile != null) {
+			playerInfoHolder.setAlbumArt(showAlbumArtButton,
+					playerInfoHolder.currentFile, false);
+			songInfoTextView.setText(playerInfoHolder.allSongsList
+					.getTitle(playerInfoHolder.currentFile)
+					+ "-"
+					+ playerInfoHolder.allSongsList
+							.getArtist(playerInfoHolder.currentFile));
+			
+			seekbar.setProgress(0);
+			
+			seekbar.setMax(playerInfoHolder.player.getDuration());
+
+			if(playerInfoHolder.isStarted())
+			playButton.setImageResource(R.drawable.ic_action_pause);
+
+			updatePosition();
+
+			playerInfoHolder.setStarted(true);
 		}
 		/*
-		if (playerInfoHolder.player.isPlaying() == true) {
-			if (playerInfoHolder.currentFile != null){
-				playerInfoHolder.setAlbumArt(showAlbumArtButton, playerInfoHolder.currentFile, false);
-				songInfoTextView.setText(playerInfoHolder.allSongsList.getTitle(playerInfoHolder.currentFile) + "-"	+ playerInfoHolder.allSongsList.getArtist(playerInfoHolder.currentFile));
-			} else {
-				
-			}
-
-		}*/// else
-		//	stopPlay();
+		 * if (playerInfoHolder.player.isPlaying() == true) { if
+		 * (playerInfoHolder.currentFile != null){
+		 * playerInfoHolder.setAlbumArt(showAlbumArtButton,
+		 * playerInfoHolder.currentFile, false);
+		 * songInfoTextView.setText(playerInfoHolder
+		 * .allSongsList.getTitle(playerInfoHolder.currentFile) + "-" +
+		 * playerInfoHolder
+		 * .allSongsList.getArtist(playerInfoHolder.currentFile)); } else {
+		 * 
+		 * }
+		 * 
+		 * }
+		 */// else
+			// stopPlay();
 	}
 
 	/**

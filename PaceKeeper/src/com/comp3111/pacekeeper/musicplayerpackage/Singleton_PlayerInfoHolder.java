@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class Singleton_PlayerInfoHolder {
 	private static Singleton_PlayerInfoHolder uniqueInstance;
 
-	static boolean isStarted = false;
+	private static boolean isStarted = false;
 	static boolean isMoveingSeekBar = false;
 	static boolean isShuffle = false;
 	/**@param 0:No repeat
@@ -135,5 +135,13 @@ public class Singleton_PlayerInfoHolder {
 
 		return B;
 
+	}
+
+	public static boolean isStarted() {
+		return isStarted;
+	}
+
+	public static void setStarted(boolean isStarted) {
+		Singleton_PlayerInfoHolder.isStarted = isStarted;
 	}
 }
