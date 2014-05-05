@@ -207,6 +207,8 @@ public class MusicActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				//Launch ExtendedMusicActivity
+				pedo.stopSensor();
+				SpeedAdjuster.resetNormal(ConsistentContents.playerInfoHolder.player.getSoundTouchPlayable());
 				Intent intent = new Intent(MusicActivity.this, MainMusicPlayerActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.slide_in_from_above, R.anim.hold);
@@ -219,6 +221,13 @@ public class MusicActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.calibrate, menu);
 		return true;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if(ConsistentContents.playerInfoHolder.player.isPlaying())
+			pedo.startSensor();
 	}
 	
 	@Override

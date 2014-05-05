@@ -39,6 +39,11 @@ public class SpeedAdjuster extends PedometerSettings{
 		saStepDurationUpperThreshold = pedo_obj.getDefaultAverageStepDuration() + SA_UPPER_THRESHOLD_RATIO*f;
 	}
 	
+	public static void resetNormal(final SoundTouchPlayable st_obj){
+		saState = SA_NORMAL;
+		if(saState != saLastState)	rampToSpeed(st_obj, SA_NORMAL);
+	}
+	
 	public static int react(Pedometer pedo_obj, final SoundTouchPlayable st_obj){
 		Log.i("SpeedAdjustor", "Lower: " + saStepDurationLowerThreshold);
 		Log.i("SpeedAdjustor", "Upper: " + saStepDurationUpperThreshold);

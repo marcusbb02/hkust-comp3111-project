@@ -67,7 +67,7 @@ public class STMediaPlayer {
 	public void setDataSource(String file) throws IOException {
 		// TODO Auto-generated method stub
 		stop();
-		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(file, 0, 2.0f, 1.0f);
+		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(file, 0, 1.0f, 1.0f);
 	}
 
 	public void prepare() {
