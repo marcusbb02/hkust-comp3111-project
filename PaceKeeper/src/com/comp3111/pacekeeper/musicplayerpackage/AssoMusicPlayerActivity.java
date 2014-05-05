@@ -556,10 +556,10 @@ public class AssoMusicPlayerActivity extends Activity {
 		}
 	};
 
-	private MediaPlayer.OnCompletionListener onCompletion = new MediaPlayer.OnCompletionListener() {
+	private com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener onCompletion = new com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener() {
 
 		@Override
-		public void onCompletion(MediaPlayer mp) {
+		public void onCompletion() {
 			stopPlay();
 			if (playerInfoHolder.currentFile != null) {
 				switch (playerInfoHolder.repeatMode) {

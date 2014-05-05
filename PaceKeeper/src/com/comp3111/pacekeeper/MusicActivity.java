@@ -10,6 +10,7 @@ import com.comp3111.achievement.PersonalAchievement;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.musicplayerpackage.MainMusicPlayerActivity;
+import com.comp3111.pacekeeper.musicplayerpackage.STMediaPlayer;
 import com.comp3111.pedometer.*;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -71,7 +72,7 @@ public class MusicActivity extends Activity {
 	/**
 	 * Consistent Contents includes
 	 * currentStatInfo : StatisticsInfo
-	 * soundTouchModule : SoundTouchPlayable
+	 * playerInfoHolder.player : SoundTouchPlayable
 	 */
 
 	//class-accessible Player
@@ -223,7 +224,7 @@ public class MusicActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 	    super.onBackPressed();
-	    ConsistentContents.soundTouchModule.stop();
+	    ConsistentContents.playerInfoHolder.player.stop();
 		pedo.stopSensor();
 		goal.pauseGoal();
 	}
@@ -293,7 +294,7 @@ public class MusicActivity extends Activity {
 			public void onClick(View arg0) {
 				
 				// stop soundtouch component and else, then launch ResultActivity
-				ConsistentContents.soundTouchModule.stop();
+				ConsistentContents.playerInfoHolder.player.stop();
 				pedo.stopSensor();
 				goal.pauseGoal();
 
@@ -358,7 +359,7 @@ public class MusicActivity extends Activity {
 				pedoSteps.setText("Steps taken: " + st+"; Th: " + threshold);
 				av_duration.setText("Av. Step Duration: "+s_duration);
 				// change UI reacting the speed
-				switch(SpeedAdjuster.react(pedo, ConsistentContents.soundTouchModule)){
+				switch(SpeedAdjuster.react(pedo, ConsistentContents.playerInfoHolder.player.getSoundTouchPlayable())){
 					case	SpeedAdjuster.SA_FAST:
 						btn_ru.setVisibility(View.INVISIBLE);
 						btn_f1.setVisibility(View.INVISIBLE);
@@ -402,19 +403,8 @@ public class MusicActivity extends Activity {
         btn_pp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				if(ConsistentContents.soundTouchModule.isPaused()){
-					/*
-					//the last two parameters are speed of playback and pitch in semi-tones.
-					try {
-						// use temporarily - for internal testing
-						AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
-						ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
-						//ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					ConsistentContents.soundTouchModule.play();
+				if(!ConsistentContents.playerInfoHolder.player.isPlaying()){
+					ConsistentContents.playerInfoHolder.player.start();
 			        pedo.startSensor();
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
@@ -424,7 +414,7 @@ public class MusicActivity extends Activity {
 						rht_main_text.setText(goal.getText());
 					}
 				}else{
-					ConsistentContents.soundTouchModule.pause();
+					ConsistentContents.playerInfoHolder.player.pause();
 					pedo.stopSensor();
 					goal.pauseGoal();
 					btn_pause.setVisibility(View.GONE);
@@ -437,8 +427,8 @@ public class MusicActivity extends Activity {
 		try {
 			// use temporarily - for internal testing
 			AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
-			ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(assetFd , 0, 1.0f, 0.0f);
-			//ConsistentContents.soundTouchModule = SoundTouchPlayable.createSoundTouchPlayable(fullPathToAudioFile , 0, 1.0f, 0.0f);
+			ConsistentContents.playerInfoHolder.player = new STMediaPlayer(this);
+			//ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList.nextFile(ConsistentContents.playerInfoHolder.currentFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

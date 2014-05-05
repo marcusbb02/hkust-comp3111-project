@@ -3,20 +3,24 @@ package com.comp3111.pacekeeper.musicplayerpackage;
 import java.io.IOException;
 
 import com.smp.soundtouchandroid.SoundTouchPlayable;
+import com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.util.Log;
 
 public class STMediaPlayer {
 	private SoundTouchPlayable stPlayable;
 	
+	public SoundTouchPlayable getSoundTouchPlayable(){
+		return stPlayable;
+	}
+	
 	public STMediaPlayer(Activity context) throws IOException{
-		//AssetFileDescriptor assetFd = context.getAssets().openFd("test.mp3");
-		//stPlayable = SoundTouchPlayable.createSoundTouchPlayable(assetFd, 0, 1.0f, 1.0f);
+		AssetFileDescriptor assetFd = context.getAssets().openFd("test.mp3");
+		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(assetFd, 0, 1.0f, 1.0f);
 	}
 
 	public void setOnErrorListener(OnErrorListener onError) {
@@ -24,9 +28,8 @@ public class STMediaPlayer {
 		
 	}
 
-	public void setOnCompletionListener(OnCompletionListener onCompletion) {
-		// TODO Auto-generated method stub
-		
+	public void setOnCompletionListener(OnCompleteListener onCompletionM) {
+		//stPlayable.onCompletion = onCompletionM;
 	}
 
 	public boolean isPlaying() {

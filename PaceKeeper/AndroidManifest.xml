@@ -62,7 +62,6 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -70,15 +69,6 @@
             android:name="com.comp3111.pacekeeper.ResultActivity"
             android:label="@string/title_activity_result"
             android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.comp3111.pacekeeper.ExtendedMusicActivity"
-            android:label="@string/title_activity_extended_music"
-            android:parentActivityName="com.comp3111.pacekeeper.MusicActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.comp3111.pacekeeper.MusicActivity" />
         </activity>
         <activity
             android:name="com.comp3111.pacekeeper.SettingActivity"

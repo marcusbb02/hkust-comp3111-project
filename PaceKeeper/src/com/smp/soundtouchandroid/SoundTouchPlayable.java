@@ -34,9 +34,16 @@ public class SoundTouchPlayable implements Runnable
 	private volatile AudioTrack track;
 	private volatile boolean paused, finished;
 
+	public OnCompleteListener onCompletion;
+	
 	public interface OnProgressChangedListener
 	{
 		void onProgressChanged(int track, double currentPercentage, long position);
+	}
+	
+	public interface OnCompleteListener
+	{
+		void onCompletion();
 	}
 
 	public long getPlayedDuration()
@@ -232,6 +239,9 @@ public class SoundTouchPlayable implements Runnable
 
 			decoder.close();
 			// at this state, thread is done
+			// run callback
+			if(onCompletion != null)
+				onCompletion.onCompletion();
 		}
 	}
 

@@ -162,6 +162,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		seekbar.setProgress(0);
 
 		playerInfoHolder.isStarted = false;
+		Log.i("stopPlay", "Song stopped");
 	}
 
 	private void updatePosition() {
@@ -171,23 +172,31 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 		handler.postDelayed(updatePositionRunnable, UPDATE_FREQUENCY);
 	}
+	
+	@Override
+	public void onBackPressed() {
+	    super.onBackPressed();
+	    overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
+		handler.removeCallbacks(updatePositionRunnable);
+		finish();
+	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 		handler.removeCallbacks(updatePositionRunnable);
+		/*
 		playerInfoHolder.player.stop();
 		playerInfoHolder.player.reset();
 		playerInfoHolder.player.release();
 
-		playerInfoHolder.player = null;
+		playerInfoHolder.player = null;*/
 	}
 
-	private MediaPlayer.OnCompletionListener onCompletion = new MediaPlayer.OnCompletionListener() {
+	private com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener onCompletion = new com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener() {
 
 		@Override
-		public void onCompletion(MediaPlayer mp) {
+		public void onCompletion() {
 			stopPlay();
 			if (playerInfoHolder.currentFile != null) {
 				switch (playerInfoHolder.repeatMode) {
@@ -249,17 +258,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				break;
 			}
 			case R.id.next: {
-				// int seekto = player.getCurrentPosition() + STEP_VALUE;
-				//
-				// if (seekto > player.getDuration())
-				// seekto = player.getDuration();
-
-				// player.pause();
-				// player.seekTo(seekto);
-				// player.start();
-
-				// currentFile = songsList.getPath(songsList
-				// .matchWithPath(currentFile) + 1);
 				if (playerInfoHolder.currentFile != null) {
 					switch (playerInfoHolder.repeatMode) {
 
@@ -390,18 +388,15 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 	// music part methods end
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Inflate the layout
 		setContentView(R.layout.mainmusicplayeractivity_layout);
 
+		if(Singleton_PlayerInfoHolder.getInstance().albumsList == null)
 		Singleton_PlayerInfoHolder.getInstance().albumsList = new AlbumList(
 				this);
+		if(Singleton_PlayerInfoHolder.getInstance().allSongsList == null)
 		Singleton_PlayerInfoHolder.getInstance().allSongsList = new MediaList(
 				this, true, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 				MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
@@ -421,14 +416,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		nextButton = (ImageButton) findViewById(R.id.next);
 		showAlbumArtButton = (ImageView) findViewById(R.id.showalbumart);
 
-		// try {
-		// playerInfoHolder.player = new STMediaPlayer(this);
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		playerInfoHolder.player = new MediaPlayer();
-
 		playerInfoHolder.player.setOnCompletionListener(onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 		seekbar.setOnSeekBarChangeListener(seekBarChanged);
@@ -439,61 +426,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		showAlbumArtButton.setOnClickListener(onButtonClick);
 		showAlbumArtButton.setImageDrawable(getResources().getDrawable(
 				R.drawable.ic_expandplayer_placeholder));
-
-		// ContentResolver cr = this.getContentResolver();
-		// final Uri uri=MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
-		// final String id=MediaStore.Audio.Playlists._ID;
-		// final String name=MediaStore.Audio.Playlists.NAME;
-		// final String[]columns={id,name};
-		//
-		// Cursor playlists= cr.query(uri, columns, null, null, null);
-		//
-		// Toast.makeText(this, "Found playlists"+
-		// playlists.getCount(), Toast.LENGTH_SHORT).show();
-		//
-		// playlists.moveToFirst();
-		// playlists.moveToNext();
-		// Toast.makeText(this, "name:"+
-		// playlists.getString(playlists.getColumnIndex(name)),
-		// Toast.LENGTH_SHORT).show();
-		//
-		//
-		// Long idoflist=playlists.getLong(playlists.getColumnIndex(id));
-		//
-		//
-		// String[] projection = {
-		// MediaStore.Audio.Playlists.Members.AUDIO_ID,
-		// MediaStore.Audio.Playlists.Members.ARTIST,
-		// MediaStore.Audio.Playlists.Members.TITLE,
-		// MediaStore.Audio.Playlists.Members._ID
-		// };
-		// playlists = null;
-		// playlists = this.managedQuery(
-		// MediaStore.Audio.Playlists.Members.getContentUri("external",idoflist
-		// ),
-		// projection,
-		// MediaStore.Audio.Media.IS_MUSIC +" != 0 ",
-		// null,
-		// null);
-		//
-		// playlists.moveToFirst();
-		//
-		// Toast.makeText(this, ".Members.TITLE :"+
-		// playlists.getString(playlists.getColumnIndex(MediaStore.Audio.Playlists.Members.AUDIO_ID)),
-		// Toast.LENGTH_SHORT).show();
-		//
-		// Toast.makeText(this, "You have a total of :"+
-		// playlists.getCount(), Toast.LENGTH_SHORT).show();
-		//
-		//
 		return;
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
-	 */
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putString("tab", tabInfoHolder.mTabHost.getCurrentTabTag()); // save
 																				// the
@@ -528,22 +463,16 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		super.onResume();
 		playerInfoHolder.player.setOnCompletionListener(onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
-		if (playerInfoHolder.player.isPlaying() == true
-				&& playerInfoHolder.currentFile != null) {
-			playerInfoHolder.setAlbumArt(showAlbumArtButton,
-					playerInfoHolder.currentFile, false);
+		if (playerInfoHolder.player.isPlaying() == true) {
+			if (playerInfoHolder.currentFile != null){
+				playerInfoHolder.setAlbumArt(showAlbumArtButton, playerInfoHolder.currentFile, false);
+				songInfoTextView.setText(playerInfoHolder.allSongsList.getTitle(playerInfoHolder.currentFile) + "-"	+ playerInfoHolder.allSongsList.getArtist(playerInfoHolder.currentFile));
+			} else {
+				
+			}
 
-			// selectedFile.setText(songsList.getTitle(listPosition)
-			// + "-" + songsList.getArtist(listPosition));
-
-			songInfoTextView.setText(playerInfoHolder.allSongsList
-					.getTitle(playerInfoHolder.currentFile)
-					+ "-"
-					+ playerInfoHolder.allSongsList
-							.getArtist(playerInfoHolder.currentFile));
-
-		} else
-			stopPlay();
+		}// else
+		//	stopPlay();
 	}
 
 	/**
@@ -651,38 +580,18 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		Singleton_TabInfoHolder tabInfoHolder = Singleton_TabInfoHolder
 				.getInstance();
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrolled
-		 * (int, float, int)
-		 */
 		@Override
 		public void onPageScrolled(int position, float positionOffset,
 				int positionOffsetPixels) {
 			// TODO Auto-generated method stub
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected
-		 * (int)
-		 */
 		@Override
 		public void onPageSelected(int position) {
 			// TODO Auto-generated method stub
 			tabInfoHolder.mTabHost.setCurrentTab(position);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.support.v4.view.ViewPager.OnPageChangeListener#
-		 * onPageScrollStateChanged(int)
-		 */
 		@Override
 		public void onPageScrollStateChanged(int state) {
 			// TODO Auto-generated method stub
