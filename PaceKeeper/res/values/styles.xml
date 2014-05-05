@@ -115,6 +115,9 @@
 	<drawable name="color_white">#FFFFFFFF</drawable>
 	<drawable name="color_red">#FFDC4437</drawable>
 	<drawable name="color_blue">#FF123456</drawable>
+	<drawable name="color_lightblue">#FF33B5E5</drawable>
 	<drawable name="color_green">#FF109D59</drawable>
+	<drawable name="color_lightgreen">#FF99CC00</drawable>
+	<drawable name="color_purple">#FFAA66CC</drawable>
 
 </resources>

@@ -80,7 +80,7 @@
 			            android:id="@+id/pedo_vp_collapsed_shuffle"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:src="@drawable/ic_action_shuffle" />			    
+			            android:src="@drawable/ic_action_shuffle1" />			    
 			    </LinearLayout>
 		    </LinearLayout>
 		</LinearLayout>
@@ -114,7 +114,6 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:src="@drawable/ic_action_next" />
-		    
 	    </LinearLayout>
 	</LinearLayout>
 	

@@ -9,6 +9,7 @@ import com.comp3111.achievement.Achievement;
 import com.comp3111.achievement.PersonalAchievement;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
+import com.comp3111.pacekeeper.musicplayerpackage.MainMusicPlayerActivity;
 import com.comp3111.pedometer.*;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -205,7 +206,7 @@ public class MusicActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				//Launch ExtendedMusicActivity
-				Intent intent = new Intent(MusicActivity.this, ExtendedMusicActivity.class);
+				Intent intent = new Intent(MusicActivity.this, MainMusicPlayerActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.slide_in_from_above, R.anim.hold);
 			}			

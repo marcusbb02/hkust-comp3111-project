@@ -97,6 +97,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.comp3111.achievement.AchievementActivity" />
         </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.musicplayerpackage.MainMusicPlayerActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >            
+        </activity>
+        <activity
+            android:name="com.comp3111.pacekeeper.musicplayerpackage.AssoMusicPlayerActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            </activity>
     </application>
 
 </manifest>
