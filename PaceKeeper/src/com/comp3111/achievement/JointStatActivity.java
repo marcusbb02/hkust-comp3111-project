@@ -71,12 +71,12 @@ public class JointStatActivity extends Activity {
 		final CircleView cvRegion = (CircleView) findViewById(R.id.j_ach_circle_region);
 		final CircleView cvDevice = (CircleView) findViewById(R.id.j_ach_circle_device);
 		cvWhole.setColor(CircleView.LIGHT_GREY);
-		cvWhole.animateCircle(250, 100);
+		cvWhole.animateCircle(350, 100);
 		cvRegion.setColor(CircleView.GREEN);
-		cvRegion.animateCircle(350, regionPer);
+		cvRegion.animateCircle(450, regionPer);
 		cvDevice.setColor(CircleView.RED);
 		cvDevice.setStartOffset(regionPer - devicePer);
-		cvDevice.animateCircle(450, devicePer);
+		cvDevice.animateCircle(550, devicePer);
 	}
 
 	/**
