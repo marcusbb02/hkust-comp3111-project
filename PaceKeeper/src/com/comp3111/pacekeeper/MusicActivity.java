@@ -62,6 +62,7 @@ public class MusicActivity extends Activity {
     private int tabWidth, screenW, screenH, offsetX;
     private ImageView ivCursor, ivAlbumArt;
     int finalHeight, actionBarHeight;
+	public int lastSongDuration = -100;
     
     // For things inside ViewPager
 	String fullPathToAudioFile = Environment.getExternalStorageDirectory().toString() + "/test.mp3";
@@ -154,6 +155,12 @@ public class MusicActivity extends Activity {
 		        goal = new TimeGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
+						try {
+							checkForNextSong();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				};
 		    }
@@ -161,6 +168,12 @@ public class MusicActivity extends Activity {
 		        goal = new StepGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
+						try {
+							checkForNextSong();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				};
 		    }
@@ -168,6 +181,12 @@ public class MusicActivity extends Activity {
 		        goal = new DistanceGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
+						try {
+							checkForNextSong();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				};
 		    }
@@ -175,6 +194,12 @@ public class MusicActivity extends Activity {
 		        goal = new StepGoal(){
 					public void updateGoalStateCallback(){
 						rht_main_text.setText(this.getText());
+						try {
+							checkForNextSong();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				};
 		    }
@@ -309,7 +334,6 @@ public class MusicActivity extends Activity {
 		// right page text and button
 		// assume quick start goal at start, could be replaced by other goals at InitExtra
         goal = new QuickStartGoal(){
-        	private int lastDuration = -100;
 			public void updateGoalStateCallback(){
 				rht_main_text.setText(this.getText());
 				try {
@@ -318,48 +342,6 @@ public class MusicActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-
-			private void checkForNextSong() throws IOException {
-				// TODO Auto-generated method stub
-				Log.i("MusicActivity", lastDuration + "vs. " + ConsistentContents.playerInfoHolder.player.getCurrentPosition());
-				if(lastDuration == ConsistentContents.playerInfoHolder.player.getCurrentPosition()){
-					ConsistentContents.playerInfoHolder.player.stop(); 
-					// song mode
-					if (ConsistentContents.playerInfoHolder.currentFile != null) {
-						switch (ConsistentContents.playerInfoHolder.repeatMode) {
-						// Repeat all
-						case 2: {
-							ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
-									.nextFileLoop(ConsistentContents.playerInfoHolder.currentFile);
-							ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
-							ConsistentContents.playerInfoHolder.player.start();
-							break;
-						}
-						// Repeat once
-						case 1: {
-							ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
-							ConsistentContents.playerInfoHolder.player.start();
-							break;
-						}
-						// No repeat
-						case 0: {
-							ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
-									.nextFile(ConsistentContents.playerInfoHolder.currentFile);
-							if (ConsistentContents.playerInfoHolder.currentFile != null){
-								ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
-								ConsistentContents.playerInfoHolder.player.start();
-							} else {
-							}
-							break;
-						}
-						}
-					}
-					// ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
-					updateAlbumArtAndInfo();
-					//ConsistentContents.playerInfoHolder.player.start();
-				}
-				lastDuration = ConsistentContents.playerInfoHolder.player.getCurrentPosition();
 			}
 		};
 		TextView rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_title);
@@ -628,5 +610,49 @@ public class MusicActivity extends Activity {
         DecimalFormat twoDForm = new DecimalFormat("#.#"); 
         return Double.valueOf(twoDForm.format(d));
     }  
+
+	public void checkForNextSong() throws IOException {
+		// TODO Auto-generated method stub
+		Log.i("MusicActivity", lastSongDuration + "vs. " + ConsistentContents.playerInfoHolder.player.getCurrentPosition());
+		if(lastSongDuration == ConsistentContents.playerInfoHolder.player.getCurrentPosition()){
+			playNextSong();
+		}
+		lastSongDuration = ConsistentContents.playerInfoHolder.player.getCurrentPosition();
+	}
+
+	public void playNextSong() throws IOException {
+		ConsistentContents.playerInfoHolder.player.stop(); 
+		// song mode
+		if (ConsistentContents.playerInfoHolder.currentFile != null) {
+			switch (ConsistentContents.playerInfoHolder.repeatMode) {
+			// Repeat all
+			case 2: {
+				ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
+						.nextFileLoop(ConsistentContents.playerInfoHolder.currentFile);
+				ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+				ConsistentContents.playerInfoHolder.player.start();
+				break;
+			}
+			// Repeat once
+			case 1: {
+				ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+				ConsistentContents.playerInfoHolder.player.start();
+				break;
+			}
+			// No repeat
+			case 0: {
+				ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
+						.nextFile(ConsistentContents.playerInfoHolder.currentFile);
+				if (ConsistentContents.playerInfoHolder.currentFile != null){
+					ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+					ConsistentContents.playerInfoHolder.player.start();
+				} else {
+				}
+				break;
+			}
+			}
+		}
+		updateAlbumArtAndInfo();
+	}
 
 }
