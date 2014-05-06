@@ -8,6 +8,7 @@ import java.util.Calendar;
 import com.comp3111.achievement.Achievement;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
+import com.comp3111.pacekeeper.musicplayerpackage.Singleton_PlayerInfoHolder;
 import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.DistanceGoal;
 import com.comp3111.pedometer.QuickStartGoal;
@@ -56,9 +57,12 @@ public class ResultActivity extends Activity {
 			LinearLayout ach_l = (LinearLayout) findViewById(R.id.result_song_container);
 			LayoutInflater vi = (LayoutInflater) getApplicationContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View v = vi.inflate(R.layout.item_picture_block, null);
-			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			View v = vi.inflate(R.layout.item_song_block, null);
+			TextView tv = (TextView) v.findViewById(R.id.item_song_desc);
 			tv.setText(ConsistentContents.currentStatInfo.song_list.get(i));
+			// replace placeholder with album art if available
+			ImageView iv = (ImageView) v.findViewById(R.id.item_song_pic);
+			Singleton_PlayerInfoHolder.setAlbumArt(iv, ConsistentContents.currentStatInfo.song_path.get(i), false);
 			ach_l.addView(v);
 		}
 	}

@@ -441,8 +441,7 @@ public class MusicActivity extends Activity {
 			}        	
         });
         
-        // load the music and fire up the player
- 		Singleton_PlayerInfoHolder.loadLists(this);
+        // fire up the player
  		try {
  			// set music to the first file
  			Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);

@@ -53,6 +53,9 @@ public class GreetActivity extends Activity implements OnClickListener{
 		panel_anim = (View)findViewById(R.id.greet_animate_panel);
 		panel_anim.setVisibility(View.VISIBLE);
 		panel_anim.setVisibility(View.INVISIBLE);
+		
+		// initialize music info
+ 		Singleton_PlayerInfoHolder.loadLists(this);
 	}
 	
 	@Override
