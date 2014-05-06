@@ -190,7 +190,8 @@ public class AssoMusicPlayerActivity extends Activity {
 		super.onResume();
 		//playerInfoHolder.player.setOnCompletionListener(AssoMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
-		completionHandler.post(completionRunnable2);
+		if(playerInfoHolder.player.isPlaying())
+			completionHandler.post(completionRunnable2);
 	}
 
 	@Override
