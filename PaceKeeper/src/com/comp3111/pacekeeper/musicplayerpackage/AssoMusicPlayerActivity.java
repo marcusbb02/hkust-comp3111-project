@@ -301,6 +301,7 @@ public class AssoMusicPlayerActivity extends Activity {
 	public void selectSong(String filePath){
 		playerInfoHolder.currentFile=filePath;
 		playerInfoHolder.setAlbumArt(albumArtView, filePath, false);
+		
 		ViewTreeObserver vto = albumArtView.getViewTreeObserver();
 		vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			public boolean onPreDraw() {
@@ -577,10 +578,18 @@ public class AssoMusicPlayerActivity extends Activity {
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			if (playerInfoHolder.isMoveingSeekBar) {
-				playerInfoHolder.player.seekTo(progress);
-
-				Log.i("OnSeekBarChangeListener", "onProgressChanged");
+			if (fromUser) {
+				if(playerInfoHolder.isStarted()){
+					playerInfoHolder.player.seekTo(progress);
+					Log.i("OnSeekBarChangeListener", "onProgressChanged");
+				}
+				else{
+					if(playerInfoHolder.currentFile!=null){
+						startPlay(playerInfoHolder.currentFile);
+						playerInfoHolder.player.seekTo(progress);
+						Log.i("OnSeekBarChangeListener", "onProgressChanged");
+					}
+				}
 			}
 		}
 	};

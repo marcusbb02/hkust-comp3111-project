@@ -102,14 +102,30 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			.getInstance();
 
 	private final Handler handler = new Handler();
-
+	private final Handler completionHandler = new Handler();
 	private final Runnable updatePositionRunnable = new Runnable() {
 		public void run() {
 			updatePosition();
 		}
 	};
-	public void selectSong(String filePath){
-		playerInfoHolder.currentFile=filePath;
+
+	private final Runnable completionRunnable = new Runnable() {
+		public void run() {
+			completionHandler.removeCallbacks(completionRunnable);
+			
+			if (playerInfoHolder.isStarted()) {
+				if (playerInfoHolder.player.getCurrentPosition() >= playerInfoHolder.player
+						.getDuration()||MainMusicPlayerActivity.this.seekbar.getProgress()>= MainMusicPlayerActivity.this.seekbar.getMax()) {
+					Toast.makeText(MainMusicPlayerActivity.this, "?", Toast.LENGTH_SHORT).show();
+					onCompletion();
+				}
+			}
+			completionHandler.post(completionRunnable);
+		}
+	};
+
+	public void selectSong(String filePath) {
+		playerInfoHolder.currentFile = filePath;
 		playerInfoHolder.setAlbumArt(showAlbumArtButton, filePath, false);
 
 		songInfoTextView.setText(playerInfoHolder.allSongsList
@@ -119,7 +135,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 						.getArtist(playerInfoHolder.currentFile));
 		seekbar.setProgress(0);
 	}
-	
+
 	public void startPlay(String filePath) {
 		Log.i("Selected: ", filePath);
 
@@ -150,7 +166,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		}
 
 		seekbar.setProgress(0);
-		
+
 		seekbar.setMax(playerInfoHolder.player.getDuration());
 
 		playButton.setImageResource(R.drawable.ic_action_pause);
@@ -158,7 +174,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		updatePosition();
 
 		playerInfoHolder.setStarted(true);
-		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(
+				MainMusicPlayerActivity.this, onCompletion);
 	}
 
 	private void stopPlay() {
@@ -188,14 +205,14 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		if(tabInfoHolder.fragmentInflated){
-			
-			tabInfoHolder.fragmentInflated=false;
-		}
-		else{
-		overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
-		handler.removeCallbacks(updatePositionRunnable);
-		finish();
+		if (tabInfoHolder.fragmentInflated) {
+
+			tabInfoHolder.fragmentInflated = false;
+		} else {
+			overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
+			handler.removeCallbacks(updatePositionRunnable);
+			completionHandler.removeCallbacks(completionRunnable);
+			finish();
 		}
 	}
 
@@ -203,6 +220,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		handler.removeCallbacks(updatePositionRunnable);
+		completionHandler.removeCallbacks(completionRunnable);
 		/*
 		 * playerInfoHolder.player.stop(); playerInfoHolder.player.reset();
 		 * playerInfoHolder.player.release();
@@ -215,36 +233,37 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 		@Override
 		public void onCompletion() {
-			stopPlay();
 			
-			if (playerInfoHolder.currentFile != null) {
-				switch (playerInfoHolder.repeatMode) {
-
-				// Repeat all
-				case 2: {
-					playerInfoHolder.currentFile = playerInfoHolder.currentList
-							.nextFileLoop(playerInfoHolder.currentFile);
-					startPlay(playerInfoHolder.currentFile);
-					break;
-				}
-				// Repeat once
-				case 1: {
-					startPlay(playerInfoHolder.currentFile);
-					break;
-				}
-				// No repeat
-				case 0: {
-					playerInfoHolder.currentFile = playerInfoHolder.currentList
-							.nextFile(playerInfoHolder.currentFile);
-					if (playerInfoHolder.currentFile != null)
-						startPlay(playerInfoHolder.currentFile);
-					else{
-						selectSong(playerInfoHolder.currentList.getPath(0));
-					}
-					break;
-				}
-				}
-			}
+//			stopPlay();
+//
+//			if (playerInfoHolder.currentFile != null) {
+//				switch (playerInfoHolder.repeatMode) {
+//
+//				// Repeat all
+//				case 2: {
+//					playerInfoHolder.currentFile = playerInfoHolder.currentList
+//							.nextFileLoop(playerInfoHolder.currentFile);
+//					startPlay(playerInfoHolder.currentFile);
+//					break;
+//				}
+//				// Repeat once
+//				case 1: {
+//					startPlay(playerInfoHolder.currentFile);
+//					break;
+//				}
+//				// No repeat
+//				case 0: {
+//					playerInfoHolder.currentFile = playerInfoHolder.currentList
+//							.nextFile(playerInfoHolder.currentFile);
+//					if (playerInfoHolder.currentFile != null)
+//						startPlay(playerInfoHolder.currentFile);
+//					else {
+//						selectSong(playerInfoHolder.currentList.getPath(0));
+//					}
+//					break;
+//				}
+//				}
+//			}
 		}
 	};
 
@@ -303,9 +322,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the last song!", LENGTH_SHORT)
 									.show();
-							
-						stopPlay();
-						selectSong(playerInfoHolder.currentList.getPath(0));
+
+							stopPlay();
+							selectSong(playerInfoHolder.currentList.getPath(0));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -354,9 +373,11 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the first song!", LENGTH_SHORT)
 									.show();
-							
+
 							stopPlay();
-							selectSong(playerInfoHolder.currentList.getPath(playerInfoHolder.currentList.getSize()-1));
+							selectSong(playerInfoHolder.currentList
+									.getPath(playerInfoHolder.currentList
+											.getSize() - 1));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -407,8 +428,23 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
 			if (playerInfoHolder.isMoveingSeekBar) {
-				playerInfoHolder.player.seekTo(progress);
-				Log.i("OnSeekBarChangeListener", "onProgressChanged");
+				if (playerInfoHolder.isStarted()) {
+					if (progress >= seekBar.getMax()) {
+						playerInfoHolder.player.seekTo(seekBar.getMax() - 1);
+					} else
+						playerInfoHolder.player.seekTo(progress);
+					Log.i("OnSeekBarChangeListener", "onProgressChanged");
+				} else {
+					if (playerInfoHolder.currentFile != null) {
+						startPlay(playerInfoHolder.currentFile);
+						if (progress >= seekBar.getMax()) {
+							playerInfoHolder.player
+									.seekTo(seekBar.getMax() - 1);
+						} else
+							playerInfoHolder.player.seekTo(progress);
+						Log.i("OnSeekBarChangeListener", "onProgressChanged");
+					}
+				}
 			}
 		}
 	};
@@ -436,7 +472,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		nextButton = (ImageButton) findViewById(R.id.next);
 		showAlbumArtButton = (ImageView) findViewById(R.id.showalbumart);
 
-		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(
+				MainMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 		seekbar.setOnSeekBarChangeListener(seekBarChanged);
 
@@ -447,6 +484,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		showAlbumArtButton.setImageDrawable(getResources().getDrawable(
 				R.drawable.ic_expandplayer_placeholder));
 		songInfoTextView.setText("No song selected");
+
+		completionHandler.post(completionRunnable);
 		return;
 	}
 
@@ -482,7 +521,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(
+				MainMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 		if (playerInfoHolder.currentFile != null) {
 			playerInfoHolder.setAlbumArt(showAlbumArtButton,
@@ -492,24 +532,55 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 					+ "-"
 					+ playerInfoHolder.allSongsList
 							.getArtist(playerInfoHolder.currentFile));
-			
+
 			seekbar.setProgress(0);
-			
+
 			seekbar.setMax(playerInfoHolder.player.getDuration());
 
-			if(playerInfoHolder.player.isPlaying()){
+			if (playerInfoHolder.player.isPlaying()) {
 				playButton.setImageResource(R.drawable.ic_action_pause);
-			}
-			else{
+			} else {
 				playButton.setImageResource(R.drawable.ic_action_play);
 			}
 			updatePosition();
-		}
-		else{
+		} else {
 			showAlbumArtButton.setImageDrawable(getResources().getDrawable(
 					R.drawable.ic_expandplayer_placeholder));
 			songInfoTextView.setText("No song selected");
 			seekbar.setProgress(0);
+		}
+	}
+
+	public void onCompletion() {
+		stopPlay();
+
+		if (playerInfoHolder.currentFile != null) {
+			switch (playerInfoHolder.repeatMode) {
+
+			// Repeat all
+			case 2: {
+				playerInfoHolder.currentFile = playerInfoHolder.currentList
+						.nextFileLoop(playerInfoHolder.currentFile);
+				startPlay(playerInfoHolder.currentFile);
+				break;
+			}
+			// Repeat once
+			case 1: {
+				startPlay(playerInfoHolder.currentFile);
+				break;
+			}
+			// No repeat
+			case 0: {
+				playerInfoHolder.currentFile = playerInfoHolder.currentList
+						.nextFile(playerInfoHolder.currentFile);
+				if (playerInfoHolder.currentFile != null)
+					startPlay(playerInfoHolder.currentFile);
+				else {
+					selectSong(playerInfoHolder.currentList.getPath(0));
+				}
+				break;
+			}
+			}
 		}
 	}
 
