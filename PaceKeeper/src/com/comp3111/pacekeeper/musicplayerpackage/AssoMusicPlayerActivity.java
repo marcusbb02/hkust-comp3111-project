@@ -211,9 +211,13 @@ public class AssoMusicPlayerActivity extends Activity {
 	 * 
 	 */
 	protected void resetStatus() {
-		if (!playerInfoHolder.isStarted()) {
+		if (playerInfoHolder.currentFile==null) {
 			albumArtView.setImageDrawable(getResources().getDrawable(
 					R.drawable.ic_expandplayer_placeholder));
+			textSongTitle.setText("No song selected");
+			textArtist.setText(" ");
+			textAlbum.setText(" ");
+			
 		} else {
 			updatePosition2();
 			textSongTitle.setText(playerInfoHolder.allSongsList
@@ -294,10 +298,31 @@ public class AssoMusicPlayerActivity extends Activity {
 		handler.postDelayed(updatePositionRunnable2, UPDATE_FREQUENCY);
 	}
 
-	public void startPlay(String file) {
-		Log.i("Selected: ", file);
+	public void selectSong(String filePath){
+		playerInfoHolder.currentFile=filePath;
+		playerInfoHolder.setAlbumArt(albumArtView, filePath, false);
+		ViewTreeObserver vto = albumArtView.getViewTreeObserver();
+		vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+			public boolean onPreDraw() {
 
-		playerInfoHolder.setAlbumArt(albumArtView, file, false);
+				int temp = albumArtView.getMeasuredWidth();
+				albumArtView.getLayoutParams().height = temp;
+				return true;
+			}
+		});
+
+		textSongTitle.setText(playerInfoHolder.allSongsList
+				.getTitle(playerInfoHolder.currentFile));
+		textArtist.setText(playerInfoHolder.allSongsList
+				.getArtist(playerInfoHolder.currentFile));
+		textAlbum.setText(playerInfoHolder.allSongsList
+				.getAlbum(playerInfoHolder.currentFile));
+		seekbar.setProgress(0);
+	}
+	public void startPlay(String filePath) {
+		Log.i("Selected: ", filePath);
+
+		playerInfoHolder.setAlbumArt(albumArtView, filePath, false);
 		ViewTreeObserver vto = albumArtView.getViewTreeObserver();
 		vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			public boolean onPreDraw() {
@@ -321,7 +346,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		playerInfoHolder.player.reset();
 
 		try {
-			playerInfoHolder.player.setDataSource(file);
+			playerInfoHolder.player.setDataSource(filePath);
 			playerInfoHolder.player.prepare();
 			playerInfoHolder.player.start();
 		} catch (IllegalArgumentException e) {
@@ -416,6 +441,8 @@ public class AssoMusicPlayerActivity extends Activity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the first song!",
 									Toast.LENGTH_SHORT).show();
+							stopPlay();
+							selectSong(playerInfoHolder.currentList.getPath(playerInfoHolder.currentList.getSize()-1));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -456,6 +483,8 @@ public class AssoMusicPlayerActivity extends Activity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the last song!",
 									Toast.LENGTH_SHORT).show();
+							stopPlay();
+							selectSong(playerInfoHolder.currentList.getPath(0));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -583,6 +612,9 @@ public class AssoMusicPlayerActivity extends Activity {
 							.nextFile(playerInfoHolder.currentFile);
 					if (playerInfoHolder.currentFile != null)
 						startPlay(playerInfoHolder.currentFile);
+					else{
+						selectSong(playerInfoHolder.currentList.getPath(0));
+					}
 					break;
 				}
 				}

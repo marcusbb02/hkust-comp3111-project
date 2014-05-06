@@ -108,11 +108,22 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			updatePosition();
 		}
 	};
+	public void selectSong(String filePath){
+		playerInfoHolder.currentFile=filePath;
+		playerInfoHolder.setAlbumArt(showAlbumArtButton, filePath, false);
 
-	public void startPlay(String file) {
-		Log.i("Selected: ", file);
+		songInfoTextView.setText(playerInfoHolder.allSongsList
+				.getTitle(playerInfoHolder.currentFile)
+				+ "-"
+				+ playerInfoHolder.allSongsList
+						.getArtist(playerInfoHolder.currentFile));
+		seekbar.setProgress(0);
+	}
+	
+	public void startPlay(String filePath) {
+		Log.i("Selected: ", filePath);
 
-		playerInfoHolder.setAlbumArt(showAlbumArtButton, file, false);
+		playerInfoHolder.setAlbumArt(showAlbumArtButton, filePath, false);
 
 		// selectedFile.setText(songsList.getTitle(listPosition)
 		// + "-" + songsList.getArtist(listPosition));
@@ -127,7 +138,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		playerInfoHolder.player.reset();
 
 		try {
-			playerInfoHolder.player.setDataSource(file);
+			playerInfoHolder.player.setDataSource(filePath);
 			playerInfoHolder.player.prepare();
 			playerInfoHolder.player.start();
 		} catch (IllegalArgumentException e) {
@@ -177,9 +188,15 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		if(tabInfoHolder.fragmentInflated){
+			
+			tabInfoHolder.fragmentInflated=false;
+		}
+		else{
 		overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
 		handler.removeCallbacks(updatePositionRunnable);
 		finish();
+		}
 	}
 
 	@Override
@@ -221,6 +238,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 							.nextFile(playerInfoHolder.currentFile);
 					if (playerInfoHolder.currentFile != null)
 						startPlay(playerInfoHolder.currentFile);
+					else{
+						selectSong(playerInfoHolder.currentList.getPath(0));
+					}
 					break;
 				}
 				}
@@ -283,6 +303,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the last song!", LENGTH_SHORT)
 									.show();
+							
+						stopPlay();
+						selectSong(playerInfoHolder.currentList.getPath(0));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -331,6 +354,9 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 							Toast.makeText((Activity) v.getContext(),
 									"This is the first song!", LENGTH_SHORT)
 									.show();
+							
+							stopPlay();
+							selectSong(playerInfoHolder.currentList.getPath(playerInfoHolder.currentList.getSize()-1));
 						} else
 							startPlay(playerInfoHolder.currentFile);
 						break;
@@ -420,6 +446,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		showAlbumArtButton.setOnClickListener(onButtonClick);
 		showAlbumArtButton.setImageDrawable(getResources().getDrawable(
 				R.drawable.ic_expandplayer_placeholder));
+		songInfoTextView.setText("No song selected");
 		return;
 	}
 
@@ -470,12 +497,19 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			
 			seekbar.setMax(playerInfoHolder.player.getDuration());
 
-			if(playerInfoHolder.isStarted())
-			playButton.setImageResource(R.drawable.ic_action_pause);
-
+			if(playerInfoHolder.player.isPlaying()){
+				playButton.setImageResource(R.drawable.ic_action_pause);
+			}
+			else{
+				playButton.setImageResource(R.drawable.ic_action_play);
+			}
 			updatePosition();
-
-			playerInfoHolder.setStarted(true);
+		}
+		else{
+			showAlbumArtButton.setImageDrawable(getResources().getDrawable(
+					R.drawable.ic_expandplayer_placeholder));
+			songInfoTextView.setText("No song selected");
+			seekbar.setProgress(0);
 		}
 	}
 

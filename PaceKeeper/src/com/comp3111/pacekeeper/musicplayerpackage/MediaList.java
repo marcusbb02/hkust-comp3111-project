@@ -129,7 +129,10 @@ public class MediaList {
 			songsList.add(new AssociatedKey(backUpList.get(i)));
 		}
 	}
-
+	public int getSize() {
+		return songsList.size();
+	}
+	
 	public int findKeybyPath(String path) {
 		// if sortable, then use binery search
 		int pos; 

@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class Singleton_PlayerInfoHolder {
 	private static Singleton_PlayerInfoHolder uniqueInstance;
-
+	
 	private static boolean isStarted = false;
 	static boolean isMoveingSeekBar = false;
 	static boolean isShuffle = false;

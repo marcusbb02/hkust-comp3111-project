@@ -4,7 +4,7 @@ import android.widget.TabHost;
 
 public class Singleton_TabInfoHolder {
 	private static Singleton_TabInfoHolder uniqueInstance;
-	
+	static boolean fragmentInflated=false;
 	static boolean isTabClickable=true;
 	static boolean isSwipeable=true;
 	static TabHost mTabHost;

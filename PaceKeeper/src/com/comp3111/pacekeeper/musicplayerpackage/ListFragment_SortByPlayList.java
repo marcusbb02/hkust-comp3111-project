@@ -294,7 +294,7 @@ public class ListFragment_SortByPlayList extends ListFragment{
 
 		tabInfoHolder.setPageSwipeable(false);
 		tabInfoHolder.setTabClickable(false);
-
+		tabInfoHolder.fragmentInflated=true;
 		transaction.replace(R.id.songs_of_a_playlist_frame, childFragment);
 		// Commit the transaction
 		transaction.addToBackStack(null);

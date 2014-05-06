@@ -318,7 +318,7 @@ public class ListFragment_SortByAlbum extends ListFragment {
 		}
 		tabInfoHolder.setPageSwipeable(false);
 		tabInfoHolder.setTabClickable(false);
-
+		tabInfoHolder.fragmentInflated=true;
 		transaction.replace(R.id.songs_of_an_album_frame, childFragment);
 		// Commit the transaction
 		transaction.addToBackStack(null);
