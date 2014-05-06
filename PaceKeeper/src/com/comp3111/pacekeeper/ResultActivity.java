@@ -45,8 +45,22 @@ public class ResultActivity extends Activity {
 		initJourneyStat();
 		checkGoalType();
 		ConsistentContents.aggRecords.recalculateStat();
+		populateSongList();
 		check_achievement();
 
+	}
+
+	private void populateSongList() {
+		for (int i = 0; i < ConsistentContents.currentStatInfo.song_list.size(); i++) {
+			Log.i("ResultActivity", "Populating " + ConsistentContents.currentStatInfo.song_list.get(i));
+			LinearLayout ach_l = (LinearLayout) findViewById(R.id.result_song_container);
+			LayoutInflater vi = (LayoutInflater) getApplicationContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View v = vi.inflate(R.layout.item_picture_block, null);
+			TextView tv = (TextView) v.findViewById(R.id.item_picture_desc);
+			tv.setText(ConsistentContents.currentStatInfo.song_list.get(i));
+			ach_l.addView(v);
+		}
 	}
 
 	public void initJourneyStat() {

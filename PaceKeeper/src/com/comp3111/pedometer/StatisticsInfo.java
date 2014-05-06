@@ -35,12 +35,23 @@ public class StatisticsInfo {
 	public String journeyType;		// goals title
 	public String journeyTime;		// time elapsed / steps / etc
 	public ArrayList<Integer> ach_list=new ArrayList<Integer>();
+	public ArrayList<String> song_list = new ArrayList<String>();
+	public ArrayList<String> song_path = new ArrayList<String>();
 	
 	public StatisticsInfo(double kilogram){
 		setWeight(kilogram);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		recordDateString = df.format(new Date());
 		Log.i("StatisticsInfo", "New record created with DateStr: " + recordDateString);
+	}
+	
+	public boolean ifExist(String song_name){
+		for(int i = 0; i < song_list.size(); i++){
+			if(song_list.get(i).equals(song_name)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void addTime(double unit){

@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import com.comp3111.pedometer.AggregatedRecords;
 import com.comp3111.pedometer.ConsistentContents;
@@ -30,8 +31,8 @@ public class JSONHandler {
 		FileOutputStream fos = null;
 		// write json string to dat file
 		fos = new FileOutputStream(filePath);
-		DataOutputStream dos = new DataOutputStream(fos);
-		dos.writeBytes(jsonStr);
+		OutputStreamWriter dos = new OutputStreamWriter(fos);
+		dos.write(jsonStr);
 		dos.flush();
 		dos.close();
     }

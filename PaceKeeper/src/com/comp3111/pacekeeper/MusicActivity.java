@@ -234,6 +234,11 @@ public class MusicActivity extends Activity {
 		if(ConsistentContents.playerInfoHolder.player.isPlaying()){
 			pedo.startSensor();
 			goal.startGoal(1000);
+			btn_pause.setVisibility(View.VISIBLE);
+			btn_play.setVisibility(View.GONE);
+		}else{
+			btn_pause.setVisibility(View.GONE);
+			btn_play.setVisibility(View.VISIBLE);
 		}
 	}
 	
@@ -425,11 +430,6 @@ public class MusicActivity extends Activity {
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
 					btn_play.setVisibility(View.GONE);
-					/*
-					// temp. use for time goal demostration
-					if(goal != null){
-						rht_main_text.setText(goal.getText());
-					}*/
 				}else{
 					ConsistentContents.playerInfoHolder.player.pause();
 					ConsistentContents.playerInfoHolder.setStarted(false);
