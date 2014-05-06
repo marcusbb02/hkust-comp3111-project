@@ -21,7 +21,7 @@ public class STMediaPlayer {
 	public STMediaPlayer(Activity context) throws IOException{
 		//AssetFileDescriptor assetFd = context.getAssets().openFd("test.mp3");
 		String assetFd = Singleton_PlayerInfoHolder.getInstance().currentFile;
-		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(assetFd, 0, 1.0f, 1.0f);
+		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(assetFd, 0, 1.0f, 0.0f);
 	}
 
 	public void setOnErrorListener(OnErrorListener onError) {
@@ -68,7 +68,7 @@ public class STMediaPlayer {
 	public void setDataSource(String file) throws IOException {
 		// TODO Auto-generated method stub
 		stop();
-		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(file, 0, 1.0f, 1.0f);
+		stPlayable = SoundTouchPlayable.createSoundTouchPlayable(file, 0, 1.0f, 0.0f);
 	}
 
 	public void prepare() {
