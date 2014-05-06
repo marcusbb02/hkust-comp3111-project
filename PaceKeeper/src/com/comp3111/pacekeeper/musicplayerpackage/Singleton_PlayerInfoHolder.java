@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -43,10 +44,12 @@ public class Singleton_PlayerInfoHolder {
 					mActivity, true, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 					MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
 					MediaStore.Audio.Media.TITLE_KEY);
+			if(Singleton_PlayerInfoHolder.getInstance().currentList == null)
 			Singleton_PlayerInfoHolder.getInstance().currentList = new MediaList(
 					mActivity, false, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 					MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
 					MediaStore.Audio.Media.TITLE_KEY);
+			Log.i("Singleton_PlayerInfoHolder", "Lists loaded");
 	}
 
 	public static Singleton_PlayerInfoHolder getInstance() {

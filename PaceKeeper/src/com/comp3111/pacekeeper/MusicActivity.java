@@ -21,6 +21,7 @@ import com.smp.soundtouchandroid.SoundTouchPlayable;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -62,7 +63,7 @@ public class MusicActivity extends Activity {
     
     // For things inside ViewPager
 	String fullPathToAudioFile = Environment.getExternalStorageDirectory().toString() + "/test.mp3";
-	TextView gForce, pedoSteps, av_duration, left_steps, left_miles, left_stepsPerMin, left_milesPerHour, left_calories, rht_main_text;
+	TextView gForce, pedoSteps, av_duration, left_steps, left_miles, left_stepsPerMin, left_milesPerHour, left_calories, rht_main_text, vp_song_name, vp_artist_name, vp_album_name;
 	ImageButton btn_pause, btn_play;
 	double time_axis;
 	Pedometer pedo;
@@ -209,6 +210,7 @@ public class MusicActivity extends Activity {
 			public void onClick(View arg0) {
 				//Launch ExtendedMusicActivity
 				pedo.stopSensor();
+				goal.pauseGoal();
 				SpeedAdjuster.resetNormal(ConsistentContents.playerInfoHolder.player.getSoundTouchPlayable());
 				Intent intent = new Intent(MusicActivity.this, MainMusicPlayerActivity.class);
 				startActivity(intent);
@@ -227,8 +229,12 @@ public class MusicActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(ConsistentContents.playerInfoHolder.player.isPlaying())
+		if(ConsistentContents.playerInfoHolder.player != null)
+			updateAlbumArtAndInfo();
+		if(ConsistentContents.playerInfoHolder.player.isPlaying()){
 			pedo.startSensor();
+			goal.startGoal(1000);
+		}
 	}
 	
 	@Override
@@ -314,8 +320,6 @@ public class MusicActivity extends Activity {
 				Log.v("tts",String.valueOf(ConsistentContents.aggRecords.totalSteps));
 				succeed_pa_list_to_cc();//////////////////////
 				ConsistentContents.aggRecords.addCurrentRecord();
-				
-
 				
 				Intent intent = new Intent(MusicActivity.this, ResultActivity.class);
 				startActivity(intent);
@@ -409,6 +413,7 @@ public class MusicActivity extends Activity {
 				}
         	}
         };
+        // center trigger button
         RelativeLayout btn_pp = (RelativeLayout)centerPanel.findViewById(R.id.mus_btn_trigger);
         btn_pp.setOnClickListener(new OnClickListener(){
 			@Override
@@ -420,10 +425,11 @@ public class MusicActivity extends Activity {
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
 					btn_play.setVisibility(View.GONE);
+					/*
 					// temp. use for time goal demostration
 					if(goal != null){
 						rht_main_text.setText(goal.getText());
-					}
+					}*/
 				}else{
 					ConsistentContents.playerInfoHolder.player.pause();
 					ConsistentContents.playerInfoHolder.setStarted(false);
@@ -435,18 +441,39 @@ public class MusicActivity extends Activity {
 			}        	
         });
         
-		//the last two parameters are speed of playback and pitch in semi-tones.
-		try {
-			// use temporarily - for internal testing
-			Singleton_PlayerInfoHolder.loadLists(this);
-			Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
-			//AssetFileDescriptor assetFd = getAssets().openFd("test.mp3");
-			ConsistentContents.playerInfoHolder.player = new STMediaPlayer(this);
-			//ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList.nextFile(ConsistentContents.playerInfoHolder.currentFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        // load the music and fire up the player
+ 		Singleton_PlayerInfoHolder.loadLists(this);
+ 		try {
+ 			// set music to the first file
+ 			Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
+ 			ConsistentContents.playerInfoHolder.player = new STMediaPlayer(this);
+ 			// and replace the album art and song info
+ 			//updateAlbumArtAndInfo();
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+	}
 
+	private void updateAlbumArtAndInfo() {
+		// TODO Auto-generated method stub
+		// init the textviews
+		vp_song_name = (TextView) findViewById(R.id.pedo_vp_songname);
+		vp_artist_name = (TextView) findViewById(R.id.pedo_vp_artistname);
+		vp_album_name = (TextView) findViewById(R.id.pedo_vp_albumname);
+		vp_song_name.setText(Singleton_PlayerInfoHolder.allSongsList.getTitle(Singleton_PlayerInfoHolder.currentFile));
+		vp_artist_name.setText(Singleton_PlayerInfoHolder.allSongsList.getArtist(Singleton_PlayerInfoHolder.currentFile));
+		vp_album_name.setText(Singleton_PlayerInfoHolder.allSongsList.getAlbum(Singleton_PlayerInfoHolder.currentFile));
+        // album art part; to resize after knowing the actual image height
+        ivAlbumArt = (ImageView) findViewById(R.id.pedo_vp_collapse_albumart);
+		ConsistentContents.playerInfoHolder.setAlbumArt(ivAlbumArt, Singleton_PlayerInfoHolder.currentFile, false);
+        ViewTreeObserver vto = ivAlbumArt.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                finalHeight = ivAlbumArt.getMeasuredHeight();
+                ivAlbumArt.getLayoutParams().width = finalHeight;
+                return true;
+            }
+        });
 	}
 
 	void succeed_pa_list_to_cc(){
@@ -507,16 +534,6 @@ public class MusicActivity extends Activity {
         ivCursor.getLayoutParams().width = tabWidth;
         ivCursorWidth = tabWidth;
         offsetX = (tabWidth - ivCursorWidth) / 2;
-        // album art part; to resize after knowing the actual image height
-        ivAlbumArt = (ImageView) findViewById(R.id.pedo_vp_collapse_albumart);
-        ViewTreeObserver vto = ivAlbumArt.getViewTreeObserver();
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                finalHeight = ivAlbumArt.getMeasuredHeight();
-                ivAlbumArt.getLayoutParams().width = finalHeight;
-                return true;
-            }
-        });
     }
     
     public class MyOnPageChangeListener implements OnPageChangeListener {

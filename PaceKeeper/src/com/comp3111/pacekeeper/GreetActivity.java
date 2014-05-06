@@ -1,10 +1,16 @@
 package com.comp3111.pacekeeper;
 
+import java.io.IOException;
+
 import com.comp3111.achievement.AchievementActivity;
 import com.comp3111.local_database.JSONHandler;
+import com.comp3111.pacekeeper.musicplayerpackage.STMediaPlayer;
+import com.comp3111.pacekeeper.musicplayerpackage.Singleton_PlayerInfoHolder;
+import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.ui.ExpandAnimation;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.DisplayMetrics;

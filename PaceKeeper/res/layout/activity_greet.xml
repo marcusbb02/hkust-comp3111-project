@@ -3,89 +3,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
-		    <LinearLayout
-		        android:id="@+id/upper_btns"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight="1">        
-			    <ImageView
-			        android:id="@+id/greet_left_panel"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:background="#DB4437" 
-			        android:scaleType="fitStart"
-			        android:layout_weight="1"
-        			android:src="@drawable/ic_menu_left"/>
-			
-			    <ImageView
-			        android:id="@+id/greet_right_panel"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:background="#109d59"
-			        android:scaleType="fitStart"
-			        android:layout_weight="1"
-        			android:src="@drawable/ic_menu_right" />
-		    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/upper_btns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/greet_left_panel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#DB4437"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_menu_left" />
+
+            <ImageView
+                android:id="@+id/greet_right_panel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#109d59"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_menu_right" />
+        </LinearLayout>
     </LinearLayout>
 
-		    <RelativeLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="55dp"
-		        android:background="#efefef"
-		        android:layout_alignParentBottom="true" >
-		        <Button
-		            android:id="@+id/greet_filler"
-		        	android:background="#efefef"
-		            android:layout_width="match_parent"
-		            android:layout_height="match_parent"
-		            android:scaleType="centerCrop"
-			        android:src="@drawable/ic_button_stat" />
-		        
-		        <ImageButton
-		            android:id="@+id/greet_stat"
-		            style="?android:borderlessButtonStyle"
-		            android:layout_width="55dp"
-		            android:layout_height="match_parent"
-		            android:scaleType="centerCrop"
-		            android:text="Statistics"
-			        android:src="@drawable/ic_button_stat" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="#efefef" >
 
-		        <ImageButton
-		            android:id="@+id/greet_profilelist"
-		            style="?android:borderlessButtonStyle"
-		            android:layout_width="55dp"
-		            android:layout_height="match_parent"
-		            android:layout_alignParentTop="true"
-		            android:layout_centerHorizontal="true"
-		            android:scaleType="centerCrop"
-		            android:text="Calibrate"
-			        android:src="@drawable/ic_button_calibrate" />
-		        
-		        <ImageButton
-		            android:id="@+id/greet_options"
-		            style="?android:borderlessButtonStyle"
-		            android:layout_width="55dp"
-		            android:layout_height="match_parent"
-		            android:layout_alignParentRight="true"
-		            android:layout_alignParentTop="true"
-		            android:scaleType="centerCrop"
-		            android:text="Options"
-			        android:src="@drawable/ic_button_option" />
+        <Button
+            android:id="@+id/greet_filler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#efefef"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_stat" />
 
-		    </RelativeLayout>
-		    
-		    <View
-		        android:id="@+id/greet_animate_panel"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:alpha="0.0"
-		        android:background="#DDDDDD" 
-		        android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/greet_stat"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_stat"
+            android:text="Statistics" />
+
+        <ImageButton
+            android:id="@+id/greet_profilelist"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_calibrate"
+            android:text="Calibrate" />
+
+        <ImageButton
+            android:id="@+id/greet_options"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_option"
+            android:text="Options" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/greet_animate_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:alpha="0.0"
+        android:background="#DDDDDD" />
 
 </RelativeLayout>
