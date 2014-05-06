@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,22 +133,28 @@ public class MediaCursorAdapter extends SimpleCursorAdapter {
 			
 			//Using an AsyncTask to load the slow images in a background thread
 			AsyncTask<MediaViewHolder, Void, Bitmap> imager = new AsyncTask<MediaViewHolder, Void, Bitmap>() {
-				Bitmap buffer;
-				private MediaViewHolder v;
+				Bitmap[] buffer = new Bitmap[100];
+				int arglength;
+				private MediaViewHolder[] v = new MediaViewHolder[100];
 
 				@Override
 				protected Bitmap doInBackground(MediaViewHolder... arg0) {
 					// TODO Auto-generated method stub
-					v = arg0[0];
-					buffer = Singleton_PlayerInfoHolder.decodeAlbumArt(MediaCursorAdapter.this.holder.path, true);
+					arglength = arg0.length;
+					for(int i = 0; i < arg0.length; i++){
+						v[i] = arg0[i];
+						//Log.i("AsyncTask", "Loading buffer for " + v[i].songTitle);
+						buffer[i] = Singleton_PlayerInfoHolder.decodeAlbumArt(v[i].path, true);
+					}
 					return null;
 				}
 				
 			    @Override
 			    protected void onPostExecute(Bitmap result) {
 			        super.onPostExecute(result);
-			        Singleton_PlayerInfoHolder.applyAlbumArt(holder.albumArt, buffer);
-			     
+					for(int i = 0; i < arglength; i++){
+				        Singleton_PlayerInfoHolder.applyAlbumArt(v[i].albumArt, buffer[i]);
+					}
 			    }
 			};
 			imager.execute(holder);
