@@ -33,7 +33,7 @@ import android.widget.Toast;
  */
 public class MainMusicPlayerActivity extends FragmentActivity {
 
-	public int lastSongDuration = -100;
+	public static int lastSongDuration = -100;
 	private Singleton_TabInfoHolder tabInfoHolder = Singleton_TabInfoHolder
 			.getInstance();
 	private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, MainMusicPlayerActivity.TabInfo>();
@@ -279,12 +279,16 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				if (playerInfoHolder.player.isPlaying()) {
 
 					handler.removeCallbacks(updatePositionRunnable);
+					// remember to stop completion handler from running
+					lastSongDuration -= 1;
+					completionHandler.removeCallbacks(completionRunnable);
 					playerInfoHolder.player.pause();
 					playButton.setImageResource(R.drawable.ic_action_play);
 				} else {
 					if (playerInfoHolder.isStarted()) {
 
 						playerInfoHolder.player.start();
+						completionHandler.post(completionRunnable);
 						playButton.setImageResource(R.drawable.ic_action_pause);
 						updatePosition();
 
@@ -399,7 +403,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 				Intent intObj = new Intent(MainMusicPlayerActivity.this,
 						AssoMusicPlayerActivity.class);
-
+				// make another handler at there to remain controlled
+				completionHandler.removeCallbacks(completionRunnable);
 				startActivity(intObj);
 
 				break;

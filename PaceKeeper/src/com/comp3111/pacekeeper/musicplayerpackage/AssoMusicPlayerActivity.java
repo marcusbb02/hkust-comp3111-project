@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 public class AssoMusicPlayerActivity extends Activity {
 
+	private final Handler completionHandler = new Handler();
 	private static final long UPDATE_FREQUENCY = 50;
 
 	private Singleton_PlayerInfoHolder playerInfoHolder = Singleton_PlayerInfoHolder
@@ -53,6 +54,21 @@ public class AssoMusicPlayerActivity extends Activity {
 	private final Runnable updatePositionRunnable2 = new Runnable() {
 		public void run() {
 			updatePosition2();
+		}
+	};
+	
+	private final Runnable completionRunnable2 = new Runnable() {
+		public void run() {
+			completionHandler.removeCallbacks(completionRunnable2);
+			
+			if (playerInfoHolder.isStarted()) {
+				if (playerInfoHolder.player.getCurrentPosition() == MainMusicPlayerActivity.lastSongDuration) {
+					//Toast.makeText(MainMusicPlayerActivity.this, "?", Toast.LENGTH_SHORT).show();
+					onCompletion();
+				}
+			}
+			MainMusicPlayerActivity.lastSongDuration = playerInfoHolder.player.getCurrentPosition();
+			completionHandler.postDelayed(completionRunnable2, 300);
 		}
 	};
 
@@ -172,8 +188,9 @@ public class AssoMusicPlayerActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		playerInfoHolder.player.setOnCompletionListener(AssoMusicPlayerActivity.this, onCompletion);
+		//playerInfoHolder.player.setOnCompletionListener(AssoMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
+		completionHandler.post(completionRunnable2);
 	}
 
 	@Override
@@ -181,6 +198,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		super.onDestroy();
 
 		handler.removeCallbacks(updatePositionRunnable2);
+		completionHandler.removeCallbacks(completionRunnable2);
 	}
 
 	@Override
@@ -393,12 +411,16 @@ public class AssoMusicPlayerActivity extends Activity {
 				if (playerInfoHolder.player.isPlaying()) {
 
 					handler.removeCallbacks(updatePositionRunnable2);
+					// remember to stop completion handler from running
+					MainMusicPlayerActivity.lastSongDuration -= 1;
+					completionHandler.removeCallbacks(completionRunnable2);
 					playerInfoHolder.player.pause();
 					playButton.setImageResource(R.drawable.ic_action_play);
 				} else {
 					if (playerInfoHolder.isStarted()) {
 
 						playerInfoHolder.player.start();
+						completionHandler.post(completionRunnable2);
 						playButton.setImageResource(R.drawable.ic_action_pause);
 						updatePosition2();
 
@@ -593,43 +615,76 @@ public class AssoMusicPlayerActivity extends Activity {
 			}
 		}
 	};
+	
+	public void onCompletion() {
+		stopPlay();
 
-	private com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener onCompletion = new com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener() {
+		if (playerInfoHolder.currentFile != null) {
+			switch (playerInfoHolder.repeatMode) {
 
-		@Override
-		public void onCompletion() {
-			stopPlay();
-			if (playerInfoHolder.currentFile != null) {
-				switch (playerInfoHolder.repeatMode) {
-
-				// Repeat all
-				case 2: {
-					playerInfoHolder.currentFile = playerInfoHolder.currentList
-							.nextFileLoop(playerInfoHolder.currentFile);
-
+			// Repeat all
+			case 2: {
+				playerInfoHolder.currentFile = playerInfoHolder.currentList
+						.nextFileLoop(playerInfoHolder.currentFile);
+				startPlay(playerInfoHolder.currentFile);
+				break;
+			}
+			// Repeat once
+			case 1: {
+				startPlay(playerInfoHolder.currentFile);
+				break;
+			}
+			// No repeat
+			case 0: {
+				playerInfoHolder.currentFile = playerInfoHolder.currentList
+						.nextFile(playerInfoHolder.currentFile);
+				if (playerInfoHolder.currentFile != null)
 					startPlay(playerInfoHolder.currentFile);
-					break;
+				else {
+					selectSong(playerInfoHolder.currentList.getPath(0));
 				}
-				// Repeat once
-				case 1: {
-					startPlay(playerInfoHolder.currentFile);
-					break;
-				}
-				// No repeat
-				case 0: {
-					playerInfoHolder.currentFile = playerInfoHolder.currentList
-							.nextFile(playerInfoHolder.currentFile);
-					if (playerInfoHolder.currentFile != null)
-						startPlay(playerInfoHolder.currentFile);
-					else{
-						selectSong(playerInfoHolder.currentList.getPath(0));
-					}
-					break;
-				}
-				}
+				break;
+			}
 			}
 		}
-	};
+	}
+
+//	private com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener onCompletion = new com.smp.soundtouchandroid.SoundTouchPlayable.OnCompleteListener() {
+//
+//		@Override
+//		public void onCompletion() {
+//			stopPlay();
+//			if (playerInfoHolder.currentFile != null) {
+//				switch (playerInfoHolder.repeatMode) {
+//
+//				// Repeat all
+//				case 2: {
+//					playerInfoHolder.currentFile = playerInfoHolder.currentList
+//							.nextFileLoop(playerInfoHolder.currentFile);
+//
+//					startPlay(playerInfoHolder.currentFile);
+//					break;
+//				}
+//				// Repeat once
+//				case 1: {
+//					startPlay(playerInfoHolder.currentFile);
+//					break;
+//				}
+//				// No repeat
+//				case 0: {
+//					playerInfoHolder.currentFile = playerInfoHolder.currentList
+//							.nextFile(playerInfoHolder.currentFile);
+//					if (playerInfoHolder.currentFile != null)
+//						startPlay(playerInfoHolder.currentFile);
+//					else{
+//						selectSong(playerInfoHolder.currentList.getPath(0));
+//					}
+//					break;
+//				}
+//				}
+//			}
+//		}
+//	};
 	private MediaPlayer.OnErrorListener onError = new MediaPlayer.OnErrorListener() {
 
 		@Override
