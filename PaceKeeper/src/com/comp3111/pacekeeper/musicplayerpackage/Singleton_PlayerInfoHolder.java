@@ -28,12 +28,13 @@ public class Singleton_PlayerInfoHolder {
 	 * @param 1:Single repeat
 	 * @param 2:List repeat
 	 */
-	static int repeatMode = 2;
+	public static int repeatMode = 2;
 	public static STMediaPlayer player = null;
 	public static String currentFile = null;
 	public static MediaList allSongsList;
 	public static MediaList currentList;
 	public static AlbumList albumsList;
+	public static boolean usingPlayer = false;
 	
 	public static void loadLists(Activity mActivity){
 		if(Singleton_PlayerInfoHolder.getInstance().albumsList == null)

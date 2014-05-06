@@ -10,6 +10,7 @@ import com.comp3111.achievement.PersonalAchievement;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.local_database.JSONHandler;
 import com.comp3111.pacekeeper.musicplayerpackage.MainMusicPlayerActivity;
+import com.comp3111.pacekeeper.musicplayerpackage.MediaList;
 import com.comp3111.pacekeeper.musicplayerpackage.STMediaPlayer;
 import com.comp3111.pacekeeper.musicplayerpackage.Singleton_PlayerInfoHolder;
 import com.comp3111.pedometer.*;
@@ -22,6 +23,7 @@ import com.smp.soundtouchandroid.SoundTouchPlayable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -229,8 +231,16 @@ public class MusicActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		// set music to the first file if no song selected
+		if(Singleton_PlayerInfoHolder.getInstance().currentFile == null){
+			Singleton_PlayerInfoHolder.getInstance().currentList = new MediaList(
+					this, false, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					MediaStore.Audio.Media.IS_MUSIC + " != 0", null,
+					MediaStore.Audio.Media.TITLE_KEY);
+			Singleton_PlayerInfoHolder.getInstance().currentFile = Singleton_PlayerInfoHolder.getInstance().currentList.getPath(0);
+		}
 		if(ConsistentContents.playerInfoHolder.player != null)
-			updateAlbumArtAndInfo();
+			updateAlbumArtAndInfo();		
 		if(ConsistentContents.playerInfoHolder.player.isPlaying()){
 			pedo.startSensor();
 			goal.startGoal(1000);
@@ -299,8 +309,57 @@ public class MusicActivity extends Activity {
 		// right page text and button
 		// assume quick start goal at start, could be replaced by other goals at InitExtra
         goal = new QuickStartGoal(){
+        	private int lastDuration = -100;
 			public void updateGoalStateCallback(){
 				rht_main_text.setText(this.getText());
+				try {
+					checkForNextSong();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			private void checkForNextSong() throws IOException {
+				// TODO Auto-generated method stub
+				Log.i("MusicActivity", lastDuration + "vs. " + ConsistentContents.playerInfoHolder.player.getCurrentPosition());
+				if(lastDuration == ConsistentContents.playerInfoHolder.player.getCurrentPosition()){
+					ConsistentContents.playerInfoHolder.player.stop(); 
+					// song mode
+					if (ConsistentContents.playerInfoHolder.currentFile != null) {
+						switch (ConsistentContents.playerInfoHolder.repeatMode) {
+						// Repeat all
+						case 2: {
+							ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
+									.nextFileLoop(ConsistentContents.playerInfoHolder.currentFile);
+							ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+							ConsistentContents.playerInfoHolder.player.start();
+							break;
+						}
+						// Repeat once
+						case 1: {
+							ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+							ConsistentContents.playerInfoHolder.player.start();
+							break;
+						}
+						// No repeat
+						case 0: {
+							ConsistentContents.playerInfoHolder.currentFile = ConsistentContents.playerInfoHolder.currentList
+									.nextFile(ConsistentContents.playerInfoHolder.currentFile);
+							if (ConsistentContents.playerInfoHolder.currentFile != null){
+								ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+								ConsistentContents.playerInfoHolder.player.start();
+							} else {
+							}
+							break;
+						}
+						}
+					}
+					// ConsistentContents.playerInfoHolder.player.setDataSource(Singleton_PlayerInfoHolder.getInstance().currentFile);
+					updateAlbumArtAndInfo();
+					//ConsistentContents.playerInfoHolder.player.start();
+				}
+				lastDuration = ConsistentContents.playerInfoHolder.player.getCurrentPosition();
 			}
 		};
 		TextView rht_text = (TextView)rightPanel.findViewById(R.id.pedo_right_title);
@@ -423,16 +482,20 @@ public class MusicActivity extends Activity {
         btn_pp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				if(!ConsistentContents.playerInfoHolder.player.isPlaying()){
-					ConsistentContents.playerInfoHolder.player.start();
-					ConsistentContents.playerInfoHolder.setStarted(true);
+				if(!pedo.running){
+					if(!ConsistentContents.playerInfoHolder.player.isPlaying()){
+						ConsistentContents.playerInfoHolder.player.start();
+						ConsistentContents.playerInfoHolder.setStarted(true);
+					}
 			        pedo.startSensor();
 					goal.startGoal(1000);
 					btn_pause.setVisibility(View.VISIBLE);
 					btn_play.setVisibility(View.GONE);
 				}else{
-					ConsistentContents.playerInfoHolder.player.pause();
-					ConsistentContents.playerInfoHolder.setStarted(false);
+					if(ConsistentContents.playerInfoHolder.player.isPlaying()){
+						ConsistentContents.playerInfoHolder.player.pause();
+						ConsistentContents.playerInfoHolder.setStarted(false);
+					}
 					pedo.stopSensor();
 					goal.pauseGoal();
 					btn_pause.setVisibility(View.GONE);

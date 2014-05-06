@@ -212,6 +212,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			overridePendingTransition(R.anim.hold, R.anim.slide_out_to_above);
 			handler.removeCallbacks(updatePositionRunnable);
 			completionHandler.removeCallbacks(completionRunnable);
+			Singleton_PlayerInfoHolder.usingPlayer = false;
 			finish();
 		}
 	}
@@ -219,6 +220,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		Singleton_PlayerInfoHolder.usingPlayer = false;
 		handler.removeCallbacks(updatePositionRunnable);
 		completionHandler.removeCallbacks(completionRunnable);
 		/*
@@ -521,6 +523,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Singleton_PlayerInfoHolder.usingPlayer = true;
 		playerInfoHolder.player.setOnCompletionListener(
 				MainMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);

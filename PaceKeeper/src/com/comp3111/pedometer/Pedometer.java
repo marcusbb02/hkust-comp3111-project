@@ -2,6 +2,8 @@ package com.comp3111.pedometer;
 
 import java.util.List;
 
+import com.comp3111.pacekeeper.musicplayerpackage.Singleton_PlayerInfoHolder;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,7 +17,7 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	private final static String module_name = "Pedometer";
 	// sensor and its state
 	private SensorManager sensorManager;
-	boolean running = false;
+	public boolean running = false;
 	//thread handler
 	Handler pHandler = new Handler();
 	//various values for estimation of steps
@@ -131,13 +133,13 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 						// ... and it is human-possible
 						if(pStepDelay <= 0){
 							// ... it could also be a pace change to fast (and exert more force), so try to re-adjust the threshold by stepping up :)
-							if(pForceDiff > pUpperThreshold){
+							if(pForceDiff > pUpperThreshold && pForceDiff < pUpperThreshold){
 								pThreshold = pUpperThresholdRetainProportion * pThreshold + (1-pUpperThresholdRetainProportion) * pForceDiff;
 							}
 							pStep++;
 							pStepDelay = pStepDelayNumber;	
-							// calculate new average for step duration value			
-							pStepDurationCount();
+							// calculate new average for step duration value, only if music player is not using			
+							if(Singleton_PlayerInfoHolder.usingPlayer == false)	pStepDurationCount();
 						}else{
 							// ... but it could then be the user being too violent, so let him calm before recounting a step
 							pStepDelay = pStepDelayNumber;
