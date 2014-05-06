@@ -33,6 +33,7 @@ import android.widget.Toast;
  */
 public class MainMusicPlayerActivity extends FragmentActivity {
 
+	public int lastSongDuration = -100;
 	private Singleton_TabInfoHolder tabInfoHolder = Singleton_TabInfoHolder
 			.getInstance();
 	private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, MainMusicPlayerActivity.TabInfo>();
@@ -114,13 +115,13 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			completionHandler.removeCallbacks(completionRunnable);
 			
 			if (playerInfoHolder.isStarted()) {
-				if (playerInfoHolder.player.getCurrentPosition() >= playerInfoHolder.player
-						.getDuration()||MainMusicPlayerActivity.this.seekbar.getProgress()>= MainMusicPlayerActivity.this.seekbar.getMax()) {
-					Toast.makeText(MainMusicPlayerActivity.this, "?", Toast.LENGTH_SHORT).show();
+				if (playerInfoHolder.player.getCurrentPosition() == lastSongDuration) {
+					//Toast.makeText(MainMusicPlayerActivity.this, "?", Toast.LENGTH_SHORT).show();
 					onCompletion();
 				}
 			}
-			completionHandler.post(completionRunnable);
+			lastSongDuration = playerInfoHolder.player.getCurrentPosition();
+			completionHandler.postDelayed(completionRunnable, 300);
 		}
 	};
 
