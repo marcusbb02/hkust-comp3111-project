@@ -2,10 +2,11 @@ package com.comp3111.pacekeeper.musicplayerpackage;
 import java.math.BigDecimal;
 import com.comp3111.pacekeeper.R;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
@@ -17,12 +18,12 @@ import android.widget.TextView;
 
 
 public class MediaCursorAdapter extends SimpleCursorAdapter {
-
 		
 		private Activity mainActivity;
 		private Context context;
 		private Cursor cursor;
 		private LayoutInflater inflater;
+		MediaViewHolder holder;
 		
 		protected MediaCursorAdapter(Activity activity, Context context, int layout, Cursor c) {
 			super(context, layout, c, new String[] {
@@ -85,7 +86,6 @@ public class MediaCursorAdapter extends SimpleCursorAdapter {
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent){
-			MediaViewHolder holder;
 			super.getView(position, convertView, parent);
 			if (convertView == null) {
 				//convertView = inflater.inflate(R.layout.listitem, parent, false);
@@ -126,9 +126,31 @@ public class MediaCursorAdapter extends SimpleCursorAdapter {
 			
 			holder.path=filePath;
 			
-			Singleton_PlayerInfoHolder.setAlbumArt(holder.albumArt,filePath,true);
+			//Singleton_PlayerInfoHolder.setAlbumArt(holder.albumArt,filePath,true);
 			
 			holder.position=position;
+			
+			//Using an AsyncTask to load the slow images in a background thread
+			AsyncTask<MediaViewHolder, Void, Bitmap> imager = new AsyncTask<MediaViewHolder, Void, Bitmap>() {
+				Bitmap buffer;
+				private MediaViewHolder v;
+
+				@Override
+				protected Bitmap doInBackground(MediaViewHolder... arg0) {
+					// TODO Auto-generated method stub
+					v = arg0[0];
+					buffer = Singleton_PlayerInfoHolder.decodeAlbumArt(MediaCursorAdapter.this.holder.path, true);
+					return null;
+				}
+				
+			    @Override
+			    protected void onPostExecute(Bitmap result) {
+			        super.onPostExecute(result);
+			        Singleton_PlayerInfoHolder.applyAlbumArt(holder.albumArt, buffer);
+			     
+			    }
+			};
+			imager.execute(holder);
 			return convertView;
 		}
 		
@@ -139,5 +161,7 @@ public class MediaCursorAdapter extends SimpleCursorAdapter {
 			ImageView albumArt ;
 			String path;
 			int position;
+			
 		}
+		
 	}

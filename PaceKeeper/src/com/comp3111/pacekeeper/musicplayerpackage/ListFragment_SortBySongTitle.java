@@ -11,6 +11,7 @@ import android.support.v4.app.ListFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -109,6 +110,7 @@ public class ListFragment_SortBySongTitle extends ListFragment {
 						.getInstance().currentFile);
 			}
 		});
+				
 		return view;
 	}
 

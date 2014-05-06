@@ -58,7 +58,7 @@ public class Singleton_PlayerInfoHolder {
 		}
 		return uniqueInstance;
 	}
-	
+
 	public static void setAlbumArt(ImageView imageview, String file, boolean compress) {
 
 		String albumArtpath = allSongsList
@@ -112,7 +112,67 @@ public class Singleton_PlayerInfoHolder {
 					R.drawable.ic_expandplayer_placeholder));
 		}
 	}
-	
+
+	// two extra methods for async-loading of images
+	public static Bitmap decodeAlbumArt(String file, boolean compress) {
+		
+		Bitmap toReturn = null;
+
+		String albumArtpath = allSongsList
+				.getAlbumArt(file);
+
+		if (albumArtpath != null) {
+			File albumArtFile = new File(albumArtpath);
+			Bitmap bm = null;
+			InputStream iStream1 = null;
+			InputStream iStream2 = null;
+
+			try {
+
+				iStream1 = new BufferedInputStream(new FileInputStream(
+						albumArtFile));
+				if (!compress) {
+					bm = BitmapFactory.decodeStream(iStream1);
+				} else {
+					iStream2 = new BufferedInputStream(new FileInputStream(
+							albumArtFile));
+					bm = decodeFile2(iStream1, iStream2, 100, 100);
+				}
+
+			} catch (FileNotFoundException e) {
+
+				MediaMetadataRetriever md = new MediaMetadataRetriever();
+				md.setDataSource(file);
+				byte[] art = md.getEmbeddedPicture();
+				if (art != null) {
+
+					iStream1 = new ByteArrayInputStream(md.getEmbeddedPicture());
+
+					if (!compress) {
+
+						bm = BitmapFactory.decodeStream(iStream1);
+					} else {
+						iStream2 = new ByteArrayInputStream(
+								md.getEmbeddedPicture());
+						bm = decodeFile2(iStream1, iStream2, 100, 100);
+					}
+				}
+
+			}
+			toReturn = bm;
+		}
+		return toReturn;
+	}
+
+	public static void applyAlbumArt(ImageView albumArt, Bitmap buffer) {
+		// TODO Auto-generated method stub
+		if(buffer != null){
+			albumArt.setImageBitmap(buffer);
+		} else {
+			albumArt.setImageDrawable(albumArt.getContext().getResources().getDrawable(
+					R.drawable.ic_expandplayer_placeholder));
+		}
+	}
 	public static Bitmap decodeFile2(InputStream iStream1, InputStream iStream2,
 			int WIDTH, int HIGHT) {
 
@@ -147,4 +207,5 @@ public class Singleton_PlayerInfoHolder {
 	public static void setStarted(boolean isStarted) {
 		Singleton_PlayerInfoHolder.isStarted = isStarted;
 	}
+
 }
