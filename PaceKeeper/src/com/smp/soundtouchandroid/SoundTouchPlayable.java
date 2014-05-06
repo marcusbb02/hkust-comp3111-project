@@ -235,7 +235,9 @@ public class SoundTouchPlayable implements Runnable
 			while (!finished)
 			{
 				playFile();
-				finished = true;
+				// run callback
+				//Log.i("SoundTouchPlayable", "Invoking callback");
+				//triggerOnCompletionListener();
 				paused = true;
 				decoder.resetEOS();
 			}
@@ -259,9 +261,6 @@ public class SoundTouchPlayable implements Runnable
 
 			decoder.close();
 			// at this state, thread is done
-			// run callback
-			Log.i("SoundTouchPlayable", "Invoking callback");
-			triggerOnCompletionListener();
 		}
 	}
 
