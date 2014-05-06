@@ -147,6 +147,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		updatePosition();
 
 		playerInfoHolder.setStarted(true);
+		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
 	}
 
 	private void stopPlay() {
@@ -198,6 +199,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		@Override
 		public void onCompletion() {
 			stopPlay();
+			
 			if (playerInfoHolder.currentFile != null) {
 				switch (playerInfoHolder.repeatMode) {
 
@@ -380,7 +382,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 				boolean fromUser) {
 			if (playerInfoHolder.isMoveingSeekBar) {
 				playerInfoHolder.player.seekTo(progress);
-
 				Log.i("OnSeekBarChangeListener", "onProgressChanged");
 			}
 		}
@@ -409,7 +410,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		nextButton = (ImageButton) findViewById(R.id.next);
 		showAlbumArtButton = (ImageView) findViewById(R.id.showalbumart);
 
-		playerInfoHolder.player.setOnCompletionListener(onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 		seekbar.setOnSeekBarChangeListener(seekBarChanged);
 
@@ -454,7 +455,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		playerInfoHolder.player.setOnCompletionListener(onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(MainMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 		if (playerInfoHolder.currentFile != null) {
 			playerInfoHolder.setAlbumArt(showAlbumArtButton,
@@ -476,21 +477,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 			playerInfoHolder.setStarted(true);
 		}
-		/*
-		 * if (playerInfoHolder.player.isPlaying() == true) { if
-		 * (playerInfoHolder.currentFile != null){
-		 * playerInfoHolder.setAlbumArt(showAlbumArtButton,
-		 * playerInfoHolder.currentFile, false);
-		 * songInfoTextView.setText(playerInfoHolder
-		 * .allSongsList.getTitle(playerInfoHolder.currentFile) + "-" +
-		 * playerInfoHolder
-		 * .allSongsList.getArtist(playerInfoHolder.currentFile)); } else {
-		 * 
-		 * }
-		 * 
-		 * }
-		 */// else
-			// stopPlay();
 	}
 
 	/**

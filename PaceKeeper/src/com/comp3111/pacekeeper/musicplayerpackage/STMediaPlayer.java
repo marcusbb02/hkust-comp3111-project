@@ -29,8 +29,8 @@ public class STMediaPlayer {
 		
 	}
 
-	public void setOnCompletionListener(OnCompleteListener onCompletionM) {
-		//stPlayable.onCompletion = onCompletionM;
+	public void setOnCompletionListener(Activity mact, OnCompleteListener onCompletionM) {
+		stPlayable.setOnCompleteListener(mact, onCompletionM);
 	}
 
 	public boolean isPlaying() {

@@ -172,7 +172,7 @@ public class AssoMusicPlayerActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		playerInfoHolder.player.setOnCompletionListener(onCompletion);
+		playerInfoHolder.player.setOnCompletionListener(AssoMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
 	}
 

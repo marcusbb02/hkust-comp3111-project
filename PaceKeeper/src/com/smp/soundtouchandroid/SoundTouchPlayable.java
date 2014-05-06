@@ -5,6 +5,7 @@ import static com.smp.soundtouchandroid.Constants.*;
 import java.io.IOException;
 import java.util.Arrays;
 
+import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -35,6 +36,7 @@ public class SoundTouchPlayable implements Runnable
 	private volatile boolean paused, finished;
 
 	public OnCompleteListener onCompletion;
+	public static Activity mact;
 	
 	public interface OnProgressChangedListener
 	{
@@ -44,6 +46,23 @@ public class SoundTouchPlayable implements Runnable
 	public interface OnCompleteListener
 	{
 		void onCompletion();
+	}
+
+	public void setOnCompleteListener(Activity act, OnCompleteListener ocl){
+		mact = act;
+		onCompletion = ocl;
+		Log.i("SoundTouchPlayable", "Current Activity is set to: " + mact);
+	}
+	
+	private void triggerOnCompletionListener(){
+		mact.runOnUiThread(new Runnable(){
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Log.i("UI thread", "triggered on completion listener");
+				onCompletion.onCompletion();
+			}
+		});
 	}
 
 	public long getPlayedDuration()
@@ -216,7 +235,7 @@ public class SoundTouchPlayable implements Runnable
 			while (!finished)
 			{
 				playFile();
-
+				finished = true;
 				paused = true;
 				decoder.resetEOS();
 			}
@@ -229,6 +248,7 @@ public class SoundTouchPlayable implements Runnable
 		finally
 		{
 			soundTouch.clearBuffer();
+			Log.i("SoundTouchPlayable", "running thread finished");
 
 			synchronized (trackLock)
 			{
@@ -240,8 +260,8 @@ public class SoundTouchPlayable implements Runnable
 			decoder.close();
 			// at this state, thread is done
 			// run callback
-			if(onCompletion != null)
-				onCompletion.onCompletion();
+			Log.i("SoundTouchPlayable", "Invoking callback");
+			triggerOnCompletionListener();
 		}
 	}
 
@@ -392,7 +412,6 @@ public class SoundTouchPlayable implements Runnable
 		while (!decoder.sawOutputEOS());
 
 		soundTouch.finish();
-
 		do
 		{
 			if (finished)
