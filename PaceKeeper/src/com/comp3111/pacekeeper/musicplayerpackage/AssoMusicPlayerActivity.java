@@ -251,7 +251,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		if (playerInfoHolder.isShuffle) {
 			shuffleButton.setImageResource(R.drawable.ic_action_shuffle1);
 		} else {
-			shuffleButton.setImageResource(R.drawable.ic_action_mute);
+			shuffleButton.setImageResource(R.drawable.ic_action_unshuffle);
 		}
 
 		switch (playerInfoHolder.repeatMode) {
@@ -527,7 +527,7 @@ public class AssoMusicPlayerActivity extends Activity {
 			case R.id.assoplayer_shuffle: {
 				if (playerInfoHolder.isShuffle) {
 					playerInfoHolder.isShuffle = false;
-					shuffleButton.setImageResource(R.drawable.ic_action_mute);
+					shuffleButton.setImageResource(R.drawable.ic_action_unshuffle);
 					if (playerInfoHolder.currentList != null)
 					playerInfoHolder.currentList.unrandomize();
 					setInstantPlayList();

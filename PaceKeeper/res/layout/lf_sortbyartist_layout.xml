@@ -15,13 +15,15 @@
         <ListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
     </LinearLayout>
-    
+
     <FrameLayout
         android:id="@+id/songs_of_an_artist_frame"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    
+
 </LinearLayout>
