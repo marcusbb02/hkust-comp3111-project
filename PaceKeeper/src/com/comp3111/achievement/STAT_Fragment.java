@@ -71,15 +71,15 @@ public class STAT_Fragment extends Fragment {
 		
 		// set Text for total stat
 		TextView tv = (TextView) rl_ts.findViewById(R.id.item_picture_desc);
-		tv.setText("Total Steps taken: " + ConsistentContents.aggRecords.totalSteps);
+		tv.setText("Total Steps taken: " + ConsistentContents.aggRecords.totalSteps + "  ");
 		tv = (TextView) rl_tm.findViewById(R.id.item_picture_desc);
-		tv.setText("Total miles walken: "+ roundOneDecimal(ConsistentContents.aggRecords.totalMiles));
+		tv.setText("Total miles walken: "+ roundOneDecimal(ConsistentContents.aggRecords.totalMiles) + "  ");
 		tv = (TextView) rl_as.findViewById(R.id.item_picture_desc);
-		tv.setText("Average steps per minute:"+ roundOneDecimal(ConsistentContents.aggRecords.avgSPM));
+		tv.setText("Average steps per minute:"+ roundOneDecimal(ConsistentContents.aggRecords.avgSPM) + "  ");
 		tv = (TextView) rl_am.findViewById(R.id.item_picture_desc);
-		tv.setText("Average miles per hour: "+roundOneDecimal(ConsistentContents.aggRecords.avgMPH));
+		tv.setText("Average miles per hour: "+roundOneDecimal(ConsistentContents.aggRecords.avgMPH) + "  ");
 		tv = (TextView) rl_tc.findViewById(R.id.item_picture_desc);
-		tv.setText("Total calories burnt: "+roundOneDecimal(ConsistentContents.aggRecords.calories));
+		tv.setText("Total calories burnt: "+roundOneDecimal(ConsistentContents.aggRecords.calories) + "  ");
 		
 		// inflate buttons for the records and insert into scroll view
 		LinearLayout scrollView = (LinearLayout) rootView.findViewById(R.id.f_stat_scrollLL);
