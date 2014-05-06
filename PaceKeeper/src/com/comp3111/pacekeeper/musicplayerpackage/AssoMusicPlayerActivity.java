@@ -602,20 +602,14 @@ public class AssoMusicPlayerActivity extends Activity {
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
 			if (playerInfoHolder.isMoveingSeekBar) {
-				if (playerInfoHolder.isStarted()) {
-					if (progress >= seekBar.getMax()) {
-						playerInfoHolder.player.seekTo(seekBar.getMax() - 1);
-					} else
-						playerInfoHolder.player.seekTo(progress);
+				if(playerInfoHolder.isStarted()){
+					playerInfoHolder.player.seekTo(progress);
 					Log.i("OnSeekBarChangeListener", "onProgressChanged");
-				} else {
-					if (playerInfoHolder.currentFile != null) {
+				}
+				else{
+					if(playerInfoHolder.currentFile!=null){
 						startPlay(playerInfoHolder.currentFile);
-						if (progress >= seekBar.getMax()) {
-							playerInfoHolder.player
-									.seekTo(seekBar.getMax() - 1);
-						} else
-							playerInfoHolder.player.seekTo(progress);
+						playerInfoHolder.player.seekTo(progress);
 						Log.i("OnSeekBarChangeListener", "onProgressChanged");
 					}
 				}
