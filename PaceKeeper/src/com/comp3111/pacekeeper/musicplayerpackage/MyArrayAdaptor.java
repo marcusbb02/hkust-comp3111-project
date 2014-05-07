@@ -7,6 +7,8 @@ import com.comp3111.pacekeeper.musicplayerpackage.MediaCursorAdapter.MediaViewHo
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,8 +93,35 @@ public class MyArrayAdaptor extends ArrayAdapter<String> {
 		
 		holder.path=filePath;
 		
-		Singleton_PlayerInfoHolder.setAlbumArt(holder.albumArt,filePath,true);
-		
+		//Singleton_PlayerInfoHolder.setAlbumArt(holder.albumArt,filePath,true);
+
+		//Using an AsyncTask to load the slow images in a background thread
+		AsyncTask<InstantListViewHolder, Void, Bitmap> imager = new AsyncTask<InstantListViewHolder, Void, Bitmap>() {
+			Bitmap[] buffer = new Bitmap[100];
+			int arglength;
+			private InstantListViewHolder[] v = new InstantListViewHolder[100];
+
+			@Override
+			protected Bitmap doInBackground(InstantListViewHolder... arg0) {
+				// TODO Auto-generated method stub
+				arglength = arg0.length;
+				for(int i = 0; i < arg0.length; i++){
+					v[i] = arg0[i];
+					//Log.i("AsyncTask", "Loading buffer for " + v[i].songTitle);
+					buffer[i] = Singleton_PlayerInfoHolder.decodeAlbumArt(v[i].path, true);
+				}
+				return null;
+			}
+			
+		    @Override
+		    protected void onPostExecute(Bitmap result) {
+		        super.onPostExecute(result);
+				for(int i = 0; i < arglength; i++){
+			        Singleton_PlayerInfoHolder.applyAlbumArt(v[i].albumArt, buffer[i]);
+				}
+		    }
+		};
+		imager.execute(holder);
 		return convertView;
 		
 	}

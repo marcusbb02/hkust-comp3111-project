@@ -1,6 +1,8 @@
 package com.comp3111.pacekeeper.musicplayerpackage;
 
 import com.comp3111.pacekeeper.R;
+import com.comp3111.pedometer.ConsistentContents;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Vector;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -97,12 +101,27 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 	private ImageButton playButton = null;
 	private ImageButton prevButton = null;
 	private ImageButton nextButton = null;
+	private ImageView musicPanel = null;
 	private ImageView showAlbumArtButton = null;
 
 	private Singleton_PlayerInfoHolder playerInfoHolder = Singleton_PlayerInfoHolder
 			.getInstance();
 
 	private final Handler handler = new Handler();
+	private final Handler albumHandler = new Handler();
+	private final Runnable albumBlurRunnable = new Runnable() {
+		@Override
+		public void run() {
+			Bitmap placeholder = Singleton_PlayerInfoHolder.decodeAlbumArt(Singleton_PlayerInfoHolder.currentFile, false);
+			if(placeholder != null){
+				Singleton_PlayerInfoHolder.blurredArt = Singleton_PlayerInfoHolder.fastblur(placeholder, 20);
+				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, Singleton_PlayerInfoHolder.blurredArt, MainMusicPlayerActivity.this);
+				Log.i("albumBlurRunnable", "Done blurring");
+			} else {
+				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, null, MainMusicPlayerActivity.this);
+			}
+		}		
+	};
 	private final Handler completionHandler = new Handler();
 	private final Runnable updatePositionRunnable = new Runnable() {
 		public void run() {
@@ -141,6 +160,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		Log.i("Selected: ", filePath);
 
 		playerInfoHolder.setAlbumArt(showAlbumArtButton, filePath, false);
+		//blurred background
+		albumHandler.post(albumBlurRunnable);
 
 		// selectedFile.setText(songsList.getTitle(listPosition)
 		// + "-" + songsList.getArtist(listPosition));
@@ -286,7 +307,6 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 					playButton.setImageResource(R.drawable.ic_action_play);
 				} else {
 					if (playerInfoHolder.isStarted()) {
-
 						playerInfoHolder.player.start();
 						completionHandler.post(completionRunnable);
 						playButton.setImageResource(R.drawable.ic_action_pause);
@@ -479,6 +499,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		prevButton = (ImageButton) findViewById(R.id.prev);
 		nextButton = (ImageButton) findViewById(R.id.next);
 		showAlbumArtButton = (ImageView) findViewById(R.id.showalbumart);
+		musicPanel = (ImageView) findViewById(R.id.mainmusic_album_bg);
 
 		playerInfoHolder.player.setOnCompletionListener(
 				MainMusicPlayerActivity.this, onCompletion);
@@ -492,8 +513,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		showAlbumArtButton.setImageDrawable(getResources().getDrawable(
 				R.drawable.ic_expandplayer_placeholder));
 		songInfoTextView.setText("No song selected");
-
-		completionHandler.post(completionRunnable);
+		if(ConsistentContents.playerInfoHolder.player.isPlaying())
+			completionHandler.post(completionRunnable);
 		return;
 	}
 

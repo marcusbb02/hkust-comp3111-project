@@ -272,6 +272,8 @@ public class MusicActivity extends Activity {
 			btn_pause.setVisibility(View.VISIBLE);
 			btn_play.setVisibility(View.GONE);
 		}else{
+			pedo.stopSensor();
+			goal.pauseGoal();
 			btn_pause.setVisibility(View.GONE);
 			btn_play.setVisibility(View.VISIBLE);
 		}
@@ -467,7 +469,7 @@ public class MusicActivity extends Activity {
 				if(!pedo.running){
 					if(!ConsistentContents.playerInfoHolder.player.isPlaying()){
 						ConsistentContents.playerInfoHolder.player.start();
-						ConsistentContents.playerInfoHolder.setStarted(true);
+						//ConsistentContents.playerInfoHolder.setStarted(true);
 					}
 			        pedo.startSensor();
 					goal.startGoal(1000);
@@ -476,7 +478,7 @@ public class MusicActivity extends Activity {
 				}else{
 					if(ConsistentContents.playerInfoHolder.player.isPlaying()){
 						ConsistentContents.playerInfoHolder.player.pause();
-						ConsistentContents.playerInfoHolder.setStarted(false);
+						//ConsistentContents.playerInfoHolder.setStarted(false);
 					}
 					pedo.stopSensor();
 					goal.pauseGoal();

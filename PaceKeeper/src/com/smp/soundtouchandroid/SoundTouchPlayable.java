@@ -272,7 +272,7 @@ public class SoundTouchPlayable implements Runnable
 
 	public void seekTo(long timeInUs, boolean shouldFlush)
 	{
-		if(timeInUs == decoder.getDuration())
+		if(timeInUs >= decoder.getDuration())
 			timeInUs = decoder.getDuration() - 1;
 		if (timeInUs < 0 || timeInUs >= decoder.getDuration())
 			throw new SoundTouchAndroidException("" + timeInUs + " Not a valid seek time.");
