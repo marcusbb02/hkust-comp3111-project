@@ -162,7 +162,7 @@ public class AdvancedSettingsActivity extends Activity implements OnClickListene
 			    public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {     
 			              
 
-			    	et6.setText(String.valueOf(5f+20f * 0.01f * progress));
+			    	et6.setText(String.valueOf((int)(5f+20f * 0.01f * progress)));
 			    }       
 			});            
 		  s7.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {       

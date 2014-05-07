@@ -34,6 +34,11 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	
 	public void resetAverageStepDuration(){
 		pAverageStepDuration = pDefaultAverageStepDuration;
+		pStepDuration = new int[pStepDurationSample];
+		// pre-fill pStepDuration to prevent sudden pace change on start
+		for(int i = 0; i < pStepDurationSample; i++){
+			pStepDuration[i] = (int)pDefaultAverageStepDuration;
+		}
 	}
 	
 	public Pedometer(Context context, int polling_interval){
@@ -102,14 +107,22 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	// separated thread for polling action 
 	final Runnable PedoThread = new Runnable() {
 			public void pStepDurationCount(){
+				Log.i("PedoThread", "Last duration recorded: " + pCurrentStepDuration);
+				String tmp = "All values are: ";
+				for(int i = 0; i < pStepDurationSample; i++){
+					tmp += pStepDuration[i] + " ";
+				}
+				Log.i("PedoThread", tmp);
 				// first it must be "active" steps
 				// if "active", record the time (by replacing oldest time) and calculate its average
+				/*
 				if(pCurrentStepDuration < pStepDurationDiscardThreshold){
 						// just minus the farest value and add the most recent one
 						pAverageStepDuration *= pStepDurationSample;
 						pAverageStepDuration += pCurrentStepDuration - pStepDuration[pLastStepDurationArrayPos];
 						Log.i("msg", "Current: " + pCurrentStepDuration + "; laststep: " + pStepDuration[pLastStepDurationArrayPos]);
 						pAverageStepDuration /= pStepDurationSample;
+						Log.i("msg", "Now avg. step duration is " + pAverageStepDuration);
 					//}
 					// store last duration value and do array pointer rotation
 					pStepDuration[pLastStepDurationArrayPos] = pCurrentStepDuration;
@@ -117,6 +130,24 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 					if(pLastStepDurationArrayPos >= pStepDurationSample){
 						pLastStepDurationArrayPos = 0;
 					}
+				}
+				*/
+				// avoid using buggy things
+				if(pCurrentStepDuration < pStepDurationDiscardThreshold){
+					// store last duration value and do array pointer rotation
+					pStepDuration[pLastStepDurationArrayPos] = pCurrentStepDuration;
+					pLastStepDurationArrayPos++;
+					if(pLastStepDurationArrayPos >= pStepDurationSample){
+						pLastStepDurationArrayPos = 0;
+					}
+					// calculate the average
+					pAverageStepDuration = 0;
+					for(int i = 0; i < pStepDurationSample; i++){
+						pAverageStepDuration += pStepDuration[i];
+					}
+					pAverageStepDuration /= pStepDurationSample;
+					Log.i("msg", "Current: " + pCurrentStepDuration + "; laststep: " + pStepDuration[pLastStepDurationArrayPos]);
+					Log.i("msg", "Now avg. step duration is " + pAverageStepDuration);
 				}
 				// it this state, just invalidate and recount from next step
 				pCurrentStepDuration = 0;
@@ -172,6 +203,16 @@ public class Pedometer extends PedometerSettings implements SensorEventListener{
 	public float getDefaultAverageStepDuration(){
 		resetAverageStepDuration();	// to ensure the value is updated
 		return pDefaultAverageStepDuration;
+	}
+	
+	public float getPForce(){
+		return pForce;
+	}
+	
+	public void refillPForceAverage(float pF){
+		for(int i = 0; i < pStepDurationSample; i++){
+			pStepDuration[i] = (int) pF;
+		}
 	}
 
 }

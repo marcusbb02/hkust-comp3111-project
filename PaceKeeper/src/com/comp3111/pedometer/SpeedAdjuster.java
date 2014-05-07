@@ -45,11 +45,11 @@ public class SpeedAdjuster extends PedometerSettings{
 	}
 	
 	public static int react(Pedometer pedo_obj, final SoundTouchPlayable st_obj){
-		Log.i("SpeedAdjustor", "Lower: " + saStepDurationLowerThreshold);
-		Log.i("SpeedAdjustor", "Upper: " + saStepDurationUpperThreshold);
+		//Log.i("SpeedAdjustor", "Lower: " + saStepDurationLowerThreshold);
+		//Log.i("SpeedAdjustor", "Upper: " + saStepDurationUpperThreshold);
 		// only change if it is not changing music speed and last state is different
 		if(!saChanging){
-			Log.i("SpeedAdjuster", "Rate set start");
+			//Log.i("SpeedAdjuster", "Rate set start");
 			// lock the reaction
 			saChanging = true;
 			if(pedo_obj.getAverageStepDuration() < saStepDurationLowerThreshold){
@@ -66,7 +66,7 @@ public class SpeedAdjuster extends PedometerSettings{
 				return SA_NORMAL;
 			}
 		}
-		Log.i("SpeedAdjuster", "Rate set end");
+		//Log.i("SpeedAdjuster", "Rate set end");
 		return SA_NOCHANGE;
 	}
 	
@@ -79,17 +79,17 @@ public class SpeedAdjuster extends PedometerSettings{
 			case	SA_FAST:
 				saFinalTempo = SA_TEMPO_FAST;
 				saFinalPitch = SA_PITCH_FAST;
-				Log.i("SpeedAdjuster", "Rate set to Fast");
+				//Log.i("SpeedAdjuster", "Rate set to Fast");
 				break;
 			case	SA_NORMAL:
 				saFinalTempo = SA_TEMPO_NORMAL;
 				saFinalPitch = SA_PITCH_NORMAL;
-				Log.i("SpeedAdjuster", "Rate set to Normal");
+				//Log.i("SpeedAdjuster", "Rate set to Normal");
 				break;
 			case	SA_SLOW:
 				saFinalTempo = SA_TEMPO_SLOW;
 				saFinalPitch = SA_PITCH_SLOW;
-				Log.i("SpeedAdjuster", "Rate set to Slow");
+				//Log.i("SpeedAdjuster", "Rate set to Slow");
 				break;			
 		}
 		
@@ -104,12 +104,12 @@ public class SpeedAdjuster extends PedometerSettings{
 		saHandler.postDelayed(new Runnable(){
 			@Override
 			public void run() {
-				Log.i("SpeedAdjuster", "Iterating to " + saTempo);
+				//Log.i("SpeedAdjuster", "Iterating to " + saTempo);
 				// TODO run itself until constant reached
 				if(saTempo - saFinalTempo < 0.001 && saTempo - saFinalTempo > -0.001){
 					st_obj.setTempo(saFinalTempo);
 					st_obj.setPitchSemi(saFinalPitch);
-					Log.i("SpeedAdjuster", "End iterating");
+					//Log.i("SpeedAdjuster", "End iterating");
 					// release the lock and set it as last state
 					saLastState = SA_NOCHANGE;
 					saChanging = false;

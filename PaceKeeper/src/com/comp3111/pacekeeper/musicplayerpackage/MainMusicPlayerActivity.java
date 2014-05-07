@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,8 +20,12 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -109,17 +114,25 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 	private final Handler handler = new Handler();
 	private final Handler albumHandler = new Handler();
+	public Animation anim_in;// = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_in);
+	public Animation anim_out;// = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_out);
 	private final Runnable albumBlurRunnable = new Runnable() {
 		@Override
 		public void run() {
+			Animation animation;
+			albumHandler.removeCallbacks(albumBlurRunnable);
 			Bitmap placeholder = Singleton_PlayerInfoHolder.decodeAlbumArt(Singleton_PlayerInfoHolder.currentFile, false);
 			if(placeholder != null){
-				Singleton_PlayerInfoHolder.blurredArt = Singleton_PlayerInfoHolder.fastblur(placeholder, 20);
-				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, Singleton_PlayerInfoHolder.blurredArt, MainMusicPlayerActivity.this);
+				musicPanel = (ImageView) findViewById(R.id.mainmusic_album_bg);
+				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, placeholder, MainMusicPlayerActivity.this);
 				Log.i("albumBlurRunnable", "Done blurring");
+				animation = anim_in;
 			} else {
 				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, null, MainMusicPlayerActivity.this);
+				animation = anim_out;
 			}
+			musicPanel.setAnimation(animation);
+			musicPanel.startAnimation(animation);
 		}		
 	};
 	private final Handler completionHandler = new Handler();
@@ -160,7 +173,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		Log.i("Selected: ", filePath);
 
 		playerInfoHolder.setAlbumArt(showAlbumArtButton, filePath, false);
-		//blurred background
+		InitImageView();
+		// acquire blurred background
 		albumHandler.post(albumBlurRunnable);
 
 		// selectedFile.setText(songsList.getTitle(listPosition)
@@ -168,7 +182,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 
 		songInfoTextView.setText(playerInfoHolder.allSongsList
 				.getTitle(playerInfoHolder.currentFile)
-				+ "-"
+				+ " - "
 				+ playerInfoHolder.allSongsList
 						.getArtist(playerInfoHolder.currentFile));
 
@@ -199,6 +213,19 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		playerInfoHolder.player.setOnCompletionListener(
 				MainMusicPlayerActivity.this, onCompletion);
 	}
+	
+    private void InitImageView() {
+    	Log.i("InitImageView", "tt: " + showAlbumArtButton.getLayoutParams().height);
+        ViewTreeObserver vto = showAlbumArtButton.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                int finalHeight = showAlbumArtButton.getMeasuredHeight();
+                showAlbumArtButton.getLayoutParams().width = finalHeight;
+                return true;
+            }
+        });
+    	// cursor part for correct indicator width
+    }
 
 	private void stopPlay() {
 		playerInfoHolder.player.stop();
@@ -515,6 +542,10 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 		songInfoTextView.setText("No song selected");
 		if(ConsistentContents.playerInfoHolder.player.isPlaying())
 			completionHandler.post(completionRunnable);
+		InitImageView();
+		// load animations
+		anim_in = AnimationUtils.loadAnimation(MainMusicPlayerActivity.this, android.R.anim.fade_in);
+		anim_out = AnimationUtils.loadAnimation(MainMusicPlayerActivity.this, android.R.anim.fade_out);
 		return;
 	}
 
@@ -559,7 +590,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 					playerInfoHolder.currentFile, false);
 			songInfoTextView.setText(playerInfoHolder.allSongsList
 					.getTitle(playerInfoHolder.currentFile)
-					+ "-"
+					+ " - "
 					+ playerInfoHolder.allSongsList
 							.getArtist(playerInfoHolder.currentFile));
 
@@ -572,6 +603,8 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			} else {
 				playButton.setImageResource(R.drawable.ic_action_play);
 			}
+			// acquire blurred background
+			albumHandler.post(albumBlurRunnable);
 			updatePosition();
 		} else {
 			showAlbumArtButton.setImageDrawable(getResources().getDrawable(
@@ -580,7 +613,7 @@ public class MainMusicPlayerActivity extends FragmentActivity {
 			seekbar.setProgress(0);
 		}
 	}
-
+	
 	public void onCompletion() {
 		stopPlay();
 

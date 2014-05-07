@@ -63,6 +63,7 @@ public class MusicActivity extends Activity {
     private ImageView ivCursor, ivAlbumArt;
     int finalHeight, actionBarHeight;
 	public int lastSongDuration = -100;
+	public static float lastpForce = 0;
     
     // For things inside ViewPager
 	String fullPathToAudioFile = Environment.getExternalStorageDirectory().toString() + "/test.mp3";
@@ -158,7 +159,6 @@ public class MusicActivity extends Activity {
 						try {
 							checkForNextSong();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -171,7 +171,6 @@ public class MusicActivity extends Activity {
 						try {
 							checkForNextSong();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -184,7 +183,6 @@ public class MusicActivity extends Activity {
 						try {
 							checkForNextSong();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -197,7 +195,6 @@ public class MusicActivity extends Activity {
 						try {
 							checkForNextSong();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -238,6 +235,8 @@ public class MusicActivity extends Activity {
 				//Launch ExtendedMusicActivity
 				pedo.stopSensor();
 				goal.pauseGoal();
+				// preserve data for recovering
+				lastpForce = pedo.getPForce();
 				SpeedAdjuster.resetNormal(ConsistentContents.playerInfoHolder.player.getSoundTouchPlayable());
 				Intent intent = new Intent(MusicActivity.this, MainMusicPlayerActivity.class);
 				startActivity(intent);
@@ -277,6 +276,7 @@ public class MusicActivity extends Activity {
 			btn_pause.setVisibility(View.GONE);
 			btn_play.setVisibility(View.VISIBLE);
 		}
+		//pedo.refillPForceAverage(lastpForce);
 	}
 	
 	@Override
@@ -461,6 +461,7 @@ public class MusicActivity extends Activity {
 				}
         	}
         };
+        pedo.resetAverageStepDuration();
         // center trigger button
         RelativeLayout btn_pp = (RelativeLayout)centerPanel.findViewById(R.id.mus_btn_trigger);
         btn_pp.setOnClickListener(new OnClickListener(){

@@ -1,188 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="71dp"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/assoplayer_back"
-            style="?android:borderlessButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.2"
-            android:src="@drawable/ic_action_goback" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_margin="6dip"
-            android:layout_marginBottom="0dip"
-            android:layout_marginTop="5dip"
-            android:layout_weight="5"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/assoplayer_artist"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="Artist"
-                android:textColor="#666666"
-                android:textSize="17sp" />
-
-            <TextView
-                android:id="@+id/assoplayer_song_title"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="Title"
-                android:textColor="#666666"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/assoplayer_album"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="Album"
-                android:textColor="#666666"
-                android:textStyle="italic" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.2" >
-        </LinearLayout>
-    </LinearLayout>
+    android:layout_height="fill_parent">
 
     <ImageView
-        android:id="@+id/assoplayer_showalbumart"
+        android:id="@+id/assoplayer_showalbumbg"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:scaleType="fitXY" />
-
-    <ListView
-        android:id="@+id/assoplayer_playlist"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:background="#ffe3a0"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
-
+        android:layout_height="fill_parent"
+        android:alpha="0.25"
+        android:scaleType="centerCrop" />
+        
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <ImageButton
-                android:id="@+id/assoplayer_shuffle"
+                android:id="@+id/assoplayer_back"
                 style="?android:borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.2"
-                android:src="@drawable/ic_action_shuffle1" />
+                android:src="@drawable/ic_action_goback" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_marginBottom="3dip"
-                android:layout_marginTop="4dip"
+                android:layout_margin="6dip"
+                android:layout_marginBottom="0dip"
+                android:layout_marginTop="5dip"
                 android:layout_weight="5"
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/assoplayer_prevSongDescription"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:gravity="center_horizontal"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="Previous Song"
-                    android:textColor="#666666" />
-
-                <TextView
-                    android:id="@+id/assoplayer_nextSongDescription"
+                    android:id="@+id/assoplayer_artist"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="middle"
                     android:gravity="center_horizontal"
                     android:singleLine="true"
-                    android:text="Next Song"
-                    android:textColor="#666666" />
+                    android:text="Artist"
+                    android:textColor="#666666"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/assoplayer_song_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:text="Title"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assoplayer_album"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:text="Album"
+                    android:textColor="#666666"
+                    android:textStyle="italic" />
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/assoplayer_repeat"
-                style="?android:borderlessButtonStyle"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="1.1"
-                android:src="@drawable/ic_action_repeat_a" />
+                android:layout_weight="1.2" >
+            </LinearLayout>
         </LinearLayout>
 
-        <SeekBar
-            android:id="@+id/assoplayer_seekbar"
+        <ImageView
+            android:id="@+id/assoplayer_showalbumart"
             android:layout_width="fill_parent"
-            android:layout_height="dp"
-            android:layout_weight="1.2"
-            android:max="100"
-    		android:progressDrawable="@drawable/scrubber_progress"
-            android:thumb="@null" />
+            android:layout_height="400dp"
+            android:scaleType="fitCenter" />
+
+        <ListView
+            android:id="@+id/assoplayer_playlist"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:background="#FFBD21"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
-            <ImageButton
-                android:id="@+id/assoplayer_prev"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_previous" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:orientation="horizontal" >
 
-            <ImageButton
-                android:id="@+id/assoplayer_play"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_play" />
+                <ImageButton
+                    android:id="@+id/assoplayer_shuffle"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_shuffle1" />
 
-            <ImageButton
-                android:id="@+id/assoplayer_next"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_next" />
+
+                    <TextView
+                        android:id="@+id/assoplayer_songTimer"
+                        android:layout_weight="5"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textSize="18dp"
+                        android:text=""
+                        android:textColor="#666666" />
+
+                <ImageButton
+                    android:id="@+id/assoplayer_repeat"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_repeat_a" />
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/assoplayer_seekbar"
+                android:layout_width="fill_parent"
+                android:layout_height="dp"
+                android:layout_weight="1.2"
+                android:max="100"
+                android:progressDrawable="@drawable/scrubber_progress"
+                android:thumb="@null" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/assoplayer_prev"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_previous" />
+
+                <ImageButton
+                    android:id="@+id/assoplayer_play"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_play" />
+
+                <ImageButton
+                    android:id="@+id/assoplayer_next"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_next" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

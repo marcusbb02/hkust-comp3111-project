@@ -6,7 +6,7 @@
     <string name="title_activity_pedo">PedoActivity</string>
     <string name="title_activity_music"></string>
     <string name="title_activity_goal">Goal Selection</string>
-    <string name="title_activity_social">SocialActivity</string>
+    <string name="title_activity_stat">Statistics</string>
     <string name="title_activity_profile">Personal Profile</string>
     <string name="title_activity_greet">PaceKeeper</string>
     <string name="title_activity_result">Journey\'s Result</string>

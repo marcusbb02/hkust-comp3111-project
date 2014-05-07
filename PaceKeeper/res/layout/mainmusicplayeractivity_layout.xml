@@ -66,14 +66,14 @@
                         android:id="@+id/mainmusic_album_bg"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:alpha="0.2"
+                        android:alpha="0.25"
                         android:scaleType="centerCrop" >
                     </ImageView>
 
                     <ImageView
                         android:id="@+id/showalbumart"
-                        android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginBottom="8dip"
                         android:layout_marginLeft="16dp"
@@ -101,6 +101,7 @@
                             android:paddingBottom="5dip"
                             android:singleLine="true"
                    		    android:layout_marginTop="8dip"
+                        	android:textSize="14dp"
                             android:text="No file selected"
                             android:textColor="#666666" />
 

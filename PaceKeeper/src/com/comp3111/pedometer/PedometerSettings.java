@@ -14,9 +14,9 @@ public class PedometerSettings {
 			pLowerThresholdRetainProportion = 0.9f;	// the proportion to be retained when small step slope is detected
 													// range 0.0f - 1.0f
 	public static int 
-			pStepDurationSample = 10, 				// number of steps to be considered for finding average step duration
+			pStepDurationSample = 5, 				// number of steps to be considered for finding average step duration
 													// range 5 - 25
-			pStepDurationDiscardThreshold = 20;		// discard the last step data for average if it lasts more than this threshold
+			pStepDurationDiscardThreshold = 10;		// discard the last step data for average if it lasts more than this threshold
 													// range 5 - 25
 	public static float 
 			pDefaultAverageStepDuration = 4.5f;		// default average step duration for the "constant" pace

@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.comp3111.pacekeeper.musicplayerpackage.MyArrayAdaptor.InstantListViewHolder;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
@@ -48,15 +51,40 @@ public class AssoMusicPlayerActivity extends Activity {
 	private TextView textPrev = null;
 	private TextView textNext = null;
 	private SeekBar seekbar = null;
+	public TextView songTime = null;
 
 	private final Handler handler = new Handler();
+	public Animation anim_in;// = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_in);
+	public Animation anim_out;// = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_out);
 
 	private final Runnable updatePositionRunnable2 = new Runnable() {
 		public void run() {
 			updatePosition2();
 		}
 	};
-	
+
+	private ImageView musicPanel = null;
+	private final Handler albumHandler = new Handler();
+	private final Runnable albumBlurRunnable = new Runnable() {
+		@Override
+		public void run() {
+			Animation animation;
+			albumHandler.removeCallbacks(albumBlurRunnable);
+			Bitmap placeholder = Singleton_PlayerInfoHolder.decodeAlbumArt(Singleton_PlayerInfoHolder.currentFile, false);
+			if(placeholder != null){
+				//Singleton_PlayerInfoHolder.blurredArt = Singleton_PlayerInfoHolder.fastblur(placeholder, 20);
+				musicPanel = (ImageView) findViewById(R.id.assoplayer_showalbumbg);
+				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, placeholder, AssoMusicPlayerActivity.this);
+				Log.i("albumBlurRunnable", "Done blurring");
+				animation = anim_in;
+			} else {
+				Singleton_PlayerInfoHolder.setAlbumBackground(musicPanel, null, AssoMusicPlayerActivity.this);
+				animation = anim_out;
+			}
+			musicPanel.setAnimation(animation);
+			musicPanel.startAnimation(animation);
+		}		
+	};
 	private final Runnable completionRunnable2 = new Runnable() {
 		public void run() {
 			completionHandler.removeCallbacks(completionRunnable2);
@@ -65,6 +93,19 @@ public class AssoMusicPlayerActivity extends Activity {
 				if (playerInfoHolder.player.getCurrentPosition() == MainMusicPlayerActivity.lastSongDuration) {
 					//Toast.makeText(MainMusicPlayerActivity.this, "?", Toast.LENGTH_SHORT).show();
 					onCompletion();
+				}
+				int cur_min = playerInfoHolder.player.getCurrentPosition() / 1000000 / 60;
+				int total_min = playerInfoHolder.player.getDuration() / 1000000 / 60;
+				int cur_sec = playerInfoHolder.player.getCurrentPosition() / 1000000 % 60;
+				int total_sec = playerInfoHolder.player.getDuration() / 1000000 % 60;
+				String curMinStr = ((cur_min < 10) ? "0" + cur_min : ""+cur_min);
+				String totalMinStr = ((total_min < 10) ? "0" + total_min : ""+total_min);
+				String curSecStr = ((cur_sec < 10) ? "0" + cur_sec : ""+cur_sec);
+				String totalSecStr = (String) ((total_sec < 10) ? "0" + total_sec : ""+total_sec);
+				String currentTime = curMinStr + ":" + curSecStr + " / " + totalMinStr + ":" + totalSecStr;
+				//Log.i("completionRunnable2", currentTime);
+				if(songTime != null){
+					songTime.setText(currentTime);
 				}
 			}
 			MainMusicPlayerActivity.lastSongDuration = playerInfoHolder.player.getCurrentPosition();
@@ -81,8 +122,9 @@ public class AssoMusicPlayerActivity extends Activity {
 		textSongTitle = (TextView) findViewById(R.id.assoplayer_song_title);
 		textArtist = (TextView) findViewById(R.id.assoplayer_artist);
 		textAlbum = (TextView) findViewById(R.id.assoplayer_album);
-		textPrev = (TextView) findViewById(R.id.assoplayer_prevSongDescription);
-		textNext = (TextView) findViewById(R.id.assoplayer_nextSongDescription);
+		//textPrev = (TextView) findViewById(R.id.assoplayer_prevSongDescription);
+		//textNext = (TextView) findViewById(R.id.assoplayer_nextSongDescription);
+		songTime = (TextView) findViewById(R.id.assoplayer_songTimer);
 		seekbar = (SeekBar) findViewById(R.id.assoplayer_seekbar);
 		playButton = (ImageButton) findViewById(R.id.assoplayer_play);
 		prevButton = (ImageButton) findViewById(R.id.assoplayer_prev);
@@ -92,6 +134,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		albumArtView = (ImageView) findViewById(R.id.assoplayer_showalbumart);
 		inflatedListView = (ListView) findViewById(R.id.assoplayer_playlist);
 		backButton = (ImageButton) findViewById(R.id.assoplayer_back);
+		musicPanel = (ImageView) findViewById(R.id.assoplayer_showalbumbg);
 		
 		playButton.setOnClickListener(onButtonClick);
 		nextButton.setOnClickListener(onButtonClick);
@@ -102,6 +145,10 @@ public class AssoMusicPlayerActivity extends Activity {
 		albumArtView.setOnClickListener(onButtonClick);
 		backButton.setOnClickListener(onButtonClick);
 		seekbar.setOnSeekBarChangeListener(seekBarChanged);
+		
+
+		anim_in = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_in);
+		anim_out = AnimationUtils.loadAnimation(AssoMusicPlayerActivity.this, android.R.anim.fade_out);
 
 		OnItemClickListener onItemClickListener = new OnItemClickListener() {
 			@Override
@@ -190,8 +237,12 @@ public class AssoMusicPlayerActivity extends Activity {
 		super.onResume();
 		//playerInfoHolder.player.setOnCompletionListener(AssoMusicPlayerActivity.this, onCompletion);
 		playerInfoHolder.player.setOnErrorListener(onError);
-		if(playerInfoHolder.player.isPlaying())
+		if(playerInfoHolder.player.isPlaying()){
 			completionHandler.post(completionRunnable2);
+		}
+		// acquire blurred background
+		if(Singleton_PlayerInfoHolder.currentFile != null)
+			albumHandler.post(albumBlurRunnable);
 	}
 
 	@Override
@@ -343,6 +394,8 @@ public class AssoMusicPlayerActivity extends Activity {
 		Log.i("Selected: ", filePath);
 
 		playerInfoHolder.setAlbumArt(albumArtView, filePath, false);
+		// acquire blurred background
+		albumHandler.post(albumBlurRunnable);
 		ViewTreeObserver vto = albumArtView.getViewTreeObserver();
 		vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			public boolean onPreDraw() {
@@ -384,6 +437,7 @@ public class AssoMusicPlayerActivity extends Activity {
 		updatePosition2();
 
 		playerInfoHolder.setStarted(true);
+		completionHandler.post(completionRunnable2);
 	}
 
 	private void stopPlay() {
