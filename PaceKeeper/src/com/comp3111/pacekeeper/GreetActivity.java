@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,6 +107,14 @@ public class GreetActivity extends Activity implements OnClickListener{
 			
 		});
 		panel_anim.startAnimation(panel_anim_expand);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.greet, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override

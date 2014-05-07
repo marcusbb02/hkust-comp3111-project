@@ -18,5 +18,7 @@
     <string name="title_activity_advancedsetting">Advanced Settings</string>
     <string name="title_activity_joint_stat">JointStatActivity</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="invite">invite</string>
+    <string name="post_message">post_message</string>
+    <string name="app_id">217430381779274</string>
 </resources>
