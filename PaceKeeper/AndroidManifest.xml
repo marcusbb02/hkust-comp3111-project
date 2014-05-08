@@ -9,7 +9,7 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="com.comp3111.local_database.Global_value"
         android:allowBackup="true"
@@ -90,6 +90,14 @@
             android:name="com.comp3111.pacekeeper.musicplayerpackage.AssoMusicPlayerActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             </activity>
+            <activity
+    android:name="com.facebook.LoginActivity"
+    android:label="@string/app_name"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+<meta-data
+    android:name="com.facebook.sdk.ApplicationId"
+    android:value="@string/app_id" />
     </application>
 
 </manifest>

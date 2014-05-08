@@ -1,9 +1,17 @@
 package com.comp3111.achievement;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import com.comp3111.local_database.DataBaseHelper;
+import com.comp3111.pacekeeper.GreetActivity;
 import com.comp3111.pacekeeper.R;
+import com.comp3111.pedometer.ConsistentContents;
+import com.sromku.simple.fb.Permission;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.entities.Feed;
+import com.sromku.simple.fb.listeners.OnLoginListener;
+import com.sromku.simple.fb.listeners.OnPublishListener;
 
 import static com.comp3111.local_database.DataBaseConstants.*;
 import android.annotation.SuppressLint;
@@ -12,6 +20,7 @@ import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
@@ -25,7 +34,11 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 @SuppressLint("NewApi")
 public class AchievementActivity extends FragmentActivity implements
@@ -35,11 +48,103 @@ public class AchievementActivity extends FragmentActivity implements
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
+	private SimpleFacebook mSimpleFacebook;
+	protected static final String TAG = AchievementActivity.class.getName();
+	private TextView mTextStatus;
+	
+	
+	private void toast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+	private OnLoginListener mOnLoginListener = new OnLoginListener() {
+
+		@Override
+		public void onFail(String reason) {
+			//mTextStatus.setText(reason);
+			Log.w(TAG, "Failed to login");
+		}
+
+		@Override
+		public void onException(Throwable throwable) {
+			//mTextStatus.setText("Exception: " + throwable.getMessage());
+			Log.e(TAG, "Bad thing happened", throwable);
+		}
+
+		@Override
+		public void onThinking() {
+			// show progress bar or something to the user while login is
+			// happening
+			//mTextStatus.setText("Thinking...");
+			
+		}
+
+		@Override
+		public void onLogin() {
+			// change the state of the button or do whatever you want
+			//mTextStatus.setText("Logged in");
+			ConsistentContents.fblogin=true;
+			toast("You are logged in");
+		}
+
+		@Override
+		public void onNotAcceptingPermissions(Permission.Type type) {
+			toast(String.format("You didn't accept %s permissions", type.name()));
+		}
+	};
+	
+	
+	final OnPublishListener onPublishListener = new OnPublishListener() {
+
+		@Override
+		public void onFail(String reason) {
+			//hideDialog();
+			// insure that you are logged in before publishing
+			Log.w(TAG, "Failed to publish");
+		}
+
+		@Override
+		public void onException(Throwable throwable) {
+			//hideDialog();
+			Log.e(TAG, "Bad thing happened", throwable);
+		}
+
+		@Override
+		public void onThinking() {
+			// show progress bar or something to the user while publishing
+			//showDialog();
+		}
+
+		@Override
+		public void onComplete(String postId) {
+			//hideDialog();
+			toast("Published successfully. The new post id = " + postId);
+		}
+	
+
+	// feed builder
+	final Feed feed = new Feed.Builder()
+			.setMessage("Running with pacekeeper")
+			.setName("Best Running App for Android")
+			.setCaption("Run with music, Run with your own pace.")
+			.setDescription(
+					"Pacekeeper aims to help user keep a constant speed during exercise. By using this, running becomes more efficient to one's cardio workout; it also trains their stamina to run for a longer time.")
+			.setPicture("https://hkust-comp3111-project.googlecode.com/svn/trunk/PaceKeeper/ic_launcher-web.png").setLink("https://github.com/sromku/android-simple-facebook").build();
+
+	};
+	
 	// Tab titles
 	// private String[] tabs = { "STAT", "PER-ACH", "JOINT-ACH" };
 	private int[] tabs = { R.drawable.ic_action_view_as_list,
 			R.drawable.ic_action_person, R.drawable.ic_action_group };
 
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data); 
+	    super.onActivityResult(requestCode, resultCode, data);
+	} 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -97,6 +202,48 @@ public class AchievementActivity extends FragmentActivity implements
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.postmss, menu);
 	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		//mSimpleFacebook.logout(onLogoutListener);
+		switch (item.getItemId()) {
+		case R.id.post_message:
+			// app icon in action bar clicked; go home
+			
+			//if (ConsistentContents.fblogin == false) {
+			if(mSimpleFacebook.isLogin()==false){
+				Toast.makeText(this, "Please login first", Toast.LENGTH_LONG)
+						.show();
+				mSimpleFacebook.login( mOnLoginListener);
+			} else{
+			final Feed feed = new Feed.Builder()
+			.setMessage("Running with pacekeeper")
+			.setName("Best Running App for Android")
+			.setCaption("Run with music, Run with your own pace.")
+			.setDescription(
+					"I have run "+ConsistentContents.aggRecords.totalSteps+" steps and burnt "+ roundOneDecimal(ConsistentContents.aggRecords.calories) +" calories")
+			.setPicture("https://hkust-comp3111-project.googlecode.com/svn/trunk/PaceKeeper/ic_launcher-web.png").setLink("https://code.google.com/p/hkust-comp3111-project/").build();
+			
+				mSimpleFacebook.publish(feed, true, onPublishListener);
+			}
+			return true;
+		
+		
+		default:
+
+			return super.onOptionsItemSelected(item);
+
+		}
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    mSimpleFacebook = SimpleFacebook.getInstance(this);
 	}
 	
 	@Override
@@ -187,5 +334,8 @@ public class AchievementActivity extends FragmentActivity implements
 		return (int) (100 * ((float) num_of_ach_finished(table) / (float) dbhelper
 				.getCount(table)));
 	}
-
+	double roundOneDecimal(double d) { 
+        DecimalFormat twoDForm = new DecimalFormat("#.#"); 
+        return Double.valueOf(twoDForm.format(d));
+    }  
 }

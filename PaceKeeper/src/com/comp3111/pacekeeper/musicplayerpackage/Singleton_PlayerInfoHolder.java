@@ -182,6 +182,11 @@ public class Singleton_PlayerInfoHolder {
 		Bitmap buffer_output = null;
 		if(buffer != null){
 			// TODO Auto-generated method stub
+			int img_width = buffer.getHeight();
+			int img_height = buffer.getWidth();
+			float ratio = (float) img_width / img_height;
+			if(ratio < 1)	ratio= 1/ratio;
+			if(ratio > 2)	albumBg.setVisibility(View.INVISIBLE);
 			buffer_output = Bitmap.createBitmap(buffer);
 			final RenderScript rs = RenderScript.create( mActivity );
 			final Allocation input = Allocation.createFromBitmap( rs, buffer, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT );

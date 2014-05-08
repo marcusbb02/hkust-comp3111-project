@@ -18,6 +18,13 @@
             android:title="Region settings" >
         </Preference>
     </PreferenceCategory>
+    <PreferenceCategory android:title="Facebook" >
+        <Preference
+            android:key="resetfb"
+            android:summary="Logout Facebook Account from current user"
+            android:title="Logout Account" >
+        </Preference>
+    </PreferenceCategory>
     <PreferenceCategory android:title="Reset" >
         <com.comp3111.pacekeeper.CARDialogPreference
             android:dialogMessage="Are you sure?"

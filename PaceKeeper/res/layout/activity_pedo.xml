@@ -71,6 +71,7 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tw_pedo_gf"
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
@@ -80,6 +81,7 @@
         android:text="TextView" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tw_pedo_steps"
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
@@ -89,6 +91,7 @@
         android:text="TextView" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tw_pedo_av_duration"
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"

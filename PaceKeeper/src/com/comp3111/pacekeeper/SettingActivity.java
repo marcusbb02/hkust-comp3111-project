@@ -11,6 +11,8 @@ import com.comp3111.local_database.DataBaseHelper;
 import com.comp3111.local_database.Global_value;
 import com.comp3111.pedometer.ConsistentContents;
 import com.comp3111.pedometer.UserSettings;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.listeners.OnLogoutListener;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,9 +26,52 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingActivity extends PreferenceActivity {
 
+	boolean logined = false;
+	private SimpleFacebook mSimpleFacebook;
+	protected static final String TAG = SettingActivity.class.getName();
+	private TextView mTextStatus;
+	
+	private void toast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+	
+	OnLogoutListener onLogoutListener = new OnLogoutListener() {
+		@Override
+		public void onFail(String reason) {
+		//	mTextStatus.setText(reason);
+			Log.w(TAG, "Failed to login");
+		}
+
+		@Override
+		public void onException(Throwable throwable) {
+		//	mTextStatus.setText("Exception: " + throwable.getMessage());
+			Log.e(TAG, "Bad thing happened", throwable);
+		}
+
+		@Override
+		public void onThinking() {
+			// show progress bar or something to the user while login is
+			// happening
+		//	mTextStatus.setText("Thinking...");
+		}
+
+		
+		@Override
+	    public void onLogout() {
+	        Log.i(TAG, "You are logged out");
+	    }
+
+	    /* 
+	     * You can override other methods here: 
+	     * onThinking(), onFail(String reason), onException(Throwable throwable)
+	     */ 
+	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,9 +84,36 @@ public class SettingActivity extends PreferenceActivity {
 				return false;
 			}
 		});
+		Preference fbPref = (Preference) findPreference("resetfb");
+		fbPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+			@Override
+			public boolean onPreferenceClick(Preference arg0) {
+				//if (ConsistentContents.fblogin==true){
+				if(mSimpleFacebook.isLogin())
+				{mSimpleFacebook.logout(onLogoutListener);
+				ConsistentContents.fblogin=false;
+				toast("You have logouted");
+				}
+				else toast("You haven't login");
+				return false;
+			}
+		});
 
 	}
-
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    mSimpleFacebook = SimpleFacebook.getInstance(this);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data); 
+	    super.onActivityResult(requestCode, resultCode, data);
+	} 
+	
+	
+	
 	public static void deleteFiles() {
 
 		final String path = Environment.getExternalStorageDirectory()

@@ -11,6 +11,7 @@ public class ConsistentContents {
 	public static Singleton_PlayerInfoHolder playerInfoHolder = Singleton_PlayerInfoHolder.getInstance();
 	public static AggregatedRecords aggRecords = new AggregatedRecords();
 	public static UserSettings currentUserSettings = new UserSettings();
+	public static boolean fblogin=false;
 	//public static PedometerSettings pedoSetting = new PedometerSettings();
 
 }
